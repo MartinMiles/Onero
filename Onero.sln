@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Onero.Crawler", "Onero.Crawler\Onero.Crawler.csproj", "{65F29D97-D838-41BD-93AD-4369AA176BE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Onero", "Onero\Onero.csproj", "{5BC53E26-4AAE-4E9B-8EB9-C330856B47B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{65F29D97-D838-41BD-93AD-4369AA176BE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65F29D97-D838-41BD-93AD-4369AA176BE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65F29D97-D838-41BD-93AD-4369AA176BE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65F29D97-D838-41BD-93AD-4369AA176BE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BC53E26-4AAE-4E9B-8EB9-C330856B47B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BC53E26-4AAE-4E9B-8EB9-C330856B47B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BC53E26-4AAE-4E9B-8EB9-C330856B47B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BC53E26-4AAE-4E9B-8EB9-C330856B47B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

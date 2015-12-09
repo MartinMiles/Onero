@@ -1,0 +1,9 @@
+*.suo
+*.user
+*.DS_Store
+bin
+obj
+Test/bin
+Test/obj
+packages/
+Results

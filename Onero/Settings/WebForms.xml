@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <form name="Plan a journey" enabled="true">
+    <url>/plan-a-journey$</url>
+    <fields>
+      <field id="#InputFrom">London Bridge</field>
+      <field id="#InputTo">Stratford</field>
+    </fields>
+    <submit id=".plan-journey-button" />
+    <result type="redirect">
+      <url>plan-a-journey/results</url>
+    </result>
+  </form>
+</forms>

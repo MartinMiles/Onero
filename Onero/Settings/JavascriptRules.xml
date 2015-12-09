@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<rules>
+  <rule name="Has Html element loaded Well" type="exclude" enabled="true">
+    <condition>return $('html').length;</condition>
+  </rule>
+  <rule name="Plan a journey form exists on a page" type="include" enabled="true">
+    <condition>return $('#InputFrom').length;</condition>
+    <url>http://tfl.gov.uk/plan-a-journey</url>
+  </rule>
+  <rule name="Tube status Rainbow loaded" type="include" enabled="true">
+    <condition>return $('#rainbow-list-tube-dlr-overground-tflrail').length;</condition>
+    <url>https://tfl.gov.uk$</url>
+  </rule>
+  <rule name="Journey results present on a page" type="include" enabled="true">
+    <condition>return $('.jp-result-transport').length;</condition>
+    <url>/plan-a-journey/results</url>
+  </rule>
+  <rule name="Header exists" type="exclude" enabled="true">
+    <condition>return $('.top-row').length;</condition>
+  </rule>
+  <rule name="Footer exists" type="exclude" enabled="true">
+    <condition>return $('.secondary-footer').length;</condition>
+  </rule>
+</rules>
