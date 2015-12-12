@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Windows.Forms;
 using System.Xml;
-using Onero.Crawler;
-using Onero.Crawler.Results;
+using Onero.Collections;
+using Onero.Loader;
+using Onero.Loader.Results;
 
 namespace Onero.Dialogs
 {
@@ -16,8 +15,6 @@ namespace Onero.Dialogs
     {
         #region Strings and constants
 
-        private const string RESULTS_DIRECTORY = "Results";
-        private const int DEFAULT_TIMEOUT = 60;
 
         private const string PROGRESS_COMPLETED = "Progress: completed {0} pages";
         private const string INVALID_CRAWLING_MODE = "Crawling mode not specified correctly";
@@ -28,37 +25,9 @@ namespace Onero.Dialogs
 
         #endregion
 
-        private Loader loader;
-        private static CrawlerSettings settings;
+        private Loader.Loader loader;
+        private static LoaderSettings settings;
         private List<Result> results;
-
-        private static string DefaultOutputPath
-        {
-            get
-            {
-                string directory = Environment.CurrentDirectory;
-
-                #if (DEBUG)
-                    directory = Directory.GetParent(directory).ToString();
-                #endif
-
-                return string.Format("{0}\\{1}", directory, RESULTS_DIRECTORY);
-            }
-        }
-
-        private static string PathPrefix
-        {
-            get
-            {
-                string prefix = String.Empty;
-
-                #if (DEBUG)
-                    prefix = "..\\..\\";
-                #endif
-
-                return prefix;
-            }
-        }
 
         public Dictionary<string, DisplayResult> UrlToProcess { get; private set; }
 
@@ -72,6 +41,12 @@ namespace Onero.Dialogs
             InitSettings();
 
             ShowTestButton();
+            SetFormName();
+        }
+
+        private void SetFormName()
+        {
+            Text = string.Format("Onero Page Runner - {0}", CurrentProfileName);
         }
 
         private void ShowTestButton()
@@ -84,14 +59,12 @@ namespace Onero.Dialogs
         private void InitSettings()
         {
             // set initial defaults below
-            settings = new CrawlerSettings
-            {
-                OutputPath = DefaultOutputPath,
-                TimeOut = DEFAULT_TIMEOUT,
-                ShowFirefox = false,
-                Verbose = false,
-                CreateScreenshots = true
-            };
+            settings = new LoaderSettings { Profile = Profiles.Current };
+        }
+
+        internal string CurrentProfileName
+        {
+            get { return settings.Profile.Name; }
         }
 
         #region Crawling Mode features
@@ -138,7 +111,7 @@ namespace Onero.Dialogs
 
         #endregion
 
-        #region BackgroungWorker functions
+        #region Loader Backgroung Worker functions
 
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         { 
@@ -169,18 +142,24 @@ namespace Onero.Dialogs
 
         #endregion
 
-        private void BlockUserInterfaceOnRun(bool isBlocked)
+        #region Load links background worker functions
+
+        private void LoadLinksDoWork(object sender, DoWorkEventArgs e)
         {
-            environmentLinksItems.ReadOnly = isBlocked;
-            radioButtonLinks.Enabled = !isBlocked;
-            radioButtonSitemap.Enabled = !isBlocked;
-            radioButtonWebAPI.Enabled = !isBlocked;
-
-            resultLabel.Visible = !isBlocked;
-
-            progressBar1.Visible = isBlocked;
-            loadLinksButton.Enabled = !isBlocked;
+            PopulateLinksTextbox();
         }
+
+        private void LoadLinksCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            environmentLinksItems.FillValuesWithColor(UrlToProcess);
+
+            loadLinksButton.Enabled = true;
+            startButton.Enabled = true;
+            linksGroupbox.Text = string.Format("Pages to process ({0})", UrlToProcess.Count);
+        }
+
+        #endregion
+
 
         private void OnStartButonClick(object sender, EventArgs e)
         {
@@ -197,11 +176,11 @@ namespace Onero.Dialogs
                 if (!this.IsValid())
                     return;
 
-                settings.Rules = Rules.Read();
-                settings.Forms = Forms.Read();
+                settings.Rules = new CollectionOf<Rule>(CurrentProfileName).Read<Rule>().Where(r => r.Enabled);
+                settings.Forms = new CollectionOf<Form>(CurrentProfileName).Read<WebForm>().Where(f => f.Enabled);
                 settings.PagesToCrawl = LinksFromTextbox;
 
-                loader = new Loader(settings);
+                loader = new Loader.Loader(settings);
 
                 if (results != null || CurrentCrawlingMode == CrawlingMode.Manual)
                 {
@@ -282,6 +261,7 @@ namespace Onero.Dialogs
             {
                 var form = new PageResultViewForms {StartPosition = FormStartPosition.CenterParent};
                 form.PageResult = clickedPageResult;
+                form.CurrentProfileName = settings.Profile.Name;
                 form.RulesCollection = settings.Rules;
                 form.FormsCollection = settings.Forms;
 
@@ -303,12 +283,14 @@ namespace Onero.Dialogs
             if (settingsForm.ShowDialog() == DialogResult.OK)
             {
                 settings = settingsForm.Settings;
+                SetFormName();
             }
         }
 
         private void SetRulesButtonClick(object sender, EventArgs e)
         {
             var form = new RulesList { StartPosition = FormStartPosition.CenterParent };
+            form.CurrentProfileName = settings.Profile.Name;
             form.ShowDialog();
             form.Dispose();
         }
@@ -316,6 +298,7 @@ namespace Onero.Dialogs
         private void SetFormsButtonClick(object sender, EventArgs e)
         {
             var form = new FormsList { StartPosition = FormStartPosition.CenterParent };
+            form.CurrentProfileName = settings.Profile.Name;
             form.ShowDialog();
             form.Dispose();
         }
@@ -332,7 +315,13 @@ namespace Onero.Dialogs
             if (!this.IsValidInit())
                 return;
 
-            PopulateLinksTextbox();
+            if (!loadLinksBackgroundWorker.IsBusy)
+            {
+                loadLinksButton.Enabled = false;
+                startButton.Enabled = false;
+
+                loadLinksBackgroundWorker.RunWorkerAsync();                
+            }
         }
 
         private void PopulateLinksTextbox()
@@ -340,9 +329,6 @@ namespace Onero.Dialogs
             try
             {
                 UrlToProcess = GetLinksClient().Parse().ToDictionary(i => i, i => DisplayResult.Unprocessed);
-                environmentLinksItems.FillValuesWithColor(UrlToProcess);
-
-                linksGroupbox.Text = string.Format("Pages to process ({0})", UrlToProcess.Count);
             }
             catch (DirectoryNotFoundException e)
             {
@@ -354,26 +340,40 @@ namespace Onero.Dialogs
             }
         }
 
+        private void BlockUserInterfaceOnRun(bool isBlocked)
+        {
+            environmentLinksItems.ReadOnly = isBlocked;
+            radioButtonLinks.Enabled = !isBlocked;
+            radioButtonSitemap.Enabled = !isBlocked;
+            radioButtonWebAPI.Enabled = !isBlocked;
+
+            resultLabel.Visible = !isBlocked;
+
+            progressBar1.Visible = isBlocked;
+            loadLinksButton.Enabled = !isBlocked;
+        }
+
         private void TestClick(object sender, EventArgs e)
         {
             //ReadWebApi("http://test01/sitecore/api/ssc/item/0DE95AE4-41AB-4D01-9EB0-67441B7C2450/children?database=master");
 
             //ParseWebApi(apiEndpoint.Text, apiLogin.Text);
 
+            const string WebApi = "http://test02/?sc_itemid={110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}";
             const string URL1 = "https://tfl.gov.uk/\nhttp://tfl.gov.uk/plan-a-journey/\nhttp://tfl.gov.uk/plan-a-journey/results";
 
             //webApiMode.Checked = true;
-            apiEndpoint.Text = "http://test01/sitecore/api/ssc/item/0DE95AE4-41AB-4D01-9EB0-67441B7C2450/children?database=master";
+            apiEndpoint.Text = "http://test02/-/item/v1/?query=/sitecore/content/*";
             apiLogin.Text = "sitecore\\admin";
             apiPassword.Text = "b";
-            sitemapHost.Text = "https://tfl.gov.uk/";
+            sitemapHost.Text = "https://tfl.gov.uk";
             sitemapFilename.Text = "sitemap.xml";
 
             var doc = new XmlDocument();
-            doc.Load(string.Format("{0}Settings\\JavascriptRules.xml", PathPrefix));
+            doc.Load(string.Format(new CollectionOf<Rule>(CurrentProfileName).FilePath));
 
             environmentLinksItems.Clear();
-            environmentLinksItems.Text = URL1;
+            environmentLinksItems.Text = WebApi;
             //results = new List<Result>
             //{
             //    new Result(URL1)

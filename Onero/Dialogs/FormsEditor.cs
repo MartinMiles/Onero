@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Onero.Crawler;
-using Onero.Crawler.Results;
+using Onero.Loader;
+using Onero.Loader.Results;
 
 namespace Onero.Dialogs
 {

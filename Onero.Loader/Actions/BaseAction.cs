@@ -1,18 +1,18 @@
 ﻿using OpenQA.Selenium.Remote;
 
-namespace Onero.Crawler.CrawlerActions
+namespace Onero.Loader.Actions
 {
-    public interface ICrawlerAction
+    public interface IAction
     {
         dynamic Execute();
     }
 
-    public abstract class BaseCrawlerAction : ICrawlerAction
+    public abstract class BaseAction : IAction
     {
         protected RemoteWebDriver driver;
-        protected CrawlerSettings settings;
+        protected LoaderSettings settings;
 
-        protected BaseCrawlerAction(RemoteWebDriver driver, CrawlerSettings settings)
+        protected BaseAction(RemoteWebDriver driver, LoaderSettings settings)
         {
             this.driver = driver;
             this.settings = settings;

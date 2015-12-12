@@ -1,4 +1,4 @@
-﻿namespace Onero.Crawler.Results
+﻿namespace Onero.Loader.Results
 {
     public enum ResultCode
     {

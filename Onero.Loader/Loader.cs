@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
-using Onero.Crawler.CrawlerActions;
-using Onero.Crawler.Results;
+using Onero.Loader.Actions;
+using Onero.Loader.Results;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.PhantomJS;
 using OpenQA.Selenium.Remote;
 
-namespace Onero.Crawler
+namespace Onero.Loader
 {
     public class Loader
     {
-        private readonly CrawlerSettings settings;
+        private readonly LoaderSettings settings;
         private const string ABOUT_BLANK = "about:blank";
 
         #region Constructors
@@ -23,7 +22,7 @@ namespace Onero.Crawler
         {
         }
 
-        public Loader(CrawlerSettings settings)
+        public Loader(LoaderSettings settings)
         {
             this.settings = settings;
         }
@@ -43,7 +42,20 @@ namespace Onero.Crawler
                 profile.SetPreference("startup.homepage_welcome_url", ABOUT_BLANK);
                 profile.SetPreference("startup.homepage_welcome_url.additional", ABOUT_BLANK);
 
-                return _driver ?? (_driver = settings.ShowFirefox ? (RemoteWebDriver)new FirefoxDriver(profile) : PhantomDriver);
+                return _driver ?? (_driver = settings.Profile.RunInBrowser ? (RemoteWebDriver)new FirefoxDriver(profile) : PhantomDriver);
+            }
+        }
+
+        public RemoteWebDriver ChromeDriver
+        {
+            get
+            {
+                ChromeOptions profile = new ChromeOptions();
+                //profile.SetPreference("browser.startup.homepage", ABOUT_BLANK);
+                //profile.SetPreference("startup.homepage_welcome_url", ABOUT_BLANK);
+                //profile.SetPreference("startup.homepage_welcome_url.additional", ABOUT_BLANK);
+
+                return _driver ?? (_driver = settings.Profile.RunInBrowser ? (RemoteWebDriver)new ChromeDriver(profile) : PhantomDriver);
             }
         }
 
@@ -71,7 +83,7 @@ namespace Onero.Crawler
 
                 using (var driver = Driver)
                 {
-                    driver.Manage().Timeouts().SetPageLoadTimeout(new TimeSpan(0, 0, settings.TimeOut));
+                    driver.Manage().Timeouts().SetPageLoadTimeout(new TimeSpan(0, 0, settings.Profile.Timeout));
 
                     var timer = new Stopwatch();
 
@@ -94,7 +106,7 @@ namespace Onero.Crawler
                             bool urlResult = true;
 
                             //TODO: Later move to actions factory
-                            if (settings.CreateScreenshots)
+                            if (settings.Profile.CreateScreenshots)
                             {
                                 var screenshotAction = new MakeScreenshotAction(driver, settings)  { Order = order };
                                 screenshotAction.Execute();

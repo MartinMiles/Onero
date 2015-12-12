@@ -32,7 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.deleteButton = new System.Windows.Forms.Button();
             this.message = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.urlTextbox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -122,15 +122,16 @@
             this.message.Size = new System.Drawing.Size(0, 13);
             this.message.TabIndex = 11;
             // 
-            // button2
+            // cancelButton
             // 
-            this.button2.Location = new System.Drawing.Point(352, 642);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(57, 23);
-            this.button2.TabIndex = 25;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.CancelClick);
+            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelButton.Location = new System.Drawing.Point(352, 642);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(57, 23);
+            this.cancelButton.TabIndex = 25;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.CancelClick);
             // 
             // button1
             // 
@@ -191,9 +192,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(6, 101);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 13);
+            this.label4.Size = new System.Drawing.Size(100, 13);
             this.label4.TabIndex = 19;
-            this.label4.Text = "Message:";
+            this.label4.Text = "Message (or regex):";
             // 
             // resultId
             // 
@@ -207,9 +208,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(9, 144);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(32, 13);
+            this.label5.Size = new System.Drawing.Size(122, 13);
             this.label5.TabIndex = 17;
-            this.label5.Text = "URL:";
+            this.label5.Text = "Redirect URL (or regex):";
             // 
             // resultUrl
             // 
@@ -223,9 +224,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(9, 60);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(18, 13);
+            this.label6.Size = new System.Drawing.Size(133, 13);
             this.label6.TabIndex = 21;
-            this.label6.Text = "ID";
+            this.label6.Text = "Message element selector:";
             // 
             // groupBox1
             // 
@@ -451,9 +452,9 @@
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(35, 20);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(115, 13);
+            this.label17.Size = new System.Drawing.Size(143, 13);
             this.label17.TabIndex = 46;
-            this.label17.Text = "ID of the field to submit";
+            this.label17.Text = "Selector of the field to submit";
             // 
             // label15
             // 
@@ -596,11 +597,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(428, 672);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.fieldsGroupbox);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.message);
@@ -625,7 +627,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.Label message;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button button1;
         public System.Windows.Forms.TextBox urlTextbox;
         private System.Windows.Forms.Label label2;

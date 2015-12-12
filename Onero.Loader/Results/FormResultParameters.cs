@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml;
 
-namespace Onero.Crawler.Results
+namespace Onero.Loader.Results
 {
     public class FormResultParameters
     {

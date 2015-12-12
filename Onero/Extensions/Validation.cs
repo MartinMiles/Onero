@@ -3,8 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Onero.Collections;
+using Onero.Loader;
 using Onero.Dialogs;
-using Onero.Crawler.Results;
+using Onero.Loader.Results;
+using Onero.Extensions;
 
 namespace Onero
 {
@@ -17,7 +20,7 @@ namespace Onero
 
         // regex
         private const string NAME_REGEX = "^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$";
-        private const string URL_SUBSET_REGEX = "^[a-zA-Z:/?.=&+!*'(), 0-9_-]*$";
+        private const string URL_SUBSET_REGEX = "^[a-zA-Z:/?.=&+!*'(), 0-9$_-]*$";
 
         // messages
         private const string NAME_SHOULD_NOT_BE_EMPTY = "Name should not be empty";
@@ -43,7 +46,54 @@ namespace Onero
         private const string SITEMAP_MODE_HOST_AND_FILE_EMPTY = "Sitemap host / filenames fields should not be empty when running Sitemap mode";
         private const string WEBAPI_MODE_ENDPOINT_EMPTY = "Endpoint URL should not be empty when running Sitecore WebAPI mode";
 
+        // settings form
+        private const string OUTPUT_PATH_NOT_SET = "Output path is not set";
+        private const string INVALID_TIMEOUT = "Please input valid TimeOut value";
+
+        private const string PROFILE_ALREADY_EXISTS = "Profile with this name already exists";
+        private const string PROFILE_NAME_MISMATCH = "Profile name mismatch";
+
+        private const string COFIRMATION_REQURIED = "Confirmation requried";
+        private const string LOOSE_SELECTOR = "At least one of selectors on this form does not start with '.' or '#'. Is that correct?";
+
         #endregion
+
+        public static bool IsValid(this SettingsForm formEditor)
+        {
+            string outputPathValue = formEditor.outputPath.Text.Trim();
+            if (!outputPathValue.Any())
+            {
+                MessageBox.Show(OUTPUT_PATH_NOT_SET, ERROR);
+                return false;
+            }
+
+            int timeout = formEditor.timeOut.Text.Parse(0);
+            if (timeout < 1)
+            {
+                MessageBox.Show(INVALID_TIMEOUT);
+                return false;
+            }
+            
+            return true;
+        }
+
+        public static bool IsValidAddProfile(this SettingsForm formEditor)
+        {
+            if (formEditor.profiles.Any(i => i.Name == formEditor.newProfileName.Text))
+            {
+                MessageBox.Show(PROFILE_ALREADY_EXISTS);
+                return false;
+            }
+
+            if (!new Regex(NAME_REGEX).IsMatch(formEditor.newProfileName.Text))
+            {
+                MessageBox.Show(PROFILE_NAME_MISMATCH);
+                return false;
+            }
+
+            return true;
+        }
+
 
         public static bool IsValid(this RulesEditor formEditor)
         {
@@ -73,7 +123,7 @@ namespace Onero
                     return false;
                 }
 
-                if (!new Regex(URL_SUBSET_REGEX).IsMatch(formEditor.urlTextbox.Text.TrimEnd('$')))
+                if (!new Regex(URL_SUBSET_REGEX).IsMatch(formEditor.urlTextbox.Text))
                 {
                     MessageBox.Show(URL_PATTERN_WRONG_CHARS, VALIDATION_ERROR);
                     return false;
@@ -103,6 +153,8 @@ namespace Onero
                 return false;
             }
 
+            bool looseSelectorDetected = false;
+
             for (int i = 0; i < 7; i++)
             {
                 var field = formEditor.fieldsGroupbox.Controls.Find("fieldId" + (i + 1), true).First() as TextBox;
@@ -113,7 +165,15 @@ namespace Onero
                     MessageBox.Show(ID_AND_VALUE_INVALID, VALIDATION_ERROR);
                     return false;
                 }
+
+                if (!string.IsNullOrWhiteSpace(field.Text) && !(field.Text.StartsWith("#") || field.Text.StartsWith(".")))
+                {
+                    looseSelectorDetected = true;
+                }
             }
+
+            string submitId = formEditor.submitButtonId.Text;
+            looseSelectorDetected = looseSelectorDetected || !(submitId.StartsWith("#") || submitId.StartsWith("."));
 
             if (formEditor.ResultType == FormResultType.Redirect && String.IsNullOrWhiteSpace(formEditor.resultUrl.Text))
             {
@@ -126,20 +186,28 @@ namespace Onero
                 return false;
             }
 
+            if (looseSelectorDetected)
+            {
+                var dialogResult = MessageBox.Show(LOOSE_SELECTOR, COFIRMATION_REQURIED, MessageBoxButtons.YesNo);
+                return dialogResult == DialogResult.Yes;
+            }
+
             return true;
         }
 
         public static bool IsValid(this MainForm mainForm)
         {
-            if (!File.Exists(Rules.FilePath))
+            string rulesFilePath = new CollectionOf<Rule>(mainForm.CurrentProfileName).FilePath;
+            if (!File.Exists(rulesFilePath))
             {
-                MessageBox.Show(string.Format(RULES_FILE_NOT_EXISTS_AT, Rules.FilePath), ERROR);
+                MessageBox.Show(string.Format(RULES_FILE_NOT_EXISTS_AT, rulesFilePath), ERROR);
                 return false;
             }
-            
-            if (!File.Exists(Forms.FilePath))
+
+            var formsFilePath = new CollectionOf<WebForm>(mainForm.CurrentProfileName).FilePath;
+            if (!File.Exists(formsFilePath))
             {
-                MessageBox.Show(string.Format(FORMS_FILE_NOT_EXISTS_AT, Forms.FilePath), ERROR);
+                MessageBox.Show(string.Format(FORMS_FILE_NOT_EXISTS_AT, formsFilePath), ERROR);
                 return false;
             }
 

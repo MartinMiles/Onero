@@ -56,6 +56,7 @@ namespace Onero.Dialogs
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.loadLinksBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             this.linksGroupbox.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -323,6 +324,11 @@ namespace Onero.Dialogs
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.AboutClick);
             // 
+            // loadLinksBackgroundWorker
+            // 
+            this.loadLinksBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.LoadLinksDoWork);
+            this.loadLinksBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.LoadLinksCompleted);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -376,6 +382,7 @@ namespace Onero.Dialogs
         private Label label4;
         private TextBox apiPassword;
         private Button loadLinksButton;
+        private System.ComponentModel.BackgroundWorker loadLinksBackgroundWorker;
     }
 }
 

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace Onero.Crawler
+namespace Onero.Loader
 {
     public class Logger
     {

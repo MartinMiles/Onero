@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Onero.Crawler;
-using Onero.Crawler.Results;
+using Onero.Collections;
+using Onero.Loader;
+using Onero.Loader.Interfaces;
+using Onero.Loader.Results;
 
 namespace Onero.Dialogs
 {
@@ -11,6 +13,7 @@ namespace Onero.Dialogs
     {
         public Result PageResult { get; set; }
 
+        public string CurrentProfileName { get; internal set; }
         public IEnumerable<Rule> RulesCollection { get; set; }
         public IEnumerable<WebForm> FormsCollection { get; set; }
 
@@ -63,7 +66,7 @@ namespace Onero.Dialogs
                 //rule.Name = editorForm.NameBox.Trim();
                 //rule.Condition = editorForm.EditBox.Trim();
 
-                Rules.Save(RulesCollection);
+                new CollectionOf<Rule>(CurrentProfileName).Save(RulesCollection);
                     
                 FillRichTextBox(rulesBox, PageResult.RuleResults);
             }

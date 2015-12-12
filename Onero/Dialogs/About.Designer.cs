@@ -30,7 +30,8 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.label17 = new System.Windows.Forms.Label();
+            this.okButton = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -57,11 +58,12 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(216, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Version 1.0       Release date: 07/Dec/2015";
+            this.label1.Text = "Version 1.1       Release date: 11/Dec/2015";
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.label17);
+            this.groupBox1.Controls.Add(this.okButton);
             this.groupBox1.Controls.Add(this.label16);
             this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Controls.Add(this.label14);
@@ -81,20 +83,30 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(266, 325);
+            this.groupBox1.Size = new System.Drawing.Size(266, 338);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Onero Page Runner";
             // 
-            // button1
+            // label17
             // 
-            this.button1.Location = new System.Drawing.Point(188, 292);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(64, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "OK";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.OkClick);
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(16, 275);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(148, 13);
+            this.label17.TabIndex = 17;
+            this.label17.Text = "- ships as open source project";
+            // 
+            // okButton
+            // 
+            this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.okButton.Location = new System.Drawing.Point(191, 299);
+            this.okButton.Name = "okButton";
+            this.okButton.Size = new System.Drawing.Size(64, 23);
+            this.okButton.TabIndex = 1;
+            this.okButton.Text = "OK";
+            this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.OkClick);
             // 
             // label16
             // 
@@ -108,11 +120,11 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(16, 275);
+            this.label15.Location = new System.Drawing.Point(16, 262);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(148, 13);
+            this.label15.Size = new System.Drawing.Size(188, 13);
             this.label15.TabIndex = 15;
-            this.label15.Text = "- ships as open source project";
+            this.label15.Text = "- suppors multiple configuration profiles";
             // 
             // label14
             // 
@@ -155,7 +167,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(16, 262);
+            this.label11.Location = new System.Drawing.Point(16, 249);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(194, 13);
             this.label11.TabIndex = 10;
@@ -164,7 +176,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(16, 249);
+            this.label10.Location = new System.Drawing.Point(16, 288);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(125, 13);
             this.label10.TabIndex = 9;
@@ -246,7 +258,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(286, 344);
+            this.CancelButton = this.okButton;
+            this.ClientSize = new System.Drawing.Size(289, 362);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -278,6 +291,7 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button okButton;
+        private System.Windows.Forms.Label label17;
     }
 }

@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Onero.Crawler;
+using Onero.Collections;
+using Onero.Loader;
 
 namespace Onero.Dialogs
 {
     public partial class RulesList : Form
     {
         private IEnumerable<Rule> rules;
+
+        public string CurrentProfileName { get; internal set; }
 
         public RulesList()
         {
@@ -17,7 +20,7 @@ namespace Onero.Dialogs
 
         private void FormLoad(object sender, EventArgs e)
         {
-            rules = Rules.Read();
+            rules = new CollectionOf<Rule>(CurrentProfileName).Read<Rule>();
             DrawRulesList();
 
             saveButton.Enabled = false;
@@ -30,7 +33,7 @@ namespace Onero.Dialogs
             for (int i = 0; i < rules.Count(); i++)
             {
                 var rule = rules.ElementAt(i);
-                rulesCheckList.Items.Add(rule.Name, rule.Enabled);
+                rulesCheckList.Items.Add(rule.NameWithPrefix, rule.Enabled);
             }
         }
 
@@ -40,7 +43,7 @@ namespace Onero.Dialogs
             var clb = sender as CheckedListBox;
             var clickedItem = clb.SelectedItem;
 
-            var rule = rules.FirstOrDefault(r => r.Name == clickedItem as string);
+            var rule = rules.FirstOrDefault(r => r.NameWithPrefix == clickedItem as string);
 
             var editorForm = new RulesEditor { StartPosition = FormStartPosition.CenterParent };
             //editorForm.Message = "Note: to save rules changes into a file - hit 'Save rules' on the\nprevious screen. This screen only modifies but not saves rules";
@@ -56,8 +59,9 @@ namespace Onero.Dialogs
             else if (dialogResult == DialogResult.Yes)
             {
                 rules = rules.Where(r => r != rule);
-                DrawRulesList();
             }
+
+            DrawRulesList();
 
             editorForm.Dispose();
 
@@ -69,12 +73,12 @@ namespace Onero.Dialogs
             var checkedRulesNames = rulesCheckList.CheckedItems;
             foreach (Rule rule in rules)
             {
-                rule.Enabled = checkedRulesNames.Contains(rule.Name);
+                rule.Enabled = checkedRulesNames.Contains(rule.NameWithPrefix);
             }
 
             try
             {
-                Rules.Save(rules);
+                new CollectionOf<Rule>(CurrentProfileName).Save(rules);
 
                 saveButton.Enabled = false;
                 Text = "Rules Editor - Successfully saved";

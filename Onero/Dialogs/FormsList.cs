@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Onero.Crawler;
+using Onero.Collections;
+using Onero.Loader;
 
 namespace Onero.Dialogs
 {
     public partial class FormsList : Form
     {
         private List<WebForm> forms;
+
+        public string CurrentProfileName { get; internal set; }
 
         public FormsList()
         {
@@ -17,7 +20,7 @@ namespace Onero.Dialogs
 
         private void FormLoad(object sender, EventArgs e)
         {
-            forms = Forms.Read();
+            forms = new CollectionOf<WebForm>(CurrentProfileName).Read<WebForm>().ToList();
             DrawFormsList();
 
             saveButton.Enabled = false;
@@ -27,7 +30,7 @@ namespace Onero.Dialogs
         {
             formsCheckList.Items.Clear();
 
-            for (int i = 0; i < forms.Count(); i++)
+            for (int i = 0; i < forms.Count; i++)
             {
                 var rule = forms.ElementAt(i);
                 formsCheckList.Items.Add(rule.Name, rule.Enabled);
@@ -44,7 +47,7 @@ namespace Onero.Dialogs
 
             try
             {
-                Forms.Save(forms);
+                new CollectionOf<WebForm>(CurrentProfileName).Save(forms);
 
                 saveButton.Enabled = false;
                 Text = "Forms Editor - Successfully saved";
@@ -80,13 +83,13 @@ namespace Onero.Dialogs
             if (dialogResult == DialogResult.OK)
             {
                 form = editorForm.Form;
-                //form.Condition = editorForm.EditBox;
             }
             else if (dialogResult == DialogResult.Yes)
             {
                 forms = forms.Where(r => r != form).ToList();
-                DrawFormsList();
             }
+
+            DrawFormsList();
 
             editorForm.Dispose();
 

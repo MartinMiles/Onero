@@ -3,21 +3,29 @@ using System.Drawing.Imaging;
 using System.IO;
 using OpenQA.Selenium.Remote;
 
-namespace Onero.Crawler.CrawlerActions
+namespace Onero.Loader.Actions
 {
-    public class MakeScreenshotAction : BaseCrawlerAction, ICrawlerAction
+    public class MakeScreenshotAction : BaseAction, IAction
     {
         private const string SCREENSHOT_URL_LIST_FILE = "urls.txt";
 
         public int Order { get; set; }
 
-        public MakeScreenshotAction(RemoteWebDriver driver, CrawlerSettings settings) : base(driver, settings)
+        public MakeScreenshotAction(RemoteWebDriver driver, LoaderSettings settings) : base(driver, settings)
         {
         } 
 
         public override dynamic Execute()
         {
-            string fileFullPath = string.Format("{0}Screenshots\\{1}.jpg", settings.OutputPath, Order);
+            Directory.CreateDirectory(settings.Profile.OutputDirectory);
+
+            var screnshotsDir = string.Format("{0}\\Screenshots", settings.Profile.OutputDirectory);
+            if (!Directory.Exists(screnshotsDir))
+            {
+                Directory.CreateDirectory(screnshotsDir);
+            }
+
+            string fileFullPath = string.Format("{0}\\Screenshots\\{1}.jpg", settings.Profile.OutputDirectory, Order);
             driver.GetScreenshot().SaveAsFile(fileFullPath, ImageFormat.Png);
 
             LogUrl(string.Format("{0}. {1}{2}", Order, driver.Url, Environment.NewLine));
@@ -38,7 +46,7 @@ namespace Onero.Crawler.CrawlerActions
 
         private string LogFileName
         {
-            get { return string.Format("{0}{1}", settings.OutputPath, SCREENSHOT_URL_LIST_FILE); }
+            get { return string.Format("{0}\\{1}", settings.Profile.OutputDirectory, SCREENSHOT_URL_LIST_FILE); }
         }
     }
 }

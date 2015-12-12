@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Onero.Crawler;
-using Onero.Crawler.Results;
+using Onero.Loader;
+using Onero.Loader.Results;
 
 namespace Onero
 {
@@ -11,7 +11,7 @@ namespace Onero
     {
         private const string RESULTS_FILENAME = "results.csv";
 
-        public static void WriteCSV(List<Result> NewResults, CrawlerSettings settings)
+        public static void WriteCSV(List<Result> NewResults, LoaderSettings settings)
         {
             var output = new List<string>();
 
@@ -24,18 +24,18 @@ namespace Onero
             {
                 output.Add(string.Format("{0},{1},{2},{3},{4},{5}", url.Url, String.Empty, String.Empty, url.IsSuccessful, url.PageResult, url.PageLoadTime));
 
-                foreach (var newResultCode in url.RuleResults.Where(r => settings.Verbose || r.Value != ResultCode.Successfull))
+                foreach (var newResultCode in url.RuleResults.Where(r => settings.Profile.VerboseMode || r.Value != ResultCode.Successfull))
                 {
                     output.Add(string.Format("{0},{1},{2},{3}", String.Empty, "Rule: " + newResultCode.Key.Name, newResultCode.Value, String.Empty));
                 }
 
-                foreach (var newResultCode in url.FormResults.Where(r => settings.Verbose || r.Value != ResultCode.Successfull))
+                foreach (var newResultCode in url.FormResults.Where(r => settings.Profile.VerboseMode || r.Value != ResultCode.Successfull))
                 {
                     output.Add(string.Format("{0},{1},{2},{3}", String.Empty, "Form: " + newResultCode.Key.Name, newResultCode.Value, String.Empty));
                 }
             }
 
-            File.WriteAllLines(string.Format("{0}{1}", settings.OutputPath, RESULTS_FILENAME), output);
+            File.WriteAllLines(string.Format("{0}\\{1}", settings.Profile.OutputDirectory, RESULTS_FILENAME), output);
         }
     }
 }

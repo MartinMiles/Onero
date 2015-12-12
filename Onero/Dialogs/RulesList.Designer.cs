@@ -42,7 +42,7 @@
             this.rulesGroupBox.Controls.Add(this.rulesCheckList);
             this.rulesGroupBox.Location = new System.Drawing.Point(12, 12);
             this.rulesGroupBox.Name = "rulesGroupBox";
-            this.rulesGroupBox.Size = new System.Drawing.Size(226, 349);
+            this.rulesGroupBox.Size = new System.Drawing.Size(301, 349);
             this.rulesGroupBox.TabIndex = 1;
             this.rulesGroupBox.TabStop = false;
             this.rulesGroupBox.Text = "Rules (double-click to edit)";
@@ -55,14 +55,14 @@
             this.rulesCheckList.FormattingEnabled = true;
             this.rulesCheckList.Location = new System.Drawing.Point(20, 26);
             this.rulesCheckList.Name = "rulesCheckList";
-            this.rulesCheckList.Size = new System.Drawing.Size(200, 315);
+            this.rulesCheckList.Size = new System.Drawing.Size(275, 315);
             this.rulesCheckList.TabIndex = 1;
             this.rulesCheckList.Click += new System.EventHandler(this.CheckedListBoxSingleClick);
             this.rulesCheckList.DoubleClick += new System.EventHandler(this.CheckedListBoxDoubleClick);
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(82, 367);
+            this.saveButton.Location = new System.Drawing.Point(157, 367);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 3;
@@ -80,7 +80,8 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(163, 367);
+            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelButton.Location = new System.Drawing.Point(238, 367);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 4;
@@ -90,7 +91,7 @@
             // 
             // addNew
             // 
-            this.addNew.Location = new System.Drawing.Point(15, 367);
+            this.addNew.Location = new System.Drawing.Point(12, 367);
             this.addNew.Name = "addNew";
             this.addNew.Size = new System.Drawing.Size(61, 23);
             this.addNew.TabIndex = 2;
@@ -102,7 +103,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(246, 402);
+            this.CancelButton = this.cancelButton;
+            this.ClientSize = new System.Drawing.Size(324, 398);
             this.ControlBox = false;
             this.Controls.Add(this.addNew);
             this.Controls.Add(this.cancelButton);

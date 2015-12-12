@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Onero.Crawler", "Onero.Crawler\Onero.Crawler.csproj", "{65F29D97-D838-41BD-93AD-4369AA176BE8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Onero.Loader", "Onero.Loader\Onero.Loader.csproj", "{65F29D97-D838-41BD-93AD-4369AA176BE8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Onero", "Onero\Onero.csproj", "{5BC53E26-4AAE-4E9B-8EB9-C330856B47B3}"
 EndProject

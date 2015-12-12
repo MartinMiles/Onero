@@ -30,7 +30,7 @@
         {
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.deleteResultsButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.openFolderButton = new System.Windows.Forms.Button();
             this.browseButton = new System.Windows.Forms.Button();
             this.outputPath = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -39,27 +39,33 @@
             this.showFirefox = new System.Windows.Forms.CheckBox();
             this.verbose = new System.Windows.Forms.CheckBox();
             this.createScreenshots = new System.Windows.Forms.CheckBox();
-            this.button4 = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.deleteProfileButton = new System.Windows.Forms.Button();
+            this.newProfileName = new System.Windows.Forms.TextBox();
+            this.addProfileButton = new System.Windows.Forms.Button();
+            this.profileCombobox = new System.Windows.Forms.ComboBox();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.deleteResultsButton);
-            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.openFolderButton);
             this.groupBox3.Controls.Add(this.browseButton);
             this.groupBox3.Controls.Add(this.outputPath);
             this.groupBox3.Controls.Add(this.label1);
-            this.groupBox3.Location = new System.Drawing.Point(11, 11);
+            this.groupBox3.Location = new System.Drawing.Point(11, 113);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(322, 99);
-            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Output directory";
             // 
@@ -73,15 +79,15 @@
             this.deleteResultsButton.UseVisualStyleBackColor = true;
             this.deleteResultsButton.Click += new System.EventHandler(this.ClearClick);
             // 
-            // button1
+            // openFolderButton
             // 
-            this.button1.Location = new System.Drawing.Point(109, 61);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(85, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Open folder";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.OpenInExplorerButtonClick);
+            this.openFolderButton.Location = new System.Drawing.Point(109, 61);
+            this.openFolderButton.Name = "openFolderButton";
+            this.openFolderButton.Size = new System.Drawing.Size(85, 23);
+            this.openFolderButton.TabIndex = 3;
+            this.openFolderButton.Text = "Open folder";
+            this.openFolderButton.UseVisualStyleBackColor = true;
+            this.openFolderButton.Click += new System.EventHandler(this.OpenInExplorerButtonClick);
             // 
             // browseButton
             // 
@@ -163,25 +169,25 @@
             this.createScreenshots.Text = "Create screeshots";
             this.createScreenshots.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // saveButton
             // 
-            this.button4.Location = new System.Drawing.Point(179, 221);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 9;
-            this.button4.Text = "OK";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.SaveButtonClick);
+            this.saveButton.Location = new System.Drawing.Point(179, 323);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(75, 23);
+            this.saveButton.TabIndex = 9;
+            this.saveButton.Text = "Save";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.SaveButtonClick);
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.createScreenshots);
             this.groupBox1.Controls.Add(this.verbose);
             this.groupBox1.Controls.Add(this.showFirefox);
-            this.groupBox1.Location = new System.Drawing.Point(12, 115);
+            this.groupBox1.Location = new System.Drawing.Point(11, 217);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(161, 100);
-            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Binary switches";
             // 
@@ -189,33 +195,89 @@
             // 
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.timeOut);
-            this.groupBox2.Location = new System.Drawing.Point(179, 115);
+            this.groupBox2.Location = new System.Drawing.Point(179, 217);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(155, 100);
-            this.groupBox2.TabIndex = 3;
+            this.groupBox2.Size = new System.Drawing.Size(154, 100);
+            this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Other";
             // 
-            // button3
+            // cancelButton
             // 
-            this.button3.Location = new System.Drawing.Point(258, 221);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 10;
-            this.button3.Text = "Cancel";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.CancelClick);
+            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelButton.Location = new System.Drawing.Point(258, 323);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(75, 23);
+            this.cancelButton.TabIndex = 10;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.CancelClick);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.deleteProfileButton);
+            this.groupBox4.Controls.Add(this.newProfileName);
+            this.groupBox4.Controls.Add(this.addProfileButton);
+            this.groupBox4.Controls.Add(this.profileCombobox);
+            this.groupBox4.Location = new System.Drawing.Point(11, 12);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(322, 96);
+            this.groupBox4.TabIndex = 1;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Testing profile";
+            // 
+            // deleteProfileButton
+            // 
+            this.deleteProfileButton.Enabled = false;
+            this.deleteProfileButton.Location = new System.Drawing.Point(230, 19);
+            this.deleteProfileButton.Name = "deleteProfileButton";
+            this.deleteProfileButton.Size = new System.Drawing.Size(75, 23);
+            this.deleteProfileButton.TabIndex = 32;
+            this.deleteProfileButton.Text = "Delete";
+            this.deleteProfileButton.UseVisualStyleBackColor = true;
+            this.deleteProfileButton.Click += new System.EventHandler(this.DeleteProfileClick);
+            // 
+            // newProfileName
+            // 
+            this.newProfileName.Location = new System.Drawing.Point(10, 59);
+            this.newProfileName.Name = "newProfileName";
+            this.newProfileName.Size = new System.Drawing.Size(214, 20);
+            this.newProfileName.TabIndex = 33;
+            this.newProfileName.TextChanged += new System.EventHandler(this.NewProfileTextChanged);
+            // 
+            // addProfileButton
+            // 
+            this.addProfileButton.Enabled = false;
+            this.addProfileButton.Location = new System.Drawing.Point(230, 57);
+            this.addProfileButton.Name = "addProfileButton";
+            this.addProfileButton.Size = new System.Drawing.Size(75, 23);
+            this.addProfileButton.TabIndex = 34;
+            this.addProfileButton.Text = "Add new";
+            this.addProfileButton.UseVisualStyleBackColor = true;
+            this.addProfileButton.Click += new System.EventHandler(this.AddProfileClick);
+            // 
+            // profileCombobox
+            // 
+            this.profileCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.profileCombobox.FormattingEnabled = true;
+            this.profileCombobox.Location = new System.Drawing.Point(10, 21);
+            this.profileCombobox.Name = "profileCombobox";
+            this.profileCombobox.Size = new System.Drawing.Size(214, 21);
+            this.profileCombobox.TabIndex = 31;
+            this.profileCombobox.SelectedIndexChanged += new System.EventHandler(this.ProfileComboboxChanged);
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(343, 252);
+            this.CancelButton = this.cancelButton;
+            this.ClientSize = new System.Drawing.Size(345, 355);
             this.ControlBox = false;
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.groupBox3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "SettingsForm";
@@ -227,6 +289,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -235,18 +299,23 @@
 
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox timeOut;
+        public System.Windows.Forms.TextBox timeOut;
         private System.Windows.Forms.Button deleteResultsButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button openFolderButton;
         private System.Windows.Forms.CheckBox showFirefox;
         private System.Windows.Forms.CheckBox verbose;
         private System.Windows.Forms.Button browseButton;
-        private System.Windows.Forms.TextBox outputPath;
+        public System.Windows.Forms.TextBox outputPath;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox createScreenshots;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button addProfileButton;
+        private System.Windows.Forms.ComboBox profileCombobox;
+        private System.Windows.Forms.Button deleteProfileButton;
+        public System.Windows.Forms.TextBox newProfileName;
     }
 }

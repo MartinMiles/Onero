@@ -2,26 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Onero.Crawler.Results;
+using System.Web;
+using Onero.Loader.Results;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 
-namespace Onero.Crawler.CrawlerActions
+namespace Onero.Loader.Actions
 {
-    public class FormSubmitAction : BaseCrawlerAction
+    public class FormSubmitAction : BaseAction
     {
         private readonly Dictionary<WebForm, ResultCode> result;
 
-        public FormSubmitAction(RemoteWebDriver driver, CrawlerSettings settings) : base(driver, settings)
+        public FormSubmitAction(RemoteWebDriver driver, LoaderSettings settings) : base(driver, settings)
         {
             result = new Dictionary<WebForm, ResultCode>();
         }
 
         public override dynamic Execute()
         {
-            // for the moment we can submit only one form per page as it redirects to result
-            // thus find first form that matches current url and process it if found
-
             if (settings.Forms != null)
             {
                 foreach (WebForm pageForm in settings.Forms)
@@ -30,7 +28,9 @@ namespace Onero.Crawler.CrawlerActions
                     {
                         var regexUrl = new Regex(url, RegexOptions.IgnoreCase);
 
-                        if (regexUrl.IsMatch(driver.Url.TrimEnd('/')))
+                        var currentUrl = HttpUtility.UrlDecode(driver.Url).TrimEnd('/');
+
+                        if (regexUrl.IsMatch(currentUrl))
                         {
                             var resultCode = ResultCode.NotFinished;
 
@@ -51,16 +51,22 @@ namespace Onero.Crawler.CrawlerActions
                                 if (pageForm.ResultParameters.ResultType == FormResultType.Redirect)
                                 {
                                     var regexResultUrl = new Regex(pageForm.ResultParameters.Url.Trim('/'), RegexOptions.IgnoreCase);
+
                                     resultCode = regexResultUrl.IsMatch(driver.Url) ? ResultCode.Successfull : ResultCode.RedirectUrlMismatch;
+
+                                    // also need to make sure url did not chage
+                                    if (resultCode == ResultCode.Successfull)
+                                    {
+                                        driver.Navigate().Back();
+                                    }
                                 }
                                 else if (pageForm.ResultParameters.ResultType == FormResultType.Message)
                                 {
-                                    // that one works OK
                                     driver.Manage().Timeouts().ImplicitlyWait(new TimeSpan(0, 0, 30));
 
-                                    resultCode = driver.FindElement(By.Id(pageForm.ResultParameters.Id)).Text.Contains(pageForm.ResultParameters.Message)
-                                        ? ResultCode.Successfull
-                                        : ResultCode.ElementNotFound;
+                                    var element = driver.FindElement(BySelector(pageForm.ResultParameters.Id));
+                                    var regex = new Regex(pageForm.ResultParameters.Message, RegexOptions.IgnoreCase);
+                                    resultCode = regex.IsMatch(element.Text) ? ResultCode.Successfull : ResultCode.ElementNotFound;
 
                                     if(!string.IsNullOrWhiteSpace(pageForm.ResultParameters.Url) && driver.Url.Trim('/').ToLower() != pageForm.ResultParameters.Url.ToLower().Trim('/'))
                                     {

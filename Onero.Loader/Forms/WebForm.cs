@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
-using Onero.Crawler.Results;
+using Onero.Loader.Results;
 
-namespace Onero.Crawler
+namespace Onero.Loader
 {
-    public class WebForm : INameable 
+    public class WebForm : RuleForm 
     {
         #region Contructors
 
@@ -16,9 +16,8 @@ namespace Onero.Crawler
             ResultParameters = new FormResultParameters(FormResultType.Message);
         }
 
-        public WebForm(XmlNode node)
+        public WebForm(XmlNode node) : base(node)
         {
-            Load(node);
         }
 
         #endregion
@@ -33,13 +32,9 @@ namespace Onero.Crawler
 
         public FormResultParameters ResultParameters { get; set; }
 
-        public string Name { get; set; }
-
-        public bool Enabled { get; set; }
-
         #endregion
 
-        private void Load(XmlNode node)
+        protected override void Parse()
         {
             bool enabled = true;
             if (node.Attributes["enabled"] != null)
@@ -71,7 +66,7 @@ namespace Onero.Crawler
             }
         }
 
-        public XElement Save()
+        public override XElement Save()
         {
             var node = new XElement("form");
             node.SetAttributeValue("name", Name);
@@ -113,11 +108,6 @@ namespace Onero.Crawler
             node.Add(result);
 
             return node;
-        }
-
-        public override string ToString()
-        {
-            return Name;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Onero.Crawler
+﻿namespace Onero.Loader
 {
     public class WebFormField
     {

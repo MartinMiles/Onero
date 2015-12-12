@@ -7,8 +7,8 @@
     <ProjectGuid>{65F29D97-D838-41BD-93AD-4369AA176BE8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Onero.Crawler</RootNamespace>
-    <AssemblyName>Onero.Crawler</AssemblyName>
+    <RootNamespace>Onero.Loader</RootNamespace>
+    <AssemblyName>Onero.Loader</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,12 +46,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IProfile.cs" />
     <Compile Include="Loader.cs" />
-    <Compile Include="CrawlerActions\FormSubmitAction.cs" />
-    <Compile Include="CrawlerActions\BaseCrawlerAction.cs" />
-    <Compile Include="CrawlerActions\MakeScreenshotAction.cs" />
-    <Compile Include="CrawlerActions\RulesExecuteAction.cs" />
-    <Compile Include="CrawlerSettings.cs" />
+    <Compile Include="Actions\FormSubmitAction.cs" />
+    <Compile Include="Actions\BaseAction.cs" />
+    <Compile Include="Actions\MakeScreenshotAction.cs" />
+    <Compile Include="Actions\RulesExecuteAction.cs" />
+    <Compile Include="LoaderSettings.cs" />
     <Compile Include="Interfaces\INameable.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Results\FormResultParameters.cs" />

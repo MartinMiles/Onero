@@ -1,9 +1,9 @@
-﻿namespace Onero.Crawler.Results
+﻿namespace Onero.Loader.Results
 {
     public enum FormResultType
     {
         Unknown = 0,
-        Redirect,
-        Message
+        Message,
+        Redirect
     }
 }

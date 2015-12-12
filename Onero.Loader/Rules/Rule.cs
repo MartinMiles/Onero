@@ -3,25 +3,74 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
+using Onero.Loader.Interfaces;
 
-namespace Onero.Crawler
+namespace Onero.Loader
 {
-    public class Rule : INameable
+    public class RuleForm : INameable
     {
-        public List<string> Urls { get; set; }
+        public string Name { get; set; }
+
+        public bool Enabled { get; set; }
+
+        protected XmlNode node;
+
+        #region Contructors
+
+        protected RuleForm()
+        {
+        }
+
+        public RuleForm(XmlNode node)
+        {
+            this.node = node;
+
+            Parse();
+        }
+
+        #endregion
+
+        public virtual XElement Save()
+        {
+            throw new NotImplementedException("Should be implemened in derived class");
+        }
+
+        protected virtual void Parse()
+        {
+            throw new NotImplementedException("Should be implemened in derived class");
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+
+    public class Rule : RuleForm
+    {
+        private readonly Dictionary<RuleExecutionScope, string> ruleScopePrefixes = new Dictionary<RuleExecutionScope, string>
+        {
+            {RuleExecutionScope.Everywhere, " -  [ALL]  -  "},
+            {RuleExecutionScope.Include, " -  [Incl]   -  "},
+            {RuleExecutionScope.Exclude, " -  [Excl]  -  "}
+        }; 
 
         #region Constructors
 
-        private Rule()
+        public Rule()
         {
             RuleExecutionScope = RuleExecutionScope.Everywhere;
+        }
+
+        public Rule(XmlNode node) : base(node)
+        {
         }
 
         public Rule(string name, string condition) : this()
         {
         }
 
-        public Rule(XmlNode node) : this()
+        protected override void Parse()
         {
             Name = node.Attributes["name"].Value;
 
@@ -47,21 +96,34 @@ namespace Onero.Crawler
                     }
                 }
             }
+            else
+            {
+                RuleExecutionScope = RuleExecutionScope.Everywhere;
+            }
         }
+
+
+        //public Rule(XmlNode node) : this()
+        //{
+ 
+        //}
 
         #endregion
 
         #region Properties
 
+        public List<string> Urls { get; set; }
+
         public RuleExecutionScope RuleExecutionScope { get; set; }
-
-        public bool Enabled { get; set; }
-
-        public string Name { get; set; }
 
         public string Condition { get; set; }
 
         #endregion
+
+        public string NameWithPrefix
+        {
+            get { return ruleScopePrefixes[RuleExecutionScope] + Name; }
+        }
 
         public bool ShouldRunOnThePage(string url)
         {
@@ -110,16 +172,17 @@ namespace Onero.Crawler
             return String.Empty;
         }
 
-        public XElement Save()
+        public override XElement Save()
         {
             var node = new XElement("rule");
             node.SetAttributeValue("name", Name);
-            node.SetAttributeValue("type", RuleExecutionScope == RuleExecutionScope.Include ? "include" : "exclude");
             node.SetAttributeValue("enabled", Enabled);
             node.Add(new XElement("condition", Condition));
 
             if (RuleExecutionScope == RuleExecutionScope.Include || RuleExecutionScope == RuleExecutionScope.Exclude)
             {
+                node.SetAttributeValue("type", RuleExecutionScope == RuleExecutionScope.Include ? "include" : "exclude");
+
                 foreach (string url in Urls)
                 {
                     node.Add(new XElement("url", url));
@@ -127,11 +190,6 @@ namespace Onero.Crawler
             }
 
             return node;
-        }
-
-        public override string ToString()
-        {
-            return Name;
         }
     }
 }
