@@ -51,15 +51,24 @@ namespace Onero.Dialogs
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.testButton = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.rulesButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.loadLinksBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.profilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.formsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutOneroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resultsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.linksGroupbox.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -77,7 +86,7 @@ namespace Onero.Dialogs
             this.groupBox1.Controls.Add(this.sitemapFilename);
             this.groupBox1.Controls.Add(this.radioButtonLinks);
             this.groupBox1.Controls.Add(this.radioButtonSitemap);
-            this.groupBox1.Location = new System.Drawing.Point(561, 12);
+            this.groupBox1.Location = new System.Drawing.Point(563, 27);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(263, 295);
             this.groupBox1.TabIndex = 2;
@@ -111,6 +120,7 @@ namespace Onero.Dialogs
             this.apiPassword.Name = "apiPassword";
             this.apiPassword.Size = new System.Drawing.Size(97, 20);
             this.apiPassword.TabIndex = 9;
+            this.apiPassword.UseSystemPasswordChar = true;
             // 
             // label3
             // 
@@ -208,7 +218,8 @@ namespace Onero.Dialogs
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(738, 389);
+            this.startButton.Enabled = false;
+            this.startButton.Location = new System.Drawing.Point(742, 337);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 15;
@@ -218,7 +229,7 @@ namespace Onero.Dialogs
             // resultLabel
             // 
             this.resultLabel.AutoSize = true;
-            this.resultLabel.Location = new System.Drawing.Point(561, 440);
+            this.resultLabel.Location = new System.Drawing.Point(560, 342);
             this.resultLabel.Name = "resultLabel";
             this.resultLabel.Size = new System.Drawing.Size(0, 13);
             this.resultLabel.TabIndex = 4;
@@ -226,9 +237,9 @@ namespace Onero.Dialogs
             // linksGroupbox
             // 
             this.linksGroupbox.Controls.Add(this.environmentLinksItems);
-            this.linksGroupbox.Location = new System.Drawing.Point(12, 10);
+            this.linksGroupbox.Location = new System.Drawing.Point(11, 27);
             this.linksGroupbox.Name = "linksGroupbox";
-            this.linksGroupbox.Size = new System.Drawing.Size(543, 443);
+            this.linksGroupbox.Size = new System.Drawing.Size(543, 373);
             this.linksGroupbox.TabIndex = 1;
             this.linksGroupbox.TabStop = false;
             this.linksGroupbox.Text = "Pages to process";
@@ -239,14 +250,15 @@ namespace Onero.Dialogs
             this.environmentLinksItems.DetectUrls = false;
             this.environmentLinksItems.Location = new System.Drawing.Point(10, 19);
             this.environmentLinksItems.Name = "environmentLinksItems";
-            this.environmentLinksItems.Size = new System.Drawing.Size(522, 418);
+            this.environmentLinksItems.Size = new System.Drawing.Size(522, 344);
             this.environmentLinksItems.TabIndex = 1;
             this.environmentLinksItems.Text = "";
+            this.environmentLinksItems.TextChanged += new System.EventHandler(this.LinksTextChanged);
             this.environmentLinksItems.DoubleClick += new System.EventHandler(this.TextboxDoubleClick);
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(561, 430);
+            this.progressBar1.Location = new System.Drawing.Point(563, 375);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(263, 23);
             this.progressBar1.TabIndex = 5;
@@ -262,7 +274,7 @@ namespace Onero.Dialogs
             // 
             // testButton
             // 
-            this.testButton.Location = new System.Drawing.Point(662, 389);
+            this.testButton.Location = new System.Drawing.Point(666, 337);
             this.testButton.Name = "testButton";
             this.testButton.Size = new System.Drawing.Size(68, 23);
             this.testButton.TabIndex = 999;
@@ -271,84 +283,145 @@ namespace Onero.Dialogs
             this.testButton.Visible = false;
             this.testButton.Click += new System.EventHandler(this.TestClick);
             // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(132, 28);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(64, 23);
-            this.button4.TabIndex = 13;
-            this.button4.Text = "Settings";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.SettingsClick);
-            // 
-            // rulesButton
-            // 
-            this.rulesButton.Location = new System.Drawing.Point(9, 28);
-            this.rulesButton.Name = "rulesButton";
-            this.rulesButton.Size = new System.Drawing.Size(56, 23);
-            this.rulesButton.TabIndex = 11;
-            this.rulesButton.Text = "Rules";
-            this.rulesButton.UseVisualStyleBackColor = true;
-            this.rulesButton.Click += new System.EventHandler(this.SetRulesButtonClick);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(71, 28);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(55, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "Forms";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.SetFormsButtonClick);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.button2);
-            this.groupBox3.Controls.Add(this.button4);
-            this.groupBox3.Controls.Add(this.button1);
-            this.groupBox3.Controls.Add(this.rulesButton);
-            this.groupBox3.Location = new System.Drawing.Point(561, 313);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(263, 70);
-            this.groupBox3.TabIndex = 3;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Configuration";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(202, 28);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(52, 23);
-            this.button2.TabIndex = 14;
-            this.button2.Text = "About";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.AboutClick);
-            // 
             // loadLinksBackgroundWorker
             // 
             this.loadLinksBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.LoadLinksDoWork);
             this.loadLinksBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.LoadLinksCompleted);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.profilesToolStripMenuItem,
+            this.configurationToolStripMenuItem,
+            this.runToolStripMenuItem,
+            this.aboutToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(836, 24);
+            this.menuStrip1.TabIndex = 1000;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // profilesToolStripMenuItem
+            // 
+            this.profilesToolStripMenuItem.Name = "profilesToolStripMenuItem";
+            this.profilesToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+            this.profilesToolStripMenuItem.Text = "Profiles";
+            // 
+            // configurationToolStripMenuItem
+            // 
+            this.configurationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rulesToolStripMenuItem,
+            this.exportsToolStripMenuItem,
+            this.formsToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.settingsToolStripMenuItem});
+            this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
+            this.configurationToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
+            this.configurationToolStripMenuItem.Text = "Configuration";
+            // 
+            // rulesToolStripMenuItem
+            // 
+            this.rulesToolStripMenuItem.Name = "rulesToolStripMenuItem";
+            this.rulesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rulesToolStripMenuItem.Text = "Rules";
+            this.rulesToolStripMenuItem.Click += new System.EventHandler(this.Rules_Click);
+            // 
+            // exportsToolStripMenuItem
+            // 
+            this.exportsToolStripMenuItem.Enabled = false;
+            this.exportsToolStripMenuItem.Name = "exportsToolStripMenuItem";
+            this.exportsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exportsToolStripMenuItem.Text = "Exports";
+            // 
+            // formsToolStripMenuItem
+            // 
+            this.formsToolStripMenuItem.Name = "formsToolStripMenuItem";
+            this.formsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.formsToolStripMenuItem.Text = "Forms";
+            this.formsToolStripMenuItem.Click += new System.EventHandler(this.Forms_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.Settings_Click);
+            // 
+            // runToolStripMenuItem
+            // 
+            this.runToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startToolStripMenuItem,
+            this.resultsFolderToolStripMenuItem});
+            this.runToolStripMenuItem.Name = "runToolStripMenuItem";
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.runToolStripMenuItem.Text = "Run";
+            // 
+            // startToolStripMenuItem
+            // 
+            this.startToolStripMenuItem.Name = "startToolStripMenuItem";
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.startToolStripMenuItem.Text = "Start";
+            this.startToolStripMenuItem.Click += new System.EventHandler(this.Start_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutOneroToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Text = "About";
+            // 
+            // aboutOneroToolStripMenuItem
+            // 
+            this.aboutOneroToolStripMenuItem.Name = "aboutOneroToolStripMenuItem";
+            this.aboutOneroToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.aboutOneroToolStripMenuItem.Text = "About Onero";
+            this.aboutOneroToolStripMenuItem.Click += new System.EventHandler(this.About_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Enabled = false;
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // resultsFolderToolStripMenuItem
+            // 
+            this.resultsFolderToolStripMenuItem.Enabled = false;
+            this.resultsFolderToolStripMenuItem.Name = "resultsFolderToolStripMenuItem";
+            this.resultsFolderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resultsFolderToolStripMenuItem.Text = "Results folder";
+            this.resultsFolderToolStripMenuItem.Click += new System.EventHandler(this.resultsFolderToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(834, 465);
-            this.Controls.Add(this.groupBox3);
+            this.ClientSize = new System.Drawing.Size(836, 410);
             this.Controls.Add(this.testButton);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.resultLabel);
             this.Controls.Add(this.startButton);
             this.Controls.Add(this.linksGroupbox);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Onero Page Runner";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.linksGroupbox.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -371,11 +444,6 @@ namespace Onero.Dialogs
         private Label label2;
         public RichTextBox environmentLinksItems;
         private Button testButton;
-        private Button button4;
-        private Button rulesButton;
-        private Button button1;
-        private GroupBox groupBox3;
-        private Button button2;
         private Label label3;
         private TextBox apiLogin;
         private Label label1;
@@ -383,6 +451,20 @@ namespace Onero.Dialogs
         private TextBox apiPassword;
         private Button loadLinksButton;
         private System.ComponentModel.BackgroundWorker loadLinksBackgroundWorker;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem profilesToolStripMenuItem;
+        private ToolStripMenuItem configurationToolStripMenuItem;
+        private ToolStripMenuItem rulesToolStripMenuItem;
+        private ToolStripMenuItem exportsToolStripMenuItem;
+        private ToolStripMenuItem formsToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripMenuItem settingsToolStripMenuItem;
+        private ToolStripMenuItem runToolStripMenuItem;
+        private ToolStripMenuItem aboutToolStripMenuItem;
+        private ToolStripMenuItem aboutOneroToolStripMenuItem;
+        private ToolStripMenuItem helpToolStripMenuItem;
+        private ToolStripMenuItem startToolStripMenuItem;
+        private ToolStripMenuItem resultsFolderToolStripMenuItem;
     }
 }
 

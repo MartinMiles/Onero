@@ -58,7 +58,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(216, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Version 1.1       Release date: 11/Dec/2015";
+            this.label1.Text = "Version 1.2       Release date: 21/Dec/2015";
             // 
             // groupBox1
             // 

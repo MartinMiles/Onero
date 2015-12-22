@@ -2,6 +2,7 @@
 using System.Xml.Linq;
 using Onero.Loader.Interfaces;
 using Onero.Extensions;
+using Onero.Loader;
 
 namespace Onero
 {
@@ -34,9 +35,13 @@ namespace Onero
                 {
                     VerboseMode = node.BoolAttribute(VALUE_ATTRIBUTE_NAME);
                 }
-                if (node.Name == "RunInBrowser")
+                if (node.Name == "CreateErrorLog")
                 {
-                    RunInBrowser = node.BoolAttribute(VALUE_ATTRIBUTE_NAME);
+                    CreateErrorLog = node.BoolAttribute(VALUE_ATTRIBUTE_NAME);
+                }
+                if (node.Name == "Browser")
+                {
+                    Browser = node.ParseEnum<Browser>(VALUE_ATTRIBUTE_NAME);
                 }
                 if (node.Name == "Timeout")
                 {
@@ -63,7 +68,9 @@ namespace Onero
 
         public bool VerboseMode { get; set; }
 
-        public bool RunInBrowser { get; set; }
+        public bool CreateErrorLog { get; set; }
+
+        public Browser Browser { get; set; }
 
         public string OutputDirectory { get; set; }
 
@@ -87,9 +94,13 @@ namespace Onero
             verbose.SetAttributeValue("value", VerboseMode);
             root.Add(verbose);
 
-            var runInBrowser = new XElement("RunInBrowser");
-            runInBrowser.SetAttributeValue("value", RunInBrowser);
-            root.Add(runInBrowser);
+            var createErrorLog = new XElement("CreateErrorLog");
+            createErrorLog.SetAttributeValue("value", CreateErrorLog);
+            root.Add(createErrorLog);
+
+            var browser = new XElement("Browser");
+            browser.SetAttributeValue("value", Browser);
+            root.Add(browser);
 
             var outputDirectory = new XElement("OutputDirectory");
             outputDirectory.SetAttributeValue("value", OutputDirectory);

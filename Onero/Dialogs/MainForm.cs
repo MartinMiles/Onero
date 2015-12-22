@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 using Onero.Collections;
+using Onero.Extensions;
 using Onero.Loader;
+using Onero.Loader.Interfaces;
 using Onero.Loader.Results;
 
 namespace Onero.Dialogs
@@ -15,18 +19,18 @@ namespace Onero.Dialogs
     {
         #region Strings and constants
 
-
         private const string PROGRESS_COMPLETED = "Progress: completed {0} pages";
         private const string INVALID_CRAWLING_MODE = "Crawling mode not specified correctly";
 
         private const string START_BUTTON = "Start";
         private const string CANCEL_BUTTON = "Cancel";
         private const string CANCELLING_BUTTON = "Cancelling...";
+        private const string PROGRESS_LABEL = "Progress: {0} of {1}";
 
         #endregion
 
         private Loader.Loader loader;
-        private static LoaderSettings settings;
+        internal static LoaderSettings settings;
         private List<Result> results;
 
         public Dictionary<string, DisplayResult> UrlToProcess { get; private set; }
@@ -35,13 +39,18 @@ namespace Onero.Dialogs
         {
             InitializeComponent();
 
-            startButton.Enabled = true;
-            startButton.Text = START_BUTTON;
-
             InitSettings();
 
             ShowTestButton();
             SetFormName();
+            LoadLinksFromProfile();
+
+            startButton.Enabled = !string.IsNullOrWhiteSpace(environmentLinksItems.Text);
+            startButton.Text = START_BUTTON;
+
+            resultsFolderToolStripMenuItem.Enabled = Directory.Exists(settings.Profile.OutputDirectory);
+
+            DrawProfilesMenu();
         }
 
         private void SetFormName()
@@ -65,9 +74,10 @@ namespace Onero.Dialogs
         internal string CurrentProfileName
         {
             get { return settings.Profile.Name; }
+            private set { settings.Profile.Name = value; }
         }
 
-        #region Crawling Mode features
+        #region Load links features
 
         public CrawlingMode CurrentCrawlingMode
         {
@@ -111,7 +121,7 @@ namespace Onero.Dialogs
 
         #endregion
 
-        #region Loader Backgroung Worker functions
+        #region Main Background Worker
 
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         { 
@@ -124,6 +134,8 @@ namespace Onero.Dialogs
             
             results.Add(result);
 
+            resultLabel.Text = string.Format(PROGRESS_LABEL, results.Count, LinksFromTextbox.Count());
+
             environmentLinksItems.ReplaceLine(result.Url, result.IsSuccessful ? DisplayResult.Successful : DisplayResult.Failed);
 
             progressBar1.Value = e.ProgressPercentage;
@@ -133,7 +145,12 @@ namespace Onero.Dialogs
         {
             startButton.Text = START_BUTTON;
             startButton.Enabled = true;
+            startToolStripMenuItem.Text = START_BUTTON;
+            startToolStripMenuItem.Enabled = true;
+
             resultLabel.Text = string.Format(PROGRESS_COMPLETED, results.Count);
+
+            resultsFolderToolStripMenuItem.Enabled = Directory.Exists(settings.Profile.OutputDirectory);
 
             BlockUserInterfaceOnRun(false);
 
@@ -155,19 +172,30 @@ namespace Onero.Dialogs
 
             loadLinksButton.Enabled = true;
             startButton.Enabled = true;
+            startToolStripMenuItem.Enabled = true;
+            environmentLinksItems.Enabled = true;
+
             linksGroupbox.Text = string.Format("Pages to process ({0})", UrlToProcess.Count);
         }
 
         #endregion
 
-
         private void OnStartButonClick(object sender, EventArgs e)
+        {
+            Run();
+        }
+
+        private void Run()
         {
             if (startButton.Text == CANCEL_BUTTON)
             {
                 backgroundWorker.CancelAsync();
                 startButton.Text = CANCELLING_BUTTON;
                 startButton.Enabled = false;
+
+                startToolStripMenuItem.Text = CANCELLING_BUTTON;
+                startToolStripMenuItem.Enabled = false;
+
                 return;
             }
 
@@ -179,6 +207,8 @@ namespace Onero.Dialogs
                 settings.Rules = new CollectionOf<Rule>(CurrentProfileName).Read<Rule>().Where(r => r.Enabled);
                 settings.Forms = new CollectionOf<Form>(CurrentProfileName).Read<WebForm>().Where(f => f.Enabled);
                 settings.PagesToCrawl = LinksFromTextbox;
+
+                SaveLinksFile(CurrentProfileName);
 
                 loader = new Loader.Loader(settings);
 
@@ -194,7 +224,11 @@ namespace Onero.Dialogs
                 progressBar1.Step = 1;
                 progressBar1.Value = 0;
                 progressBar1.Maximum = LinksFromTextbox.Count();
+                
                 startButton.Text = CANCEL_BUTTON;
+                startToolStripMenuItem.Text = CANCEL_BUTTON;
+                resultLabel.Text = string.Format(PROGRESS_LABEL, 0, LinksFromTextbox.Count());
+
                 backgroundWorker.RunWorkerAsync();
             }
             catch (Exception exception)
@@ -276,40 +310,6 @@ namespace Onero.Dialogs
             }
         }
 
-        private void SettingsClick(object sender, EventArgs e)
-        {
-            var settingsForm = new SettingsForm { StartPosition = FormStartPosition.CenterParent };
-            settingsForm.Settings = settings;
-            if (settingsForm.ShowDialog() == DialogResult.OK)
-            {
-                settings = settingsForm.Settings;
-                SetFormName();
-            }
-        }
-
-        private void SetRulesButtonClick(object sender, EventArgs e)
-        {
-            var form = new RulesList { StartPosition = FormStartPosition.CenterParent };
-            form.CurrentProfileName = settings.Profile.Name;
-            form.ShowDialog();
-            form.Dispose();
-        }
-
-        private void SetFormsButtonClick(object sender, EventArgs e)
-        {
-            var form = new FormsList { StartPosition = FormStartPosition.CenterParent };
-            form.CurrentProfileName = settings.Profile.Name;
-            form.ShowDialog();
-            form.Dispose();
-        }
-
-        private void AboutClick(object sender, EventArgs e)
-        {
-            var form = new About { StartPosition = FormStartPosition.CenterParent };
-            form.ShowDialog();
-            form.Dispose();
-        }
-
         private void LoadLinksClick(object sender, EventArgs e)
         {
             if (!this.IsValidInit())
@@ -319,6 +319,8 @@ namespace Onero.Dialogs
             {
                 loadLinksButton.Enabled = false;
                 startButton.Enabled = false;
+                startToolStripMenuItem.Enabled = false;
+                environmentLinksItems.Enabled = false;
 
                 loadLinksBackgroundWorker.RunWorkerAsync();                
             }
@@ -347,10 +349,75 @@ namespace Onero.Dialogs
             radioButtonSitemap.Enabled = !isBlocked;
             radioButtonWebAPI.Enabled = !isBlocked;
 
-            resultLabel.Visible = !isBlocked;
+            //resultLabel.Visible = !isBlocked;
 
             progressBar1.Visible = isBlocked;
             loadLinksButton.Enabled = !isBlocked;
+        }
+
+        #region Store links with profile
+
+        private string GetLinksFileName(string profileName)
+        {
+            return CollectionOf<string>.GetFilePath(profileName, "links");
+        }
+
+        private void LoadLinksFromProfile()
+        {
+            var links = new List<string>();
+
+            if (File.Exists(GetLinksFileName(CurrentProfileName)))
+            {
+                try
+                {
+                    var doc = new XmlDocument();
+                    doc.Load(GetLinksFileName(CurrentProfileName));
+
+                    foreach (XmlNode node in doc.DocumentElement.ChildNodes)
+                    {
+                        if (node.Attributes["url"] != null)
+                        {
+                            links.Add(node.Attributes["url"].Value);
+                        }
+                    }
+                }
+                catch (XmlException)
+                {
+                }
+            }
+
+            environmentLinksItems.Text = string.Join("\n", links);
+        }
+
+        private void SaveLinksFile(string profileName)
+        {
+            var items = environmentLinksItems.Text.Trim().Split('\n');
+
+            var doc = new XDocument();
+            var root = new XElement("items");
+            doc.Add(root);
+
+            foreach (string url in items)
+            {
+                var linkElement = new XElement("link");
+                linkElement.SetAttributeValue("url", url);
+                root.Add(linkElement);
+            }
+
+            doc.Save(GetLinksFileName(profileName));
+        }
+
+        private void MainFormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveLinksFile(CurrentProfileName);
+        }
+
+        #endregion
+
+        private void LinksTextChanged(object sender, EventArgs e)
+        {
+            startButton.Enabled = !string.IsNullOrWhiteSpace(environmentLinksItems.Text);
+            startToolStripMenuItem.Enabled = startButton.Enabled;
         }
 
         private void TestClick(object sender, EventArgs e)
@@ -391,6 +458,117 @@ namespace Onero.Dialogs
 
             //    }
             //};
+        }
+
+        #region Menu items
+
+        
+
+        private void DrawProfilesMenu()
+        {
+            var profiles = new BindingList<Profile>(Profiles.Read());
+
+            profilesToolStripMenuItem.DropDownItems.Clear();
+
+            foreach (var profile in profiles)
+            {
+                var item = new ToolStripMenuItem { Name = profile.Name, Text = profile.Name, Checked = profiles.EnabledOrDefault().Name == profile.Name };
+                item.Click += ProfileSelected;
+                profilesToolStripMenuItem.DropDownItems.Add(item);
+            }
+        }
+
+        private void ProfileSelected(object sender, EventArgs e)
+        {
+            var menuItem = sender as ToolStripMenuItem;
+
+            if (menuItem == null)
+            {
+                return;
+            }
+
+            var previousProfileName = CurrentProfileName;
+            SaveLinksFile(previousProfileName);
+
+            var profiles = new BindingList<Profile>(Profiles.Read());
+            profiles.EnableProfile(profiles.First(p => p.Name == menuItem.Name));
+            CurrentProfileName = menuItem.Name;
+            Profiles.Save(profiles);
+
+            SetFormName();
+            LoadLinksFromProfile();
+            DrawProfilesMenu();
+        }
+
+        private void Settings_Click(object sender, EventArgs e)
+        {
+            var settingsForm = new SettingsForm { StartPosition = FormStartPosition.CenterParent };
+            settingsForm.Settings = settings;
+
+            var previousProfileName = CurrentProfileName;
+
+            if (settingsForm.ShowDialog() == DialogResult.OK)
+            {
+                settings = settingsForm.Settings;
+                SetFormName();
+
+                if (previousProfileName != CurrentProfileName)
+                {
+                    var profiles = new BindingList<Profile>(Profiles.Read());
+
+                    profiles.EnableProfile(profiles.First(p => p.Name == CurrentProfileName));
+                    Profiles.Save(profiles);
+
+                    SaveLinksFile(previousProfileName);
+
+                    LoadLinksFromProfile();
+                    DrawProfilesMenu();
+                }
+
+                resultsFolderToolStripMenuItem.Enabled = Directory.Exists(settings.Profile.OutputDirectory);
+            }
+        }
+
+        private void Rules_Click(object sender, EventArgs e)
+        {
+            var form = new RulesList { StartPosition = FormStartPosition.CenterParent };
+            form.CurrentProfileName = settings.Profile.Name;
+            form.ShowDialog();
+            form.Dispose();
+        }
+
+        private void Forms_Click(object sender, EventArgs e)
+        {
+            var form = new FormsList { StartPosition = FormStartPosition.CenterParent };
+            form.CurrentProfileName = settings.Profile.Name;
+            form.ShowDialog();
+            form.Dispose();
+        }
+
+        private void About_Click(object sender, EventArgs e)
+        {
+            var form = new About { StartPosition = FormStartPosition.CenterParent };
+            form.ShowDialog();
+            form.Dispose();
+        }
+
+        private void Start_Click(object sender, EventArgs e)
+        {
+            Run();
+        }
+
+        #endregion
+
+        private void resultsFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Directory.Exists(settings.Profile.OutputDirectory))
+            {
+                Process.Start(settings.Profile.OutputDirectory);
+            }
+            else
+            {
+                // MessageBox.Show(RESULT_FOLDER_MISSING);
+            }
         }
     }
 }

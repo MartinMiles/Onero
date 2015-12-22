@@ -15,8 +15,8 @@ namespace Onero.Loader.Results
         {
             get
             {
-                bool allRules = RuleResults.All(r=>r.Value == ResultCode.Successfull);
-                bool allForms = FormResults.All(r=>r.Value == ResultCode.Successfull);
+                bool allRules = RuleResults.All(r=>r.Value == ResultCode.Successful);
+                bool allForms = FormResults.All(r=>r.Value == ResultCode.Successful);
 
                 return allRules && allForms;
             }

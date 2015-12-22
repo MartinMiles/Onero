@@ -13,7 +13,7 @@ namespace Onero.Loader.Actions
     {
         private readonly Dictionary<WebForm, ResultCode> result;
 
-        public FormSubmitAction(RemoteWebDriver driver, LoaderSettings settings) : base(driver, settings)
+        public FormSubmitAction(IWebDriver driver, LoaderSettings settings) : base(driver, settings)
         {
             result = new Dictionary<WebForm, ResultCode>();
         }
@@ -44,20 +44,27 @@ namespace Onero.Loader.Actions
 
                                 if (!string.IsNullOrEmpty(pageForm.SubmitId))
                                 {
+
                                     var element = driver.FindElement(BySelector(pageForm.SubmitId));
+                                    driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(60));                                    
                                     element.Click();
                                 }
 
                                 if (pageForm.ResultParameters.ResultType == FormResultType.Redirect)
                                 {
+
                                     var regexResultUrl = new Regex(pageForm.ResultParameters.Url.Trim('/'), RegexOptions.IgnoreCase);
 
-                                    resultCode = regexResultUrl.IsMatch(driver.Url) ? ResultCode.Successfull : ResultCode.RedirectUrlMismatch;
+                                    resultCode = regexResultUrl.IsMatch(driver.Url) ? ResultCode.Successful : ResultCode.RedirectUrlMismatch;
 
                                     // also need to make sure url did not chage
-                                    if (resultCode == ResultCode.Successfull)
+                                    if (resultCode == ResultCode.Successful)
                                     {
                                         driver.Navigate().Back();
+                                    }
+                                    else
+                                    {
+                                        //var k = driver.Url;
                                     }
                                 }
                                 else if (pageForm.ResultParameters.ResultType == FormResultType.Message)
@@ -66,7 +73,7 @@ namespace Onero.Loader.Actions
 
                                     var element = driver.FindElement(BySelector(pageForm.ResultParameters.Id));
                                     var regex = new Regex(pageForm.ResultParameters.Message, RegexOptions.IgnoreCase);
-                                    resultCode = regex.IsMatch(element.Text) ? ResultCode.Successfull : ResultCode.ElementNotFound;
+                                    resultCode = regex.IsMatch(element.Text) ? ResultCode.Successful : ResultCode.ElementNotFound;
 
                                     if(!string.IsNullOrWhiteSpace(pageForm.ResultParameters.Url) && driver.Url.Trim('/').ToLower() != pageForm.ResultParameters.Url.ToLower().Trim('/'))
                                     {

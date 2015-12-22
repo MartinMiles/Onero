@@ -10,36 +10,37 @@ namespace Onero.Collections
     {
         public const string DEFAULT_PROFILE_NAME = "Default";
         public const string PROFILE_SETTINGS_FILENAME = "Settings.xml";
+        public const string SETTINGS_DIRECTORY = "Settings";
 
-        public static string SettingsDirectory
-        {
-            get { return string.Format("{0}Settings", PathPrefix); }
-        }
+        //public static string SettingsDirectory
+        //{
+        //    get { return string.Format("{0}Settings", PathPrefix); }
+        //}
 
-        private static string PathPrefix
-        {
-            get
-            {
-                string prefix = String.Empty;
+        //private static string PathPrefix
+        //{
+        //    get
+        //    {
+        //        string prefix = String.Empty;
 
-                #if (DEBUG)
-                    prefix = "..\\..\\";
-                #endif
+        //        #if (DEBUG)
+        //            prefix = "..\\..\\";
+        //        #endif
 
-                return prefix;
-            }
-        }
+        //        return prefix;
+        //    }
+        //}
 
         public static IProfile Current
         {
-            get { return Read().First(p => p.Enabled); }
+            get { return EnabledOrDefault(Read()); }
         }
 
         public static List<Profile> Read()
         {
             var profiles = new List<Profile>();
 
-            var profileDirectories = Directory.GetDirectories(SettingsDirectory);
+            var profileDirectories = Directory.GetDirectories(SETTINGS_DIRECTORY);
 
             if (profileDirectories.Length > 0)
             {
@@ -62,7 +63,7 @@ namespace Onero.Collections
         {
             foreach (Profile profile in profiles)
             {
-                var directory = string.Format("{0}\\{1}", SettingsDirectory, profile.Name);
+                var directory = string.Format("{0}\\{1}", SETTINGS_DIRECTORY, profile.Name);
 
                 if (!Directory.Exists(directory))
                 {
@@ -72,6 +73,19 @@ namespace Onero.Collections
                 var filename = string.Format("{0}\\{1}", directory, PROFILE_SETTINGS_FILENAME);
                 profile.Save(filename);
             }
+        }
+
+        public static Profile EnabledOrDefault(IEnumerable<Profile> profiles)
+        {
+            var enabled = profiles.FirstOrDefault(p => p.Enabled);
+            var _default = profiles.FirstOrDefault(p => p.Name == DEFAULT_PROFILE_NAME);
+
+            if (enabled == null && _default == null)
+            {
+                throw new ArgumentException("There is no default setting profile. Unable to run.");
+            }
+
+            return enabled ?? _default;
         }
     }
 }

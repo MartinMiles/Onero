@@ -60,6 +60,10 @@ namespace Onero.Dialogs
             {
                 rules = rules.Where(r => r != rule);
             }
+            else
+            {
+                return;
+            }
 
             DrawRulesList();
 

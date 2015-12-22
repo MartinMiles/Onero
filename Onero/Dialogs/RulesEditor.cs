@@ -20,12 +20,10 @@ namespace Onero.Dialogs
 
         private void SaveClick(object sender, EventArgs e)
         {
-            if (!this.IsValid())
+            if (this.IsValid())
             {
-                return;
+                DialogResult = DialogResult.OK;
             }
-
-            DialogResult = DialogResult.OK;
         }
 
         private void DeleteClick(object sender, EventArgs e)

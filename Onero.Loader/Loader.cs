@@ -4,17 +4,12 @@ using System.Diagnostics;
 using Onero.Loader.Actions;
 using Onero.Loader.Results;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.PhantomJS;
-using OpenQA.Selenium.Remote;
 
 namespace Onero.Loader
 {
     public class Loader
     {
         private readonly LoaderSettings settings;
-        private const string ABOUT_BLANK = "about:blank";
 
         #region Constructors
 
@@ -29,50 +24,6 @@ namespace Onero.Loader
 
         #endregion
 
-        #region Selenium properties
-
-        private RemoteWebDriver _driver;
-
-        public RemoteWebDriver Driver
-        {
-            get
-            {
-                FirefoxProfile profile = new FirefoxProfile();
-                profile.SetPreference("browser.startup.homepage", ABOUT_BLANK);
-                profile.SetPreference("startup.homepage_welcome_url", ABOUT_BLANK);
-                profile.SetPreference("startup.homepage_welcome_url.additional", ABOUT_BLANK);
-
-                return _driver ?? (_driver = settings.Profile.RunInBrowser ? (RemoteWebDriver)new FirefoxDriver(profile) : PhantomDriver);
-            }
-        }
-
-        public RemoteWebDriver ChromeDriver
-        {
-            get
-            {
-                ChromeOptions profile = new ChromeOptions();
-                //profile.SetPreference("browser.startup.homepage", ABOUT_BLANK);
-                //profile.SetPreference("startup.homepage_welcome_url", ABOUT_BLANK);
-                //profile.SetPreference("startup.homepage_welcome_url.additional", ABOUT_BLANK);
-
-                return _driver ?? (_driver = settings.Profile.RunInBrowser ? (RemoteWebDriver)new ChromeDriver(profile) : PhantomDriver);
-            }
-        }
-
-        private PhantomJSDriver PhantomDriver
-        {
-            get
-            {
-                var driverService = PhantomJSDriverService.CreateDefaultService();
-                driverService.HideCommandPromptWindow = true;
-                return new PhantomJSDriver(driverService);                
-            }
-        }
-
-        #endregion
-
-
-
         public void Start(BackgroundWorker backgroundWorker)
         {
             try
@@ -81,7 +32,7 @@ namespace Onero.Loader
 
                 settings.CleanOutputDirectory();
 
-                using (var driver = Driver)
+                using (IWebDriver driver = new DriverFactory(settings.Profile).Driver)
                 {
                     driver.Manage().Timeouts().SetPageLoadTimeout(new TimeSpan(0, 0, settings.Profile.Timeout));
 
@@ -118,7 +69,7 @@ namespace Onero.Loader
                             var formsAction = new FormSubmitAction(driver, settings);
                             _newResult.FormResults = formsAction.Execute();
 
-                            _newResult.PageResult = ResultCode.Successfull;
+                            _newResult.PageResult = ResultCode.Successful;
                         }
                         catch (WebDriverException e)
                         {
@@ -136,7 +87,10 @@ namespace Onero.Loader
             }
             catch (Exception e)
             {
-                Logger.Log(e);
+                if (settings.Profile.CreateErrorLog)
+                {
+                    Logger.Log(e);
+                }
             }
         }
     }

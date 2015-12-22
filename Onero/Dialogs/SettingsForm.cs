@@ -31,17 +31,32 @@ namespace Onero.Dialogs
         {
             profiles = new BindingList<Profile>(Profiles.Read());
 
+            SetBrowserCombobox();
             SetProfileCombobox();
             SetForm();
+        }
+
+        private void SetBrowserCombobox()
+        {
+            foreach (Browser item in Enum.GetValues(typeof (Browser)))
+            {
+                // currently only first 2 browsers from the enum
+                if ((int)item < 3)
+                {
+                    browserCombobox.Items.Add(item.GetDescription());
+                }
+            }
         }
 
         private void SetForm()
         {
             createScreenshots.Checked = CurrentProfile.CreateScreenshots;
             verbose.Checked = CurrentProfile.VerboseMode;
-            showFirefox.Checked = CurrentProfile.RunInBrowser;
-            outputPath.Text = CurrentProfile.OutputDirectory;                      //TODO: revise here
+            createErrorLog.Checked = CurrentProfile.CreateErrorLog;
+            outputPath.Text = CurrentProfile.OutputDirectory;
             timeOut.Text = CurrentProfile.Timeout.ToString();
+
+            browserCombobox.SelectedItem = CurrentProfile.Browser.GetDescription();
         }
 
         private static string DefaultOutputPath
@@ -50,9 +65,9 @@ namespace Onero.Dialogs
             {
                 string directory = Environment.CurrentDirectory;
 
-                #if (DEBUG)
-                    directory = Directory.GetParent(directory).ToString();
-                #endif
+                //#if (DEBUG)
+                //    directory = Directory.GetParent(directory).ToString();
+                //#endif
 
                 return string.Format("{0}\\{1}", directory, RESULTS_DIRECTORY);
             }
@@ -92,12 +107,12 @@ namespace Onero.Dialogs
 
             CurrentProfile.Timeout = timeOut.Text.Parse(0);
             CurrentProfile.OutputDirectory = outputPath.Text.Trim();
-            CurrentProfile.RunInBrowser = showFirefox.Checked;
             CurrentProfile.VerboseMode = verbose.Checked;
+            CurrentProfile.CreateErrorLog = createErrorLog.Checked;
             CurrentProfile.CreateScreenshots = createScreenshots.Checked;
-            
-            EnableProfile(CurrentProfile);
+            CurrentProfile.Browser = SelectedBrowser;
 
+            profiles.EnableProfile(CurrentProfile);
             Profiles.Save(profiles);
 
             if (!isExistingProfile)
@@ -155,20 +170,12 @@ namespace Onero.Dialogs
         {
             deleteProfileButton.Enabled = CurrentProfile != DefaultProfile;
 
-            EnableProfile(CurrentProfile);
+            profiles.EnableProfile(CurrentProfile);
 
             SetForm();
         }
 
-        private void EnableProfile(Profile profileToEnable)
-        {
-            foreach (var profile in profiles)
-            {
-                profile.Enabled = false;
-            }
 
-            profileToEnable.Enabled = true;            
-        }
 
         private void AddProfileClick(object sender, EventArgs e)
         {
@@ -186,7 +193,7 @@ namespace Onero.Dialogs
             };
 
             profiles.Add(newProfile);
-            EnableProfile(newProfile);
+            profiles.EnableProfile(newProfile);
 
             SetProfileCombobox();
 
@@ -196,7 +203,7 @@ namespace Onero.Dialogs
 
         private void DeleteProfileClick(object sender, EventArgs e)
         {
-            string derectoryName = string.Format("{0}\\{1}", Profiles.SettingsDirectory, CurrentProfile.Name);
+            string derectoryName = string.Format("{0}\\{1}", Profiles.SETTINGS_DIRECTORY, CurrentProfile.Name);
             if (Directory.Exists(derectoryName))
             {
                 Directory.Delete(derectoryName, true);
@@ -212,6 +219,20 @@ namespace Onero.Dialogs
         private void NewProfileTextChanged(object sender, EventArgs e)
         {
             addProfileButton.Enabled = !string.IsNullOrWhiteSpace(newProfileName.Text);
+        }
+
+        private Browser SelectedBrowser
+        {
+            get
+            {
+                switch (browserCombobox.SelectedIndex)
+                {
+                    case 0 : return Browser.BrowserHidden;
+                    case 1 : return Browser.Firefox;
+                }
+
+                throw new NotImplementedException("Browser not supported");
+            }
         }
     }
 }

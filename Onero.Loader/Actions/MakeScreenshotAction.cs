@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing.Imaging;
 using System.IO;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 
 namespace Onero.Loader.Actions
@@ -11,7 +12,7 @@ namespace Onero.Loader.Actions
 
         public int Order { get; set; }
 
-        public MakeScreenshotAction(RemoteWebDriver driver, LoaderSettings settings) : base(driver, settings)
+        public MakeScreenshotAction(IWebDriver driver, LoaderSettings settings) : base(driver, settings)
         {
         } 
 
@@ -26,9 +27,12 @@ namespace Onero.Loader.Actions
             }
 
             string fileFullPath = string.Format("{0}\\Screenshots\\{1}.jpg", settings.Profile.OutputDirectory, Order);
-            driver.GetScreenshot().SaveAsFile(fileFullPath, ImageFormat.Png);
+            if (driver is RemoteWebDriver)
+            {
+                (driver as RemoteWebDriver).GetScreenshot().SaveAsFile(fileFullPath, ImageFormat.Png);
 
-            LogUrl(string.Format("{0}. {1}{2}", Order, driver.Url, Environment.NewLine));
+                LogUrl(string.Format("{0}. {1}{2}", Order, driver.Url, Environment.NewLine));
+            }
 
             return null;
         }

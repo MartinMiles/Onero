@@ -2,7 +2,7 @@
 {
     public enum ResultCode
     {
-        Successfull = 200,
+        Successful = 200,
         NoJquery,
         RuleFailed,
         RuleParseError,

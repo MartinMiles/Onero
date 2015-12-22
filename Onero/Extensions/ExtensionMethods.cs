@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Reflection;
 using System.Xml;
+using Onero.Collections;
 
 namespace Onero.Extensions
 {
@@ -23,6 +25,16 @@ namespace Onero.Extensions
             }
 
             return false;
+        }
+
+        internal static T ParseEnum<T>(this XmlNode node, string attributeName)
+        {
+            if (node.Attributes[attributeName] != null)
+            {
+                return (T)Enum.Parse(typeof(T), node.Attributes[attributeName].Value, true);
+            }
+
+            return default(T);
         }
 
         internal static int IntAttribute(this XmlNode node, string attributeName)
@@ -68,6 +80,43 @@ namespace Onero.Extensions
             }
 
             return defaultValue;
+        }
+
+        public static string GetDescription<T>(this T enumerationValue) where T : struct
+        {
+            Type type = enumerationValue.GetType();
+            if (!type.IsEnum)
+            {
+                throw new ArgumentException("EnumerationValue must be of Enum type", "enumerationValue");
+            }
+
+            MemberInfo[] memberInfo = type.GetMember(enumerationValue.ToString());
+            if (memberInfo != null && memberInfo.Length > 0)
+            {
+                object[] attrs = memberInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+                if (attrs != null && attrs.Length > 0)
+                {
+                    return ((DescriptionAttribute)attrs[0]).Description;
+                }
+            }
+            return enumerationValue.ToString();
+
+        }
+
+        public static void EnableProfile(this BindingList<Profile> profiles, Profile profileToEnable)
+        {
+            foreach (var profile in profiles)
+            {
+                profile.Enabled = false;
+            }
+
+            profileToEnable.Enabled = true;            
+        }
+
+        public static Profile EnabledOrDefault(this BindingList<Profile> profiles)
+        {
+            return Profiles.EnabledOrDefault(profiles);
         }
     }
 }

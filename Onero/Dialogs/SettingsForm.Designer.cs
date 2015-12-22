@@ -36,12 +36,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.timeOut = new System.Windows.Forms.TextBox();
-            this.showFirefox = new System.Windows.Forms.CheckBox();
             this.verbose = new System.Windows.Forms.CheckBox();
             this.createScreenshots = new System.Windows.Forms.CheckBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.createErrorLog = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.browserCombobox = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.cancelButton = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.deleteProfileButton = new System.Windows.Forms.Button();
@@ -97,7 +99,7 @@
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(85, 23);
             this.browseButton.TabIndex = 2;
-            this.browseButton.Text = "Change path";
+            this.browseButton.Text = "Change folder";
             this.browseButton.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.browseButton.UseVisualStyleBackColor = true;
             this.browseButton.Click += new System.EventHandler(this.ChangeButtonClick);
@@ -135,16 +137,6 @@
             this.timeOut.TabIndex = 8;
             this.timeOut.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // showFirefox
-            // 
-            this.showFirefox.AutoSize = true;
-            this.showFirefox.Location = new System.Drawing.Point(8, 72);
-            this.showFirefox.Name = "showFirefox";
-            this.showFirefox.Size = new System.Drawing.Size(142, 17);
-            this.showFirefox.TabIndex = 7;
-            this.showFirefox.Text = "Show Firefox (if installed)";
-            this.showFirefox.UseVisualStyleBackColor = true;
-            // 
             // verbose
             // 
             this.verbose.AutoSize = true;
@@ -171,7 +163,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(179, 323);
+            this.saveButton.Location = new System.Drawing.Point(179, 335);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 9;
@@ -181,31 +173,61 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.createErrorLog);
             this.groupBox1.Controls.Add(this.createScreenshots);
             this.groupBox1.Controls.Add(this.verbose);
-            this.groupBox1.Controls.Add(this.showFirefox);
             this.groupBox1.Location = new System.Drawing.Point(11, 217);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(161, 100);
+            this.groupBox1.Size = new System.Drawing.Size(161, 112);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Binary switches";
             // 
+            // createErrorLog
+            // 
+            this.createErrorLog.AutoSize = true;
+            this.createErrorLog.Location = new System.Drawing.Point(8, 71);
+            this.createErrorLog.Name = "createErrorLog";
+            this.createErrorLog.Size = new System.Drawing.Size(98, 17);
+            this.createErrorLog.TabIndex = 7;
+            this.createErrorLog.Text = "Create error log";
+            this.createErrorLog.UseVisualStyleBackColor = true;
+            // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.browserCombobox);
+            this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.timeOut);
             this.groupBox2.Location = new System.Drawing.Point(179, 217);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(154, 100);
+            this.groupBox2.Size = new System.Drawing.Size(154, 112);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Other";
             // 
+            // browserCombobox
+            // 
+            this.browserCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.browserCombobox.FormattingEnabled = true;
+            this.browserCombobox.Location = new System.Drawing.Point(9, 75);
+            this.browserCombobox.Name = "browserCombobox";
+            this.browserCombobox.Size = new System.Drawing.Size(128, 21);
+            this.browserCombobox.TabIndex = 32;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 59);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(81, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Run in browser:";
+            // 
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(258, 323);
+            this.cancelButton.Location = new System.Drawing.Point(258, 335);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 10;
@@ -271,7 +293,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(345, 355);
+            this.ClientSize = new System.Drawing.Size(345, 366);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.cancelButton);
@@ -302,7 +324,6 @@
         public System.Windows.Forms.TextBox timeOut;
         private System.Windows.Forms.Button deleteResultsButton;
         private System.Windows.Forms.Button openFolderButton;
-        private System.Windows.Forms.CheckBox showFirefox;
         private System.Windows.Forms.CheckBox verbose;
         private System.Windows.Forms.Button browseButton;
         public System.Windows.Forms.TextBox outputPath;
@@ -317,5 +338,8 @@
         private System.Windows.Forms.ComboBox profileCombobox;
         private System.Windows.Forms.Button deleteProfileButton;
         public System.Windows.Forms.TextBox newProfileName;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox browserCombobox;
+        private System.Windows.Forms.CheckBox createErrorLog;
     }
 }

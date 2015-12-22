@@ -12,7 +12,9 @@
 
         bool VerboseMode { get; set; }
 
-        bool RunInBrowser { get; set; }
+        bool CreateErrorLog { get; set; }
+
+        Browser Browser { get; set; }
 
         string OutputDirectory { get; set; }
     }

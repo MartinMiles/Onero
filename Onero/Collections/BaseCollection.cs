@@ -11,7 +11,7 @@ namespace Onero.Collections
 {
     public class CollectionOf<T>
     {
-        private const string FILE_PATH = "{0}Settings\\{1}\\{2}.xml";
+        private const string FILE_PATH = "Settings\\{0}\\{1}.xml";
 
         private readonly string profileName;
         private readonly string fileName;
@@ -44,23 +44,14 @@ namespace Onero.Collections
             return (T)Activator.CreateInstance(typeof(T), node);
         }
 
-        private static string PathPrefix
+        internal static string GetFilePath(string profileName, string fileNameWithoutExtension)
         {
-            get
-            {
-                string prefix = String.Empty;
-
-                #if (DEBUG)
-                    prefix = "..\\..\\";
-                #endif
-
-                return prefix;
-            }
+            return string.Format(FILE_PATH, profileName, fileNameWithoutExtension);
         }
 
         internal string FilePath
         {
-            get { return string.Format(FILE_PATH, PathPrefix, profileName, fileName); }
+            get { return GetFilePath(profileName, fileName); }
         }
 
         public void Create<T>()

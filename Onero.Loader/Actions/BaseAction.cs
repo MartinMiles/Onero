@@ -1,4 +1,4 @@
-﻿using OpenQA.Selenium.Remote;
+﻿using OpenQA.Selenium;
 
 namespace Onero.Loader.Actions
 {
@@ -9,10 +9,10 @@ namespace Onero.Loader.Actions
 
     public abstract class BaseAction : IAction
     {
-        protected RemoteWebDriver driver;
+        protected IWebDriver driver;
         protected LoaderSettings settings;
 
-        protected BaseAction(RemoteWebDriver driver, LoaderSettings settings)
+        protected BaseAction(IWebDriver driver, LoaderSettings settings)
         {
             this.driver = driver;
             this.settings = settings;

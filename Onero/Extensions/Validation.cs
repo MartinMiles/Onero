@@ -56,6 +56,8 @@ namespace Onero
         private const string COFIRMATION_REQURIED = "Confirmation requried";
         private const string LOOSE_SELECTOR = "At least one of selectors on this form does not start with '.' or '#'. Is that correct?";
 
+        private const string OUTPUT_DIRECTORY_UNDEFINED = "Output directory is undefined. Navigate to Configuration -> Settings to set it.";
+
         #endregion
 
         public static bool IsValid(this SettingsForm formEditor)
@@ -208,6 +210,12 @@ namespace Onero
             if (!File.Exists(formsFilePath))
             {
                 MessageBox.Show(string.Format(FORMS_FILE_NOT_EXISTS_AT, formsFilePath), ERROR);
+                return false;
+            }
+
+            if (MainForm.settings.Profile.OutputDirectory == null)
+            {
+                MessageBox.Show(OUTPUT_DIRECTORY_UNDEFINED, ERROR);
                 return false;
             }
 

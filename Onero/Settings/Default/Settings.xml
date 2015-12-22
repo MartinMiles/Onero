@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<profile>
+<profile enabled="true">
   <Screenshots value="true" />
   <VerboseMode value="true" />
-  <RunInBrowser value="true" />
-  <OutputDirectory value="E:\Projects\Onero\Onero\bin\Results\Default" />
+  <CreateErrorLog value="true" />
+  <Browser value="BrowserHidden" />
   <Timeout value="60" />
 </profile>

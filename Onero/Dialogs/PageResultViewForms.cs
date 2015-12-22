@@ -36,7 +36,7 @@ namespace Onero.Dialogs
         private void FillRichTextBox<T>(RichTextBox box, Dictionary<T, ResultCode> displayResults) where T : INameable
         {
             var displayResultsRule = displayResults.ToDictionary(r => string.Format("{0} - {1}", r.Key.Name, r.Value),
-                r => r.Value == ResultCode.Successfull ? DisplayResult.Successful : DisplayResult.Failed);
+                r => r.Value == ResultCode.Successful ? DisplayResult.Successful : DisplayResult.Failed);
 
             box.FillValuesWithColor(displayResultsRule);
         }

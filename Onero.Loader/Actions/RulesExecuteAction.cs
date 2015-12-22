@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Onero.Loader.Results;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 
 namespace Onero.Loader.Actions
@@ -9,7 +10,7 @@ namespace Onero.Loader.Actions
     {
         private readonly Dictionary<Rule, ResultCode> result;
 
-        public RulesExecuteAction(RemoteWebDriver driver, LoaderSettings settings) : base(driver, settings)
+        public RulesExecuteAction(IWebDriver driver, LoaderSettings settings) : base(driver, settings)
         {
             result = new Dictionary<Rule, ResultCode>();
         }
@@ -27,9 +28,12 @@ namespace Onero.Loader.Actions
 
                 try
                 {
-                    string condition = rule.Condition.StartsWith("return") ? rule.Condition : string.Format("return {0}", rule.Condition);
-                    var returnedJSobject = driver.ExecuteScript(condition);
-                    resultCode = ValidateRule(returnedJSobject) ? ResultCode.Successfull : ResultCode.RuleFailed;
+                    if (driver is RemoteWebDriver)
+                    {
+                        string condition = rule.Condition.StartsWith("return") ? rule.Condition : string.Format("return {0}", rule.Condition);
+                        var returnedJSobject = (driver as RemoteWebDriver).ExecuteScript(condition);
+                        resultCode = ValidateRule(returnedJSobject) ? ResultCode.Successful : ResultCode.RuleFailed;
+                    }
                 }
                 catch (InvalidOperationException e)
                 {
