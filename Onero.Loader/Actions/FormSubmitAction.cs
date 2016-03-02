@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Web;
 using Onero.Loader.Results;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
 
 namespace Onero.Loader.Actions
 {
@@ -33,6 +33,7 @@ namespace Onero.Loader.Actions
                         if (regexUrl.IsMatch(currentUrl))
                         {
                             var resultCode = ResultCode.NotFinished;
+                            var artefact = String.Empty;
 
                             try
                             {
@@ -52,10 +53,23 @@ namespace Onero.Loader.Actions
 
                                 if (pageForm.ResultParameters.ResultType == FormResultType.Redirect)
                                 {
-
                                     var regexResultUrl = new Regex(pageForm.ResultParameters.Url.Trim('/'), RegexOptions.IgnoreCase);
 
-                                    resultCode = regexResultUrl.IsMatch(driver.Url) ? ResultCode.Successful : ResultCode.RedirectUrlMismatch;
+                                    //TODO: Refactor this to somehing properly handling redirect - while URL not changes instead of
+                                    int i = 0;
+                                    var oldUrl = driver.Url.TrimEnd('/');
+                                    while (i <= settings.Profile.Timeout * 10 && oldUrl == driver.Url.TrimEnd('/'))
+                                    {
+                                        Thread.Sleep(100);
+                                        i++;
+                                    }
+
+                                    resultCode = regexResultUrl.IsMatch(driver.Url.TrimEnd('/')) ? ResultCode.Successful : ResultCode.RedirectUrlMismatch;
+                                    //if (resultCode == ResultCode.RedirectUrlMismatch)
+                                    //{
+                                    //    artefact = driver.Url.TrimEnd('/');
+                                    //}
+
 
                                     // also need to make sure url did not chage
                                     if (resultCode == ResultCode.Successful)

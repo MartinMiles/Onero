@@ -56,7 +56,7 @@ namespace Onero
                         string link = locNode != null ? locNode.InnerText : "";
 
                         // Add to our string builder.
-                        urls.Add(link);
+                        urls.Add(link.Trim());
                     }
                 }
             }

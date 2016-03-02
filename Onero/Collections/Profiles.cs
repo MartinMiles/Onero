@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
+using System.Xml;
 using Onero.Loader.Interfaces;
 
 namespace Onero.Collections
@@ -48,7 +50,7 @@ namespace Onero.Collections
                 {
                     var currentDirectory = new DirectoryInfo(profileDirectory);
                     string file = string.Format("{0}\\{1}", profileDirectory, PROFILE_SETTINGS_FILENAME);
-                    profiles.Add(new Profile(currentDirectory.Name, file));
+                        profiles.Add(new Profile(currentDirectory.Name, file));
                 }
             }
             else

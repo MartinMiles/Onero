@@ -1,2 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<items />
+<items>
+  <form name="Login form" enabled="true">
+    <url>login</url>
+    <fields>
+      <field id="#UserName">VITPLNU-1200658084</field>
+      <field id="#Password">Password@1</field>
+    </fields>
+    <submit id="#login" />
+    <result type="redirect">
+      <url>www.on2pp1.co.uk/$</url>
+    </result>
+  </form>  
+</items>

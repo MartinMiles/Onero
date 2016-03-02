@@ -10,7 +10,6 @@ using System.Xml.Linq;
 using Onero.Collections;
 using Onero.Extensions;
 using Onero.Loader;
-using Onero.Loader.Interfaces;
 using Onero.Loader.Results;
 
 namespace Onero.Dialogs
@@ -35,11 +34,11 @@ namespace Onero.Dialogs
 
         public Dictionary<string, DisplayResult> UrlToProcess { get; private set; }
 
-        public MainForm()
+        public MainForm(LoaderSettings _settings)
         {
             InitializeComponent();
-
-            InitSettings();
+            
+            settings = _settings;
 
             ShowTestButton();
             SetFormName();
@@ -63,12 +62,6 @@ namespace Onero.Dialogs
             #if (DEBUG)
                 testButton.Visible = true;
             #endif
-        }
-
-        private void InitSettings()
-        {
-            // set initial defaults below
-            settings = new LoaderSettings { Profile = Profiles.Current };
         }
 
         internal string CurrentProfileName
@@ -106,7 +99,7 @@ namespace Onero.Dialogs
         {
             switch (CurrentCrawlingMode)
             {
-                case CrawlingMode.Sitemap: return new SitemapClient(string.Format("{0}/{1}", sitemapHost.Text, sitemapFilename.Text));
+                case CrawlingMode.Sitemap: return new SitemapClient($"{sitemapHost.Text}/{sitemapFilename.Text}");
                 case CrawlingMode.WebAPI: return new WebApiClient(apiEndpoint.Text, apiLogin.Text, apiPassword.Text);
                 case CrawlingMode.Manual: return new EmptyClient(environmentLinksItems.Text);
             }
@@ -114,10 +107,7 @@ namespace Onero.Dialogs
             throw new ArgumentOutOfRangeException(INVALID_CRAWLING_MODE);
         }
 
-        private IEnumerable<string> LinksFromTextbox
-        {
-            get { return environmentLinksItems.Text.Trim().Split('\n'); }
-        }
+        private IEnumerable<string> LinksFromTextbox => environmentLinksItems.Text.Trim().Split('\n');
 
         #endregion
 

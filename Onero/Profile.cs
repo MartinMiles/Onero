@@ -1,4 +1,6 @@
-﻿using System.Xml;
+﻿using System;
+using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Linq;
 using Onero.Loader.Interfaces;
 using Onero.Extensions;
