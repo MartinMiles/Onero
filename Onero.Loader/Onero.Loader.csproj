@@ -44,8 +44,16 @@
       <HintPath>..\packages\Selenium.WebDriver.2.52.0\lib\net40\WebDriver.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="WebDriver.Support">
+      <HintPath>..\packages\Selenium.Support.2.52.0\lib\net40\WebDriver.Support.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\BrokenLinksAction.cs" />
+    <Compile Include="BaseItem.cs" />
+    <Compile Include="Broken\Broken.cs" />
+    <Compile Include="Broken\BrokenImage.cs" />
+    <Compile Include="Broken\BrokenLink.cs" />
     <Compile Include="Browser.cs" />
     <Compile Include="DriverFactory.cs" />
     <Compile Include="Interfaces\IProfile.cs" />
@@ -57,6 +65,7 @@
     <Compile Include="LoaderSettings.cs" />
     <Compile Include="Interfaces\INameable.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="Results\BrokenLinksResult.cs" />
     <Compile Include="Results\FormResultParameters.cs" />
     <Compile Include="Results\FormResultType.cs" />
     <Compile Include="Results\Result.cs" />

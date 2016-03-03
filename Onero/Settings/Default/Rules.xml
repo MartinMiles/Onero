@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <items>
-  <rule name="test" enabled="false">
-    <condition>tre</condition>
+  <rule name="Membership number presents on a page" enabled="true">
+    <condition>$('#membershipnumberlabel').html() ==  1200658084</condition>
   </rule>
 </items>

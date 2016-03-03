@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Onero.Loader.Broken;
 using Onero.Loader.Interfaces;
 
 namespace Onero.Loader
@@ -19,6 +20,10 @@ namespace Onero.Loader
                 Directory.Delete(Profile.OutputDirectory, true);
             }
         }
+
+        public IEnumerable<Broken.Broken> BrokenLinks { get; set; }
+
+        public IEnumerable<Broken.Broken> BrokenImages { get; set; }
 
         public IEnumerable<Rule> Rules { get; set; }
 

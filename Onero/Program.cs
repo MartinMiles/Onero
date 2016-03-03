@@ -28,10 +28,10 @@ namespace Onero
             {
                 MessageBox.Show(CONFIGURATION_FAILED);
             }
-            catch (Exception)
-            {
-                MessageBox.Show(GENERAL_EXCEPTION);
-            }
+            //catch (Exception)
+            //{
+            //    MessageBox.Show(GENERAL_EXCEPTION);
+            //}
         }
     }
 }

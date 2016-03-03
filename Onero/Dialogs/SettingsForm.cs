@@ -41,7 +41,7 @@ namespace Onero.Dialogs
             foreach (Browser item in Enum.GetValues(typeof (Browser)))
             {
                 // currently only first 2 browsers from the enum
-                if ((int)item < 3)
+                //if ((int)item < 3)
                 {
                     browserCombobox.Items.Add(item.GetDescription());
                 }
@@ -176,7 +176,6 @@ namespace Onero.Dialogs
         }
 
 
-
         private void AddProfileClick(object sender, EventArgs e)
         {
             if (!this.IsValidAddProfile())
@@ -229,6 +228,8 @@ namespace Onero.Dialogs
                 {
                     case 0 : return Browser.BrowserHidden;
                     case 1 : return Browser.Firefox;
+                    case 2 : return Browser.Chrome;
+                    case 3 : return Browser.Chrome;
                 }
 
                 throw new NotImplementedException("Browser not supported");

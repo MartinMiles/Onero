@@ -17,5 +17,10 @@
         Browser Browser { get; set; }
 
         string OutputDirectory { get; set; }
+
+        // new settings for broken links verifier
+        bool FindBrokenLinks { get; set; }
+
+        bool FindBrokenImages { get; set; }
     }
 }

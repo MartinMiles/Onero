@@ -37,13 +37,28 @@ namespace Onero.Dialogs
             }
         }
 
+        // TODO: Duplicates
+        private string GetSelectedItem(object sender)
+        {
+            var clb = sender as CheckedListBox;
+
+            if (clb.SelectedItem == null)
+            {
+                return string.Empty;
+            }
+
+            return clb.SelectedItem as string;
+        }
+
         // Runs editor window and saves results once editor is closed.
         private void CheckedListBoxDoubleClick(object sender, EventArgs e)
         {
-            var clb = sender as CheckedListBox;
-            var clickedItem = clb.SelectedItem;
+            var rule = rules.FirstOrDefault(r => r.NameWithPrefix == GetSelectedItem(sender));
 
-            var rule = rules.FirstOrDefault(r => r.NameWithPrefix == clickedItem as string);
+            if (rule == null)
+            {
+                return;
+            }
 
             var editorForm = new RulesEditor { StartPosition = FormStartPosition.CenterParent };
             //editorForm.Message = "Note: to save rules changes into a file - hit 'Save rules' on the\nprevious screen. This screen only modifies but not saves rules";

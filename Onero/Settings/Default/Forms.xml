@@ -8,7 +8,7 @@
     </fields>
     <submit id="#login" />
     <result type="redirect">
-      <url>www.on2pp1.co.uk/$</url>
+      <url>www.on2pp1.co.uk$</url>
     </result>
   </form>  
 </items>

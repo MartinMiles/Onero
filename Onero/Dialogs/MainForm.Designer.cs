@@ -62,10 +62,11 @@ namespace Onero.Dialogs
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resultsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutOneroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resultsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.brokenLinksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.linksGroupbox.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -312,6 +313,7 @@ namespace Onero.Dialogs
             this.configurationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.rulesToolStripMenuItem,
             this.exportsToolStripMenuItem,
+            this.brokenLinksToolStripMenuItem,
             this.formsToolStripMenuItem,
             this.toolStripSeparator1,
             this.settingsToolStripMenuItem});
@@ -364,9 +366,17 @@ namespace Onero.Dialogs
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.startToolStripMenuItem.Text = "Start";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.Start_Click);
+            // 
+            // resultsFolderToolStripMenuItem
+            // 
+            this.resultsFolderToolStripMenuItem.Enabled = false;
+            this.resultsFolderToolStripMenuItem.Name = "resultsFolderToolStripMenuItem";
+            this.resultsFolderToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.resultsFolderToolStripMenuItem.Text = "Results folder";
+            this.resultsFolderToolStripMenuItem.Click += new System.EventHandler(this.resultsFolderToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -391,13 +401,12 @@ namespace Onero.Dialogs
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.helpToolStripMenuItem.Text = "Help";
             // 
-            // resultsFolderToolStripMenuItem
+            // brokenLinksToolStripMenuItem
             // 
-            this.resultsFolderToolStripMenuItem.Enabled = false;
-            this.resultsFolderToolStripMenuItem.Name = "resultsFolderToolStripMenuItem";
-            this.resultsFolderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.resultsFolderToolStripMenuItem.Text = "Results folder";
-            this.resultsFolderToolStripMenuItem.Click += new System.EventHandler(this.resultsFolderToolStripMenuItem_Click);
+            this.brokenLinksToolStripMenuItem.Name = "brokenLinksToolStripMenuItem";
+            this.brokenLinksToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.brokenLinksToolStripMenuItem.Text = "Broken links";
+            this.brokenLinksToolStripMenuItem.Click += new System.EventHandler(this.brokenLinksToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -465,6 +474,7 @@ namespace Onero.Dialogs
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem startToolStripMenuItem;
         private ToolStripMenuItem resultsFolderToolStripMenuItem;
+        private ToolStripMenuItem brokenLinksToolStripMenuItem;
     }
 }
 

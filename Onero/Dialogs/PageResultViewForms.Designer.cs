@@ -31,6 +31,10 @@
             this.urlLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.linksBox = new System.Windows.Forms.RichTextBox();
+            this.imagesBox = new System.Windows.Forms.RichTextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.pageResult = new System.Windows.Forms.Label();
             this.rulesBox = new System.Windows.Forms.RichTextBox();
@@ -63,10 +67,14 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.imagesBox);
             this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.linksBox);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.pageResult);
             this.groupBox1.Controls.Add(this.rulesBox);
             this.groupBox1.Controls.Add(this.formsBox);
+            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.formsLabel);
             this.groupBox1.Controls.Add(this.rulesLabel);
             this.groupBox1.Controls.Add(this.time);
@@ -75,10 +83,48 @@
             this.groupBox1.Controls.Add(this.urlLabel);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(505, 337);
+            this.groupBox1.Size = new System.Drawing.Size(505, 530);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Results:";
+            // 
+            // linksBox
+            // 
+            this.linksBox.BackColor = System.Drawing.SystemColors.Control;
+            this.linksBox.Location = new System.Drawing.Point(8, 323);
+            this.linksBox.Name = "linksBox";
+            this.linksBox.ReadOnly = true;
+            this.linksBox.Size = new System.Drawing.Size(483, 94);
+            this.linksBox.TabIndex = 15;
+            this.linksBox.Text = "";
+            // 
+            // imagesBox
+            // 
+            this.imagesBox.BackColor = System.Drawing.SystemColors.Control;
+            this.imagesBox.Location = new System.Drawing.Point(9, 434);
+            this.imagesBox.Name = "imagesBox";
+            this.imagesBox.ReadOnly = true;
+            this.imagesBox.Size = new System.Drawing.Size(482, 80);
+            this.imagesBox.TabIndex = 14;
+            this.imagesBox.Text = "";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 418);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(80, 13);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Broken images:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 307);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(68, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Broken links:";
             // 
             // label5
             // 
@@ -103,7 +149,7 @@
             this.rulesBox.Location = new System.Drawing.Point(9, 127);
             this.rulesBox.Name = "rulesBox";
             this.rulesBox.ReadOnly = true;
-            this.rulesBox.Size = new System.Drawing.Size(485, 94);
+            this.rulesBox.Size = new System.Drawing.Size(482, 78);
             this.rulesBox.TabIndex = 9;
             this.rulesBox.Text = "";
             this.rulesBox.DoubleClick += new System.EventHandler(this.RulesDoubleClick);
@@ -111,7 +157,7 @@
             // formsBox
             // 
             this.formsBox.BackColor = System.Drawing.SystemColors.Control;
-            this.formsBox.Location = new System.Drawing.Point(6, 249);
+            this.formsBox.Location = new System.Drawing.Point(9, 224);
             this.formsBox.Name = "formsBox";
             this.formsBox.ReadOnly = true;
             this.formsBox.Size = new System.Drawing.Size(485, 80);
@@ -122,7 +168,7 @@
             // formsLabel
             // 
             this.formsLabel.AutoSize = true;
-            this.formsLabel.Location = new System.Drawing.Point(5, 233);
+            this.formsLabel.Location = new System.Drawing.Point(8, 208);
             this.formsLabel.Name = "formsLabel";
             this.formsLabel.Size = new System.Drawing.Size(38, 13);
             this.formsLabel.TabIndex = 6;
@@ -158,7 +204,7 @@
             // okButton
             // 
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.okButton.Location = new System.Drawing.Point(428, 355);
+            this.okButton.Location = new System.Drawing.Point(442, 548);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 1;
@@ -171,7 +217,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.okButton;
-            this.ClientSize = new System.Drawing.Size(524, 383);
+            this.ClientSize = new System.Drawing.Size(525, 579);
             this.ControlBox = false;
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.groupBox1);
@@ -199,6 +245,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label pageResult;
         private System.Windows.Forms.Button okButton;
-
+        private System.Windows.Forms.RichTextBox linksBox;
+        private System.Windows.Forms.RichTextBox imagesBox;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }

@@ -76,6 +76,10 @@ namespace Onero
 
         public string OutputDirectory { get; set; }
 
+        public bool FindBrokenLinks { get; set; }
+
+        public bool FindBrokenImages { get; set; }
+
         #endregion
 
         public void Save(string fileName)

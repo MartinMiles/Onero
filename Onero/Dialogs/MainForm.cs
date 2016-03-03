@@ -10,6 +10,7 @@ using System.Xml.Linq;
 using Onero.Collections;
 using Onero.Extensions;
 using Onero.Loader;
+using Onero.Loader.Broken;
 using Onero.Loader.Results;
 
 namespace Onero.Dialogs
@@ -196,6 +197,9 @@ namespace Onero.Dialogs
 
                 settings.Rules = new CollectionOf<Rule>(CurrentProfileName).Read<Rule>().Where(r => r.Enabled);
                 settings.Forms = new CollectionOf<Form>(CurrentProfileName).Read<WebForm>().Where(f => f.Enabled);
+                settings.BrokenLinks = new CollectionOf<BrokenLink>(CurrentProfileName).Read<BrokenLink>().Where(f => f.Enabled);
+                settings.BrokenImages = new CollectionOf<BrokenImage>(CurrentProfileName).Read<BrokenImage>().Where(f => f.Enabled);
+
                 settings.PagesToCrawl = LinksFromTextbox;
 
                 SaveLinksFile(CurrentProfileName);
@@ -545,6 +549,19 @@ namespace Onero.Dialogs
         private void Start_Click(object sender, EventArgs e)
         {
             Run();
+        }
+
+        private void brokenLinksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new BrokenItems { StartPosition = FormStartPosition.CenterParent };
+            form.CurrentProfileName = settings.Profile.Name;
+            form.ShowDialog();
+            form.Dispose();
+
+            //var form = new BrokenItem { StartPosition = FormStartPosition.CenterParent };
+            //form.CurrentProfileName = settings.Profile.Name;
+            //form.ShowDialog();
+            //form.Dispose();
         }
 
         #endregion

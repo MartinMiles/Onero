@@ -30,7 +30,7 @@ namespace Onero.Loader.Actions
                 {
                     if (driver is RemoteWebDriver)
                     {
-                        string condition = rule.Condition.StartsWith("return") ? rule.Condition : string.Format("return {0}", rule.Condition);
+                        string condition = rule.Condition.StartsWith("return") ? rule.Condition : $"return {rule.Condition}";
                         var returnedJSobject = (driver as RemoteWebDriver).ExecuteScript(condition);
                         resultCode = ValidateRule(returnedJSobject) ? ResultCode.Successful : ResultCode.RuleFailed;
                     }

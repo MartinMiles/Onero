@@ -43,7 +43,7 @@ namespace Onero.Loader
                         if (backgroundWorker.CancellationPending)
                             break;
 
-                        var _newResult = new Result(page);
+                        var result = new Result(page);
 
                         try
                         {
@@ -52,7 +52,7 @@ namespace Onero.Loader
                             driver.Navigate().GoToUrl(page);
                             timer.Stop();
 
-                            _newResult.PageLoadTime = timer.ElapsedMilliseconds;
+                            result.PageLoadTime = timer.ElapsedMilliseconds;
 
                             bool urlResult = true;
 
@@ -63,24 +63,27 @@ namespace Onero.Loader
                                 screenshotAction.Execute();
                             }
 
+                            var brokenLinksAction = new BrokenLinksAction(driver, settings);
+                            result.BrokenLinksResult = brokenLinksAction.Execute();
+
                             var rulesAction = new RulesExecuteAction(driver, settings);
-                            _newResult.RuleResults = rulesAction.Execute();
+                            result.RuleResults = rulesAction.Execute();
 
                             var formsAction = new FormSubmitAction(driver, settings);
-                            _newResult.FormResults = formsAction.Execute();
+                            result.FormResults = formsAction.Execute();
 
-                            _newResult.PageResult = ResultCode.Successful;
+                            result.PageResult = ResultCode.Successful;
                         }
                         catch (WebDriverException e)
                         {
                             var errorMsg = e.Message.ToLower();
 
-                            _newResult.PageResult = errorMsg.Contains("timeout") || errorMsg.Contains("timed out")
+                            result.PageResult = errorMsg.Contains("timeout") || errorMsg.Contains("timed out")
                                 ? ResultCode.PageFailedFromTimeout 
                                 : ResultCode.PageFailed;
                         }
 
-                        backgroundWorker.ReportProgress(order, _newResult);
+                        backgroundWorker.ReportProgress(order, result);
                         order++;
                     }
                 }

@@ -3,50 +3,10 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
-using Onero.Loader.Interfaces;
 
 namespace Onero.Loader
 {
-    public class RuleForm : INameable
-    {
-        public string Name { get; set; }
-
-        public bool Enabled { get; set; }
-
-        protected XmlNode node;
-
-        #region Contructors
-
-        protected RuleForm()
-        {
-        }
-
-        public RuleForm(XmlNode node)
-        {
-            this.node = node;
-
-            Parse();
-        }
-
-        #endregion
-
-        public virtual XElement Save()
-        {
-            throw new NotImplementedException("Should be implemened in derived class");
-        }
-
-        protected virtual void Parse()
-        {
-            throw new NotImplementedException("Should be implemened in derived class");
-        }
-
-        public override string ToString()
-        {
-            return Name;
-        }
-    }
-
-    public class Rule : RuleForm
+    public class Rule : BaseItem
     {
         private readonly Dictionary<RuleExecutionScope, string> ruleScopePrefixes = new Dictionary<RuleExecutionScope, string>
         {
@@ -69,44 +29,6 @@ namespace Onero.Loader
         public Rule(string name, string condition) : this()
         {
         }
-
-        protected override void Parse()
-        {
-            Name = node.Attributes["name"].Value;
-
-            if (node.Attributes["enabled"] != null)
-            {
-                Enabled = bool.Parse(node.Attributes["enabled"].Value);
-            }
-
-            Condition = GetTextValue(node.ChildNodes).Trim();
-
-            if (node.Attributes["type"] != null)
-            {
-                var type = node.Attributes["type"].Value.ToLower().Trim();
-
-                Urls = new List<string>();
-
-                foreach (XmlNode child in node.ChildNodes)
-                {
-                    if (child.Name.ToLower() == "url")
-                    {
-                        Urls.Add(child.InnerText.Trim());
-                        RuleExecutionScope = type == "include" ? RuleExecutionScope.Include : RuleExecutionScope.Exclude;
-                    }
-                }
-            }
-            else
-            {
-                RuleExecutionScope = RuleExecutionScope.Everywhere;
-            }
-        }
-
-
-        //public Rule(XmlNode node) : this()
-        //{
- 
-        //}
 
         #endregion
 
@@ -170,6 +92,38 @@ namespace Onero.Loader
             }
 
             return String.Empty;
+        }
+
+        protected override void Parse()
+        {
+            Name = node.Attributes["name"].Value;
+
+            if (node.Attributes["enabled"] != null)
+            {
+                Enabled = bool.Parse(node.Attributes["enabled"].Value);
+            }
+
+            Condition = GetTextValue(node.ChildNodes).Trim();
+
+            if (node.Attributes["type"] != null)
+            {
+                var type = node.Attributes["type"].Value.ToLower().Trim();
+
+                Urls = new List<string>();
+
+                foreach (XmlNode child in node.ChildNodes)
+                {
+                    if (child.Name.ToLower() == "url")
+                    {
+                        Urls.Add(child.InnerText.Trim());
+                        RuleExecutionScope = type == "include" ? RuleExecutionScope.Include : RuleExecutionScope.Exclude;
+                    }
+                }
+            }
+            else
+            {
+                RuleExecutionScope = RuleExecutionScope.Everywhere;
+            }
         }
 
         public override XElement Save()

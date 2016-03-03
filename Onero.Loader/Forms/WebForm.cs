@@ -7,7 +7,7 @@ using Onero.Loader.Results;
 
 namespace Onero.Loader
 {
-    public class WebForm : RuleForm 
+    public class WebForm : BaseItem 
     {
         #region Contructors
 

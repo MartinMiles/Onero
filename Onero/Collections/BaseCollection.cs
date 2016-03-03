@@ -33,7 +33,7 @@ namespace Onero.Collections
                     return "Forms";
                 }
 
-                return string.Format("{0}s", type.Name);
+                return $"{type.Name}s";
             }
 
             return null;
@@ -59,7 +59,7 @@ namespace Onero.Collections
             Save(new List<T>());
         }
 
-        public IEnumerable<T> Read<T>() where T : RuleForm, new()
+        public IEnumerable<T> Read<T>() where T : BaseItem, new()
         {
             var items = new List<T>();
 

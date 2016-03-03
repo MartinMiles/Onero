@@ -11,14 +11,16 @@ namespace Onero.Loader.Results
         public Dictionary<Rule, ResultCode> RuleResults { get; set; }
         public Dictionary<WebForm, ResultCode> FormResults { get; set; }
 
+        public BrokenLinksResult BrokenLinksResult { get; set; }
+
         public bool IsSuccessful
         {
             get
             {
                 bool allRules = RuleResults.All(r=>r.Value == ResultCode.Successful);
                 bool allForms = FormResults.All(r=>r.Value == ResultCode.Successful);
-
-                return allRules && allForms;
+                bool allLinks = !BrokenLinksResult.Images.Any() && !BrokenLinksResult.Links.Any();
+                return allRules && allForms && allLinks;
             }
         }
 
@@ -27,6 +29,7 @@ namespace Onero.Loader.Results
             PageResult = ResultCode.NotFinished;
             RuleResults = new Dictionary<Rule, ResultCode>();
             FormResults = new Dictionary<WebForm, ResultCode>();
+            BrokenLinksResult = new BrokenLinksResult();
         }
 
         public Result(string url) : this()

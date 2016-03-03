@@ -57,7 +57,10 @@ namespace Onero.Dialogs
             urlTextbox.Enabled = combobox.SelectedIndex > 0;
         }
 
+        #region Get / set data item (rule)
+
         private Rule _rule;
+
         public Rule Rule
         {
             get { return GetRule(); }
@@ -88,12 +91,15 @@ namespace Onero.Dialogs
 
             ruleScopeCombobox.SelectedItem = rule.RuleExecutionScope.ToString();
 
-            if ((rule.RuleExecutionScope == RuleExecutionScope.Include || rule.RuleExecutionScope == RuleExecutionScope.Exclude) && rule.Urls != null)
+            if ((rule.RuleExecutionScope == RuleExecutionScope.Include ||
+                 rule.RuleExecutionScope == RuleExecutionScope.Exclude) && rule.Urls != null)
             {
                 urlTextbox.Text = string.Join(", ", rule.Urls);
             }
 
             urlTextbox.Enabled = ruleScopeCombobox.SelectedIndex > 0;
         }
+
+        #endregion
     }
 }
