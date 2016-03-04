@@ -28,8 +28,7 @@ namespace Onero.Dialogs
 
         private void SaveClick(object sender, EventArgs e)
         {
-            //TODO: add validation
-            //if (this.IsValid())
+            if (this.IsValid())
             {
                 DialogResult = DialogResult.OK;
             }
@@ -61,14 +60,8 @@ namespace Onero.Dialogs
         private Broken GetItem()
         {
             _rule.Name = nameTextbox.Text.Trim();
-            //_rule.Condition = editBox.Text.Trim();
-
             _rule.RuleExecutionScope = RuleScope;
-
-            if (_rule.RuleExecutionScope != RuleExecutionScope.Everywhere)
-            {
-                _rule.Urls = urlTextbox.Text.Split(',').Select(r => r.Trim()).ToList();
-            }
+            _rule.Urls = urlTextbox.Text.Split(',').Select(r => r.Trim()).ToList();
 
             return _rule;
         }
@@ -88,7 +81,7 @@ namespace Onero.Dialogs
                 urlTextbox.Text = string.Join(", ", rule.Urls);
             }
 
-            urlTextbox.Enabled = scopeCombobox.SelectedIndex > 0;
+            //urlTextbox.Enabled = scopeCombobox.SelectedIndex > 0;
         }
 
         #endregion
@@ -101,12 +94,21 @@ namespace Onero.Dialogs
                 RuleExecutionScope.TryParse(scopeCombobox.SelectedItem as string, true, out scope);
                 return scope;
             }
+            //set { scopeCombobox.SelectedItem = value; }
         }
 
-        private void ScopeComboboxChanged(object sender, EventArgs e)
+        //private void ScopeComboboxChanged(object sender, EventArgs e)
+        //{
+        //    var combobox = sender as ComboBox;
+        //    //urlTextbox.Enabled = combobox.SelectedIndex > 0;
+        //}
+
+        private void BrokenItem_Load(object sender, EventArgs e)
         {
-            var combobox = sender as ComboBox;
-            urlTextbox.Enabled = combobox.SelectedIndex > 0;
+            if (RuleScope == 0)
+            {
+                scopeCombobox.SelectedIndex = 0;
+            }
         }
     }
 }

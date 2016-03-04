@@ -27,6 +27,7 @@ namespace Onero
         private const string NAME_CONTAINS_INVALID_CHARS = "Name contains invalid characters";
         private const string TEXT_SHOULD_NOT_BE_EMPTY = "Text should not be empty";
 
+        private const string URL_PATTERN_SHOULD_NOT_BE_EMTY = "ULR pattern should not be empty";
         private const string URL_PATTERN_WRONG_MODE = "ULR pattern(s) should be set if you are using Include or Exclude mode";
 
         private const string URL_PATTERN_WRONG_CHARS = "URL pattern contains invalid characters";
@@ -57,6 +58,12 @@ namespace Onero
         private const string LOOSE_SELECTOR = "At least one of selectors on this form does not start with '.' or '#'. Is that correct?";
 
         private const string OUTPUT_DIRECTORY_UNDEFINED = "Output directory is undefined. Navigate to Configuration -> Settings to set it.";
+
+        // broken links
+        private const string CHECK_ALL_OR_ADD_NEW_LINKS = "Please check 'Test all the pages for broken links' or enter at least one testing pattern";
+        private const string CHECK_ALL_OR_ADD_NEW_IMAGES = "Please check 'Test all the pages for broken images' or enter at least one testing pattern";
+        private const string CHECK_PATTER_OR_ALL_LINKS = "Please enable at least one testing pattern or check 'Test all the pages for broken links'";
+        private const string CHECK_PATTER_OR_ALL_IMAGES = "Please enable at least one testing pattern or check 'Test all the pages for broken images'";
 
         #endregion
 
@@ -130,6 +137,62 @@ namespace Onero
                     MessageBox.Show(URL_PATTERN_WRONG_CHARS, VALIDATION_ERROR);
                     return false;
                 }
+            }
+
+            return true;
+        }
+
+        public static bool IsValid(this BrokenItems editor)
+        {
+            //if (!editor.testAllLinks.Checked && editor.linksCheckList.Items.Count == 0)
+            //{
+            //    MessageBox.Show(CHECK_ALL_OR_ADD_NEW_LINKS, VALIDATION_ERROR);
+            //    return false;
+            //}
+            //if (!editor.testAllImages.Checked && editor.imagesCheckList.Items.Count == 0)
+            //{
+            //    MessageBox.Show(CHECK_ALL_OR_ADD_NEW_IMAGES, VALIDATION_ERROR);
+            //    return false;
+            //}
+
+            //if (!editor.testAllLinks.Checked && editor.linksCheckList.CheckedItems.Count == 0)
+            //{
+            //    MessageBox.Show(CHECK_PATTER_OR_ALL_LINKS, VALIDATION_ERROR);
+            //    return false;
+            //}
+            //if (!editor.testAllImages.Checked && editor.imagesCheckList.CheckedItems.Count == 0)
+            //{
+            //    MessageBox.Show(CHECK_PATTER_OR_ALL_IMAGES, VALIDATION_ERROR);
+            //    return false;
+            //}
+
+            return true;
+        }
+
+        public static bool IsValid(this BrokenItem editor)
+        {
+            if (String.IsNullOrWhiteSpace(editor.nameTextbox.Text))
+            {
+                MessageBox.Show(NAME_SHOULD_NOT_BE_EMPTY, VALIDATION_ERROR);
+                return false;
+            }
+
+            if (String.IsNullOrWhiteSpace(editor.urlTextbox.Text))
+            {
+                MessageBox.Show(URL_PATTERN_SHOULD_NOT_BE_EMTY, VALIDATION_ERROR);
+                return false;
+            }
+
+            if (!new Regex(NAME_REGEX).IsMatch(editor.nameTextbox.Text))
+            {
+                MessageBox.Show(NAME_CONTAINS_INVALID_CHARS, VALIDATION_ERROR);
+                return false;
+            }
+
+            if (!new Regex(URL_SUBSET_REGEX).IsMatch(editor.urlTextbox.Text))
+            {
+                MessageBox.Show(URL_PATTERN_WRONG_CHARS, VALIDATION_ERROR);
+                return false;
             }
 
             return true;

@@ -6,5 +6,7 @@
   <Browser value="BrowserHidden" />
   <OutputDirectory value="e:\Projects\Onero\Onero\bin\Debug\Results\Default" />
   <Timeout value="60" />
+  <FindAllBrokenLinks value="false" />
+  <FindAllBrokenImages value="true" />
 </profile>
 

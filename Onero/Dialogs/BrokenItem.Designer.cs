@@ -94,14 +94,12 @@
             this.scopeCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.scopeCombobox.FormattingEnabled = true;
             this.scopeCombobox.Items.AddRange(new object[] {
-            "Everywhere",
             "Include",
             "Exclude"});
             this.scopeCombobox.Location = new System.Drawing.Point(10, 76);
             this.scopeCombobox.Name = "scopeCombobox";
             this.scopeCombobox.Size = new System.Drawing.Size(158, 21);
             this.scopeCombobox.TabIndex = 28;
-            this.scopeCombobox.SelectedIndexChanged += new System.EventHandler(this.ScopeComboboxChanged);
             // 
             // label2
             // 
@@ -157,6 +155,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "BrokenItem";
             this.Text = "Broken items";
+            this.Load += new System.EventHandler(this.BrokenItem_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

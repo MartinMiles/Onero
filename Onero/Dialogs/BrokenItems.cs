@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Onero.Collections;
-using Onero.Loader;
 using Onero.Loader.Broken;
+using Onero.Loader.Interfaces;
 
 namespace Onero.Dialogs
 {
@@ -41,9 +41,15 @@ namespace Onero.Dialogs
             }
         }
 
+        private void ReadCollections()
+        {
+            _links = new CollectionOf<BrokenLink>(CurrentProfile.Name).Read<BrokenLink>();
+            _images = new CollectionOf<BrokenImage>(CurrentProfile.Name).Read<BrokenImage>();            
+        }
+
         #endregion
 
-        public string CurrentProfileName { get; internal set; }
+        public IProfile CurrentProfile { get; internal set; }
 
         public BrokenItems()
         {
@@ -54,12 +60,22 @@ namespace Onero.Dialogs
 
         private void SaveClick(object sender, EventArgs e)
         {
-            if (SaveItems<BrokenLink>(_links, linksCheckList.CheckedItems) && SaveItems<BrokenImage>(_images, imagesCheckList.CheckedItems))
+            if (this.IsValid())
             {
-                saveButton.Enabled = false;
-                Text = "Rules Editor - Successfully saved";
-                cancelButton.Text = "Close";
+                CurrentProfile.FindAllBrokenLinks = testAllLinks.Checked;
+                CurrentProfile.FindAllBrokenImages = testAllImages.Checked;
+
+                if (SaveItems<BrokenLink>(_links, linksCheckList.CheckedItems) && SaveItems<BrokenImage>(_images, imagesCheckList.CheckedItems))
+                {
+                    saveButton.Enabled = false;
+                    DialogResult = DialogResult.OK;
+                }
             }
+        }
+
+        private void CancelButtonClick(object sender, EventArgs e)
+        {
+            Close();
         }
 
         private bool SaveItems<T>(IEnumerable<Broken> items, CheckedListBox.CheckedItemCollection checkedNames) where T : Broken
@@ -71,7 +87,7 @@ namespace Onero.Dialogs
 
             try
             {
-                new CollectionOf<T>(CurrentProfileName).Save(items);
+                new CollectionOf<T>(CurrentProfile.Name).Save(items);
                 return true;
 
             }
@@ -82,27 +98,20 @@ namespace Onero.Dialogs
             }
         }
 
-
-        private void CancelClick(object sender, EventArgs e)
-        {
-            Close();
-
-           
-        }
-
         #endregion
 
         private void BrokenItems_Load(object sender, EventArgs e)
         {
-            _links = new CollectionOf<BrokenLink>(CurrentProfileName).Read<BrokenLink>();
-            _images = new CollectionOf<BrokenImage>(CurrentProfileName).Read<BrokenImage>();
+            ReadCollections();
 
-            DrawBrokenItemsList();
+            EnsureVisibility();
+
+            DrawChecklists();
 
             saveButton.Enabled = false;
         }
 
-        private void DrawBrokenItemsList()
+        private void DrawChecklists()
         {
             linksCheckList.Items.Clear();
             for (int i = 0; i < _links.Count(); i++)
@@ -150,7 +159,7 @@ namespace Onero.Dialogs
         private void CheckedListBoxDoubleClick<T>(string selectedItemName) where T : Broken, new()
         {
             // TODO: Replace this in favor of locally store collection (_links or _images) and possibly generic. To get rid of if (typeof (T) == typeof (BrokenLink)) below
-            var items = Get<T>(); // new CollectionOf<T>(CurrentProfileName).Read<T>();
+            var items = Get<T>(); 
 
             Broken rule = items.FirstOrDefault(r => r.NameWithPrefix == selectedItemName);
 
@@ -181,7 +190,7 @@ namespace Onero.Dialogs
             // temporal fix
             Set<T>(items);
 
-            DrawBrokenItemsList();
+            DrawChecklists();
 
             editorForm.Dispose();
 
@@ -200,14 +209,12 @@ namespace Onero.Dialogs
 
         private void AddNewClick<T>(string name) where T : Broken, new()
         {
-            //var rules = name == "linksCheckList" ? _links : _images;
-
             var editorForm = new BrokenItem
             {
                 StartPosition = FormStartPosition.CenterParent,
                 
                 // TODO: Make widow title change (and for similar forms as well, possibly inherriance)
-                //Title = "Please enter a new rule:",
+                Title = "Please enter a new broken links pattern",
                 Rule = (T)Activator.CreateInstance(typeof(T), new[] {"", ""})
             };
 
@@ -224,17 +231,64 @@ namespace Onero.Dialogs
 
                 }
 
-                DrawBrokenItemsList();
-
+                DrawChecklists();
                 saveButton.Enabled = true;
             }
 
             editorForm.Dispose();
         }
 
-        private void CancelButtonClick(object sender, EventArgs e)
+        private void TestAllLinksCheckChanged(object sender, EventArgs e)
         {
-            Close();
+            linksCheckList.Visible = !(sender as CheckBox).Checked;
+            addNewLinkItem.Visible = !(sender as CheckBox).Checked;
+
+            if (e != null)
+            {
+                saveButton.Enabled = true;
+            }
         }
+
+        private void TestAllImagesCheckChanged(object sender, EventArgs e)
+        {
+            imagesCheckList.Visible = !(sender as CheckBox).Checked;
+            addNewImageItem.Visible = !(sender as CheckBox).Checked;
+
+            if (e != null)
+            {
+                saveButton.Enabled = true;
+            }
+        }
+
+        private void EnsureVisibility()
+        {
+            testAllLinks.Checked = /* !_links.Any() || */ CurrentProfile.FindAllBrokenLinks;
+            testAllImages.Checked = /* !_images.Any() || */ CurrentProfile.FindAllBrokenImages;
+
+            TestAllLinksCheckChanged(testAllLinks, null);
+            TestAllImagesCheckChanged(testAllImages, null);
+        }
+
+        //private void linksCheckList_ItemCheck(object sender, ItemCheckEventArgs e)
+        //{
+        //    var checkedListBox = sender as CheckedListBox;
+        //    List<string> checkedItems = new List<string>();
+        //    foreach (var item in checkedListBox.CheckedItems)
+        //        checkedItems.Add(item.ToString());
+
+        //    if (e.NewValue == CheckState.Checked)
+        //    {
+        //        checkedItems.Add(checkedListBox.Items[e.Index].ToString());
+        //    }
+        //    else if (e.NewValue == CheckState.Unchecked)
+        //    {
+        //        checkedItems.RemoveAt(e.Index);
+        //    }
+
+        //    if (!checkedItems.Any())
+        //    {
+        //        testAllLinks.Checked = true;
+        //    }
+        //}
     }
 }

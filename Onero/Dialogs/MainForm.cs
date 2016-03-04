@@ -55,7 +55,7 @@ namespace Onero.Dialogs
 
         private void SetFormName()
         {
-            Text = string.Format("Onero Page Runner - {0}", CurrentProfileName);
+            Text = $"Onero Page Runner - {CurrentProfileName}";
         }
 
         private void ShowTestButton()
@@ -287,11 +287,14 @@ namespace Onero.Dialogs
             var clickedPageResult = results.FirstOrDefault(r => r.Url == clickedLine);
             if (clickedPageResult != null)
             {
-                var form = new PageResultViewForms {StartPosition = FormStartPosition.CenterParent};
-                form.PageResult = clickedPageResult;
-                form.CurrentProfileName = settings.Profile.Name;
-                form.RulesCollection = settings.Rules;
-                form.FormsCollection = settings.Forms;
+                var form = new PageResultViewForms
+                {
+                    StartPosition = FormStartPosition.CenterParent,
+                    PageResult = clickedPageResult,
+                    CurrentProfileName = settings.Profile.Name,
+                    RulesCollection = settings.Rules,
+                    FormsCollection = settings.Forms
+                };
 
                 if (form.ShowDialog() == DialogResult.OK)
                 {
@@ -456,8 +459,6 @@ namespace Onero.Dialogs
 
         #region Menu items
 
-        
-
         private void DrawProfilesMenu()
         {
             var profiles = new BindingList<Profile>(Profiles.Read());
@@ -496,8 +497,11 @@ namespace Onero.Dialogs
 
         private void Settings_Click(object sender, EventArgs e)
         {
-            var settingsForm = new SettingsForm { StartPosition = FormStartPosition.CenterParent };
-            settingsForm.Settings = settings;
+            var settingsForm = new SettingsForm
+            {
+                StartPosition = FormStartPosition.CenterParent,
+                Settings = settings
+            };
 
             var previousProfileName = CurrentProfileName;
 
@@ -525,16 +529,24 @@ namespace Onero.Dialogs
 
         private void Rules_Click(object sender, EventArgs e)
         {
-            var form = new RulesList { StartPosition = FormStartPosition.CenterParent };
-            form.CurrentProfileName = settings.Profile.Name;
+            var form = new RulesList
+            {
+                StartPosition = FormStartPosition.CenterParent,
+                CurrentProfileName = settings.Profile.Name
+            };
+
             form.ShowDialog();
             form.Dispose();
         }
 
         private void Forms_Click(object sender, EventArgs e)
         {
-            var form = new FormsList { StartPosition = FormStartPosition.CenterParent };
-            form.CurrentProfileName = settings.Profile.Name;
+            var form = new FormsList
+            {
+                StartPosition = FormStartPosition.CenterParent,
+                CurrentProfileName = settings.Profile.Name
+            };
+
             form.ShowDialog();
             form.Dispose();
         }
@@ -551,17 +563,29 @@ namespace Onero.Dialogs
             Run();
         }
 
-        private void brokenLinksToolStripMenuItem_Click(object sender, EventArgs e)
+        private void BrokenLinks_Click(object sender, EventArgs e)
         {
-            var form = new BrokenItems { StartPosition = FormStartPosition.CenterParent };
-            form.CurrentProfileName = settings.Profile.Name;
-            form.ShowDialog();
-            form.Dispose();
+            var profiles = new BindingList<Profile>(Profiles.Read());
 
-            //var form = new BrokenItem { StartPosition = FormStartPosition.CenterParent };
-            //form.CurrentProfileName = settings.Profile.Name;
-            //form.ShowDialog();
-            //form.Dispose();
+            var form = new BrokenItems
+            {
+                StartPosition = FormStartPosition.CenterParent,
+                CurrentProfile = settings.Profile
+            };
+
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                var item = profiles.Select((p, i) => new { Profile = p, Index = i }).LastOrDefault(x => x.Profile.Name == form.CurrentProfile.Name);
+                if (item != null)
+                {
+                    profiles[item.Index] = form.CurrentProfile as Profile;
+                }
+
+                Profiles.Save(profiles);
+
+                form.Dispose();
+
+            }
         }
 
         #endregion

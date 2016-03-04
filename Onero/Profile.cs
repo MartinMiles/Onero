@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-using System.Xml;
+﻿using System.Xml;
 using System.Xml.Linq;
 using Onero.Loader.Interfaces;
 using Onero.Extensions;
@@ -53,6 +51,14 @@ namespace Onero
                 {
                     OutputDirectory = node.StringAttribute(VALUE_ATTRIBUTE_NAME);
                 }
+                if (node.Name == "FindAllBrokenLinks")
+                {
+                    FindAllBrokenLinks = node.BoolAttribute(VALUE_ATTRIBUTE_NAME, true);
+                }
+                if (node.Name == "FindAllBrokenImages")
+                {
+                    FindAllBrokenImages = node.BoolAttribute(VALUE_ATTRIBUTE_NAME, true);
+                }
             }
         }
 
@@ -76,9 +82,9 @@ namespace Onero
 
         public string OutputDirectory { get; set; }
 
-        public bool FindBrokenLinks { get; set; }
+        public bool FindAllBrokenLinks { get; set; }
 
-        public bool FindBrokenImages { get; set; }
+        public bool FindAllBrokenImages { get; set; }
 
         #endregion
 
@@ -115,6 +121,14 @@ namespace Onero
             var timeout = new XElement("Timeout");
             timeout.SetAttributeValue("value", Timeout);
             root.Add(timeout);
+
+            var testAllLinks = new XElement("FindAllBrokenLinks");
+            testAllLinks.SetAttributeValue("value", FindAllBrokenLinks);
+            root.Add(testAllLinks);
+
+            var testAllImages = new XElement("FindAllBrokenImages");
+            testAllImages.SetAttributeValue("value", FindAllBrokenImages);
+            root.Add(testAllImages);
 
             doc.Add(root);
             doc.Save(fileName); 

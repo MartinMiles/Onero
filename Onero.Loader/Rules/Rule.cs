@@ -42,10 +42,7 @@ namespace Onero.Loader
 
         #endregion
 
-        public string NameWithPrefix
-        {
-            get { return ruleScopePrefixes[RuleExecutionScope] + Name; }
-        }
+        public string NameWithPrefix => ruleScopePrefixes[RuleExecutionScope] + Name;
 
         public bool ShouldRunOnThePage(string url)
         {

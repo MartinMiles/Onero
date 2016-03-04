@@ -406,7 +406,7 @@ namespace Onero.Dialogs
             this.brokenLinksToolStripMenuItem.Name = "brokenLinksToolStripMenuItem";
             this.brokenLinksToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.brokenLinksToolStripMenuItem.Text = "Broken links";
-            this.brokenLinksToolStripMenuItem.Click += new System.EventHandler(this.brokenLinksToolStripMenuItem_Click);
+            this.brokenLinksToolStripMenuItem.Click += new System.EventHandler(this.BrokenLinks_Click);
             // 
             // MainForm
             // 

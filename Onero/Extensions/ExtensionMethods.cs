@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
+using System.Windows.Forms;
 using System.Xml;
 using Onero.Collections;
 
@@ -17,14 +20,14 @@ namespace Onero.Extensions
             return val;
         }
 
-        internal static bool BoolAttribute(this XmlNode node, string attributeName)
+        internal static bool BoolAttribute(this XmlNode node, string attributeName, bool defaultValue = false)
         {
             if (node.Attributes[attributeName] != null)
             {
                 return node.Attributes[attributeName].Value.GetValue<bool>(bool.TryParse);
             }
 
-            return false;
+            return defaultValue;
         }
 
         internal static T ParseEnum<T>(this XmlNode node, string attributeName)

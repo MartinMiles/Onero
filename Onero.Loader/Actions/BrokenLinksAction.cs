@@ -9,7 +9,7 @@ namespace Onero.Loader.Actions
 {
     public class BrokenLinksAction : BaseAction
     {
-        const int TIMEOUT = 10; // seconds
+        const int TIMEOUT = 10; // 10 seconds
 
         public BrokenLinksAction(IWebDriver driver, LoaderSettings settings) : base(driver, settings)
         {
@@ -19,38 +19,46 @@ namespace Onero.Loader.Actions
         {
             var result = new BrokenLinksResult();
 
-            foreach (var rule in settings.BrokenLinks)
+            //TODO: Refactor blocks below
+
+            if (settings.Profile.FindAllBrokenLinks)
             {
-                var resultCode = new ResultCode();
-
-                if (!rule.ShouldRunOnThePage(driver.Url))
-                {
-                    continue;
-                }
-
                 result.Links = VerifyLinks("a", "href");
             }
-
-            foreach (var rule in settings.BrokenImages)
+            else
             {
-                var resultCode = new ResultCode();
-
-                if (!rule.ShouldRunOnThePage(driver.Url))
+                foreach (var rule in settings.BrokenLinks)
                 {
-                    continue;
-                }
+                    var resultCode = new ResultCode();
 
-                result.Images = VerifyLinks("img", "src");
+                    if (!rule.ShouldRunOnThePage(driver.Url))
+                    {
+                        continue;
+                    }
+
+                    result.Links = VerifyLinks("a", "href");
+                }                
             }
 
-            //if (settings.Profile.FindBrokenLinks)
-            //{
-            //}
 
-            //if (settings.Profile.FindBrokenImages)
-            //{
-            //    result.Images = VerifyLinks("img", "src");
-            //}
+            if (settings.Profile.FindAllBrokenImages)
+            {
+                result.Images = VerifyLinks("img", "src");
+            }
+            else
+            {
+                foreach (var rule in settings.BrokenImages)
+                {
+                    var resultCode = new ResultCode();
+
+                    if (!rule.ShouldRunOnThePage(driver.Url))
+                    {
+                        continue;
+                    }
+
+                    result.Images = VerifyLinks("img", "src");
+                }
+            }
 
             return result;
         }

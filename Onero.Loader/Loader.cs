@@ -54,8 +54,6 @@ namespace Onero.Loader
 
                             result.PageLoadTime = timer.ElapsedMilliseconds;
 
-                            bool urlResult = true;
-
                             //TODO: Later move to actions factory
                             if (settings.Profile.CreateScreenshots)
                             {

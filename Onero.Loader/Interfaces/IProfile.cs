@@ -19,8 +19,8 @@
         string OutputDirectory { get; set; }
 
         // new settings for broken links verifier
-        bool FindBrokenLinks { get; set; }
+        bool FindAllBrokenLinks { get; set; }
 
-        bool FindBrokenImages { get; set; }
+        bool FindAllBrokenImages { get; set; }
     }
 }
