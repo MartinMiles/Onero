@@ -54,6 +54,8 @@
     <Compile Include="Broken\Broken.cs" />
     <Compile Include="Broken\BrokenImage.cs" />
     <Compile Include="Broken\BrokenLink.cs" />
+    <Compile Include="Broken\BrokenScript.cs" />
+    <Compile Include="Broken\BrokenStyle.cs" />
     <Compile Include="Browser.cs" />
     <Compile Include="DriverFactory.cs" />
     <Compile Include="Interfaces\IProfile.cs" />

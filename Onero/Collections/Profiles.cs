@@ -65,14 +65,14 @@ namespace Onero.Collections
         {
             foreach (Profile profile in profiles)
             {
-                var directory = string.Format("{0}\\{1}", SETTINGS_DIRECTORY, profile.Name);
+                var directory = $"{SETTINGS_DIRECTORY}\\{profile.Name}";
 
                 if (!Directory.Exists(directory))
                 {
                     Directory.CreateDirectory(directory);
                 }
 
-                var filename = string.Format("{0}\\{1}", directory, PROFILE_SETTINGS_FILENAME);
+                var filename = $"{directory}\\{PROFILE_SETTINGS_FILENAME}";
                 profile.Save(filename);
             }
         }

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <items>
-  <rule name="Membership number presents on a page" enabled="true">
+  <rule name="Membership number presents on a page" enabled="true" type="exclude">
     <condition>$('#membershipnumberlabel').html() ==  1200658084</condition>
+    <url>https://www.on2pp1.co.uk/vitality/login</url>
   </rule>
 </items>

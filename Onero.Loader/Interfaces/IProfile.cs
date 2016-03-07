@@ -22,5 +22,9 @@
         bool FindAllBrokenLinks { get; set; }
 
         bool FindAllBrokenImages { get; set; }
+
+        bool FindAllBrokenScripts { get; set; }
+
+        bool FindAllBrokenStyles { get; set; }
     }
 }

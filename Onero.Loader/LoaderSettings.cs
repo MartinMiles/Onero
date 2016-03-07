@@ -25,6 +25,10 @@ namespace Onero.Loader
 
         public IEnumerable<Broken.Broken> BrokenImages { get; set; }
 
+        public IEnumerable<Broken.Broken> BrokenScripts { get; set; }
+
+        public IEnumerable<Broken.Broken> BrokenStyles { get; set; }
+
         public IEnumerable<Rule> Rules { get; set; }
 
         public IEnumerable<WebForm> Forms { get; set; }

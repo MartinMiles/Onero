@@ -229,6 +229,8 @@
     <Content Include="Settings\Default\BrokenLinks.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Settings\Default\BrokenScripts.xml" />
+    <Content Include="Settings\Default\BrokenStyles.xml" />
     <Content Include="Settings\Default\Links.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

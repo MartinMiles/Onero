@@ -86,6 +86,10 @@ namespace Onero
 
         public bool FindAllBrokenImages { get; set; }
 
+        public bool FindAllBrokenScripts { get; set; }
+
+        public bool FindAllBrokenStyles { get; set; }
+
         #endregion
 
         public void Save(string fileName)
@@ -129,6 +133,14 @@ namespace Onero
             var testAllImages = new XElement("FindAllBrokenImages");
             testAllImages.SetAttributeValue("value", FindAllBrokenImages);
             root.Add(testAllImages);
+
+            var testAllScripts = new XElement("FindAllBrokenScripts");
+            testAllScripts.SetAttributeValue("value", FindAllBrokenScripts);
+            root.Add(testAllScripts);
+
+            var testAllStyles = new XElement("FindAllBrokenStyles");
+            testAllStyles.SetAttributeValue("value", FindAllBrokenStyles);
+            root.Add(testAllStyles);
 
             doc.Add(root);
             doc.Save(fileName); 

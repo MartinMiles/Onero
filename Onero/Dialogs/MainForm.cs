@@ -199,6 +199,8 @@ namespace Onero.Dialogs
                 settings.Forms = new CollectionOf<Form>(CurrentProfileName).Read<WebForm>().Where(f => f.Enabled);
                 settings.BrokenLinks = new CollectionOf<BrokenLink>(CurrentProfileName).Read<BrokenLink>().Where(f => f.Enabled);
                 settings.BrokenImages = new CollectionOf<BrokenImage>(CurrentProfileName).Read<BrokenImage>().Where(f => f.Enabled);
+                settings.BrokenScripts = new CollectionOf<BrokenScript>(CurrentProfileName).Read<BrokenScript>().Where(f => f.Enabled);
+                settings.BrokenStyles = new CollectionOf<BrokenStyle>(CurrentProfileName).Read<BrokenStyle>().Where(f => f.Enabled);
 
                 settings.PagesToCrawl = LinksFromTextbox;
 

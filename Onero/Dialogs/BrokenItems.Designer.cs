@@ -35,12 +35,22 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.messageLabel = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.imagesGroupBox = new System.Windows.Forms.GroupBox();
             this.testAllImages = new System.Windows.Forms.CheckBox();
             this.addNewImageItem = new System.Windows.Forms.Button();
             this.imagesCheckList = new System.Windows.Forms.CheckedListBox();
+            this.stylesGroupBox = new System.Windows.Forms.GroupBox();
+            this.testAllStyles = new System.Windows.Forms.CheckBox();
+            this.addNewStyleItem = new System.Windows.Forms.Button();
+            this.stylesCheckList = new System.Windows.Forms.CheckedListBox();
+            this.scriptsGroupBox = new System.Windows.Forms.GroupBox();
+            this.testAllScripts = new System.Windows.Forms.CheckBox();
+            this.scriptsCheckList = new System.Windows.Forms.CheckedListBox();
+            this.addNewScriptItem = new System.Windows.Forms.Button();
             this.rulesGroupBox.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.imagesGroupBox.SuspendLayout();
+            this.stylesGroupBox.SuspendLayout();
+            this.scriptsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // rulesGroupBox
@@ -96,7 +106,7 @@
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(538, 360);
+            this.cancelButton.Location = new System.Drawing.Point(1152, 360);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 14;
@@ -114,7 +124,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(457, 360);
+            this.saveButton.Location = new System.Drawing.Point(1071, 360);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 13;
@@ -122,17 +132,17 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.SaveClick);
             // 
-            // groupBox1
+            // imagesGroupBox
             // 
-            this.groupBox1.Controls.Add(this.testAllImages);
-            this.groupBox1.Controls.Add(this.addNewImageItem);
-            this.groupBox1.Controls.Add(this.imagesCheckList);
-            this.groupBox1.Location = new System.Drawing.Point(312, 5);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(301, 349);
-            this.groupBox1.TabIndex = 16;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Broken images (double-click to edit)";
+            this.imagesGroupBox.Controls.Add(this.testAllImages);
+            this.imagesGroupBox.Controls.Add(this.addNewImageItem);
+            this.imagesGroupBox.Controls.Add(this.imagesCheckList);
+            this.imagesGroupBox.Location = new System.Drawing.Point(312, 5);
+            this.imagesGroupBox.Name = "imagesGroupBox";
+            this.imagesGroupBox.Size = new System.Drawing.Size(301, 349);
+            this.imagesGroupBox.TabIndex = 16;
+            this.imagesGroupBox.TabStop = false;
+            this.imagesGroupBox.Text = "Broken images (double-click to edit)";
             // 
             // testAllImages
             // 
@@ -172,14 +182,116 @@
             this.imagesCheckList.Click += new System.EventHandler(this.CheckedListBoxSingleClick);
             this.imagesCheckList.DoubleClick += new System.EventHandler(this.ImagesCheckListDoubleCLick);
             // 
+            // stylesGroupBox
+            // 
+            this.stylesGroupBox.Controls.Add(this.testAllStyles);
+            this.stylesGroupBox.Controls.Add(this.addNewStyleItem);
+            this.stylesGroupBox.Controls.Add(this.stylesCheckList);
+            this.stylesGroupBox.Location = new System.Drawing.Point(926, 5);
+            this.stylesGroupBox.Name = "stylesGroupBox";
+            this.stylesGroupBox.Size = new System.Drawing.Size(301, 349);
+            this.stylesGroupBox.TabIndex = 18;
+            this.stylesGroupBox.TabStop = false;
+            this.stylesGroupBox.Text = "Broken images (double-click to edit)";
+            // 
+            // testAllStyles
+            // 
+            this.testAllStyles.AutoSize = true;
+            this.testAllStyles.Checked = true;
+            this.testAllStyles.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.testAllStyles.Location = new System.Drawing.Point(10, 29);
+            this.testAllStyles.Name = "testAllStyles";
+            this.testAllStyles.Size = new System.Drawing.Size(185, 17);
+            this.testAllStyles.TabIndex = 13;
+            this.testAllStyles.Text = "Test all the pages for broken links";
+            this.testAllStyles.UseVisualStyleBackColor = true;
+            this.testAllStyles.CheckedChanged += new System.EventHandler(this.TestAllStylesCheckChanged);
+            // 
+            // addNewStyleItem
+            // 
+            this.addNewStyleItem.Location = new System.Drawing.Point(228, 25);
+            this.addNewStyleItem.Name = "addNewStyleItem";
+            this.addNewStyleItem.Size = new System.Drawing.Size(61, 23);
+            this.addNewStyleItem.TabIndex = 14;
+            this.addNewStyleItem.Text = "Add new";
+            this.addNewStyleItem.UseVisualStyleBackColor = true;
+            this.addNewStyleItem.Visible = false;
+            this.addNewStyleItem.Click += new System.EventHandler(this.AddNewStyleItemClicked);
+            // 
+            // stylesCheckList
+            // 
+            this.stylesCheckList.BackColor = System.Drawing.SystemColors.Control;
+            this.stylesCheckList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.stylesCheckList.CheckOnClick = true;
+            this.stylesCheckList.FormattingEnabled = true;
+            this.stylesCheckList.Location = new System.Drawing.Point(28, 56);
+            this.stylesCheckList.Name = "stylesCheckList";
+            this.stylesCheckList.Size = new System.Drawing.Size(261, 285);
+            this.stylesCheckList.TabIndex = 1;
+            this.stylesCheckList.Visible = false;
+            this.stylesCheckList.Click += new System.EventHandler(this.CheckedListBoxSingleClick);
+            this.stylesCheckList.DoubleClick += new System.EventHandler(this.StylesCheckListDoubleCLick);
+            // 
+            // scriptsGroupBox
+            // 
+            this.scriptsGroupBox.Controls.Add(this.testAllScripts);
+            this.scriptsGroupBox.Controls.Add(this.scriptsCheckList);
+            this.scriptsGroupBox.Controls.Add(this.addNewScriptItem);
+            this.scriptsGroupBox.Location = new System.Drawing.Point(619, 5);
+            this.scriptsGroupBox.Name = "scriptsGroupBox";
+            this.scriptsGroupBox.Size = new System.Drawing.Size(301, 349);
+            this.scriptsGroupBox.TabIndex = 17;
+            this.scriptsGroupBox.TabStop = false;
+            this.scriptsGroupBox.Text = "Broken links (double-click to edit)";
+            // 
+            // testAllScripts
+            // 
+            this.testAllScripts.AutoSize = true;
+            this.testAllScripts.Checked = true;
+            this.testAllScripts.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.testAllScripts.Location = new System.Drawing.Point(10, 29);
+            this.testAllScripts.Name = "testAllScripts";
+            this.testAllScripts.Size = new System.Drawing.Size(185, 17);
+            this.testAllScripts.TabIndex = 2;
+            this.testAllScripts.Text = "Test all the pages for broken links";
+            this.testAllScripts.UseVisualStyleBackColor = true;
+            this.testAllScripts.CheckedChanged += new System.EventHandler(this.TestAllScriptsCheckChanged);
+            // 
+            // scriptsCheckList
+            // 
+            this.scriptsCheckList.BackColor = System.Drawing.SystemColors.Control;
+            this.scriptsCheckList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.scriptsCheckList.CheckOnClick = true;
+            this.scriptsCheckList.FormattingEnabled = true;
+            this.scriptsCheckList.Location = new System.Drawing.Point(28, 56);
+            this.scriptsCheckList.Name = "scriptsCheckList";
+            this.scriptsCheckList.Size = new System.Drawing.Size(261, 285);
+            this.scriptsCheckList.TabIndex = 1;
+            this.scriptsCheckList.Visible = false;
+            this.scriptsCheckList.Click += new System.EventHandler(this.CheckedListBoxSingleClick);
+            this.scriptsCheckList.DoubleClick += new System.EventHandler(this.ScriptsCheckListDoubleCLick);
+            // 
+            // addNewScriptItem
+            // 
+            this.addNewScriptItem.Location = new System.Drawing.Point(228, 25);
+            this.addNewScriptItem.Name = "addNewScriptItem";
+            this.addNewScriptItem.Size = new System.Drawing.Size(61, 23);
+            this.addNewScriptItem.TabIndex = 12;
+            this.addNewScriptItem.Text = "Add new";
+            this.addNewScriptItem.UseVisualStyleBackColor = true;
+            this.addNewScriptItem.Visible = false;
+            this.addNewScriptItem.Click += new System.EventHandler(this.AddNewScriptItemClicked);
+            // 
             // BrokenItems
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(621, 394);
+            this.ClientSize = new System.Drawing.Size(1238, 395);
             this.ControlBox = false;
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.stylesGroupBox);
+            this.Controls.Add(this.scriptsGroupBox);
+            this.Controls.Add(this.imagesGroupBox);
             this.Controls.Add(this.rulesGroupBox);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.messageLabel);
@@ -190,8 +302,12 @@
             this.Load += new System.EventHandler(this.BrokenItems_Load);
             this.rulesGroupBox.ResumeLayout(false);
             this.rulesGroupBox.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.imagesGroupBox.ResumeLayout(false);
+            this.imagesGroupBox.PerformLayout();
+            this.stylesGroupBox.ResumeLayout(false);
+            this.stylesGroupBox.PerformLayout();
+            this.scriptsGroupBox.ResumeLayout(false);
+            this.scriptsGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,9 +322,17 @@
         private System.Windows.Forms.Label messageLabel;
         private System.Windows.Forms.Button saveButton;
         public System.Windows.Forms.CheckedListBox imagesCheckList;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox imagesGroupBox;
         public System.Windows.Forms.CheckBox testAllLinks;
         public System.Windows.Forms.CheckBox testAllImages;
         private System.Windows.Forms.Button addNewImageItem;
+        private System.Windows.Forms.GroupBox stylesGroupBox;
+        public System.Windows.Forms.CheckBox testAllStyles;
+        private System.Windows.Forms.Button addNewStyleItem;
+        public System.Windows.Forms.CheckedListBox stylesCheckList;
+        private System.Windows.Forms.GroupBox scriptsGroupBox;
+        public System.Windows.Forms.CheckBox testAllScripts;
+        public System.Windows.Forms.CheckedListBox scriptsCheckList;
+        private System.Windows.Forms.Button addNewScriptItem;
     }
 }
