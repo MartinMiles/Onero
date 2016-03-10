@@ -1,7 +1,10 @@
 ﻿using System;
+using System.IO;
 using Onero.Loader.Interfaces;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Opera;
 using OpenQA.Selenium.PhantomJS;
 using OpenQA.Selenium.Remote;
@@ -11,6 +14,12 @@ namespace Onero.Loader
     public class DriverFactory
     {
         private const string ABOUT_BLANK = "about:blank";
+
+        private const string DRIVERS_FOLDER_NAME = "Drivers";
+        private const string CHROME_DRIVER = "chromedriver.exe";
+        private const string OPERA_DRIVER = "operadriver.exe";
+
+        private string DriversFolder => $"{Directory.GetCurrentDirectory()}\\{DRIVERS_FOLDER_NAME}";
 
         private RemoteWebDriver _driver;
         private readonly IProfile _profile;
@@ -22,7 +31,7 @@ namespace Onero.Loader
 
         public RemoteWebDriver Driver
         {
-            get { return _driver ?? (_driver = ResolveDriver()); }
+            get { return _driver ?? ResolveDriver(); }
         }
 
         private RemoteWebDriver ResolveDriver()
@@ -30,15 +39,37 @@ namespace Onero.Loader
             switch (_profile.Browser)
             {
                 case Browser.BrowserHidden : return PhantomDriver;
+                case Browser.IE : return InternetExplorerDriver;
+                case Browser.Edge : return EdgeDriver;
                 case Browser.Firefox : return FirefoxDriver;
                 case Browser.Chrome : return ChromeDriver;
                 case Browser.Opera : return OperaDriver;
             }
 
-            throw new NotImplementedException(string.Format("Unknown Remote Web Driver: {0}", _profile.Browser));
+            throw new NotImplementedException($"Unknown Remote Web Driver: {_profile.Browser}");
         }
 
         #region Vendor-specific driver properties
+
+        public RemoteWebDriver InternetExplorerDriver
+        {
+            get
+            {
+                var driverService = InternetExplorerDriverService.CreateDefaultService(DriversFolder);
+                driverService.HideCommandPromptWindow = true;
+
+                return new InternetExplorerDriver(driverService, new InternetExplorerOptions { InitialBrowserUrl = ABOUT_BLANK });
+            }
+        }
+
+        public RemoteWebDriver EdgeDriver
+        {
+            get
+            {
+                EdgeOptions options = new EdgeOptions { PageLoadStrategy = EdgePageLoadStrategy.Eager };
+                return new EdgeDriver(DriversFolder, options);
+            }
+        }
 
         public RemoteWebDriver FirefoxDriver
         {
@@ -57,13 +88,10 @@ namespace Onero.Loader
         {
             get
             {
-                DesiredCapabilities capabilities = DesiredCapabilities.Chrome();
-                ChromeOptions options = new ChromeOptions();
-                options.AddArguments("test-type");
-                capabilities.SetCapability("chrome.binary", @"e:\Projects\Onero\Onero\");
-                capabilities.SetCapability(ChromeOptions.Capability, options);
-
-                return new ChromeDriver(@"e:\Projects\Onero\Onero", options);
+                var options = new ChromeOptions { LeaveBrowserRunning = false };
+                var service = ChromeDriverService.CreateDefaultService(DriversFolder, CHROME_DRIVER);
+                service.HideCommandPromptWindow = true;
+                return new ChromeDriver(service, options);
             }
         }
 
@@ -71,13 +99,10 @@ namespace Onero.Loader
         {
             get
             {
-                DesiredCapabilities capabilities = DesiredCapabilities.Chrome();
-                ChromeOptions options = new ChromeOptions();
-                options.AddArguments("test-type");
-                capabilities.SetCapability("chrome.binary", @"e:\Projects\Onero\Onero\");
-                capabilities.SetCapability(ChromeOptions.Capability, options);
-
-                return new OperaDriver(@"e:\Projects\Onero\Onero\");
+                var options = new OperaOptions { LeaveBrowserRunning = false };
+                var service = OperaDriverService.CreateDefaultService(DriversFolder, OPERA_DRIVER);
+                service.HideCommandPromptWindow = true;
+                return new OperaDriver(service, options);
             }
         }
 
@@ -85,7 +110,7 @@ namespace Onero.Loader
         {
             get
             {
-                var driverService = PhantomJSDriverService.CreateDefaultService();
+                var driverService = PhantomJSDriverService.CreateDefaultService(DriversFolder);
                 driverService.HideCommandPromptWindow = true;
                 return new PhantomJSDriver(driverService);
             }

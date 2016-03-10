@@ -3,7 +3,7 @@
   <Screenshots value="true" />
   <VerboseMode value="true" />
   <CreateErrorLog value="true" />
-  <Browser value="BrowserHidden" />
+  <Browser value="IE" />
   <OutputDirectory value="e:\Projects\Onero\Onero\bin\Debug\Results\Default" />
   <Timeout value="60" />
   <FindAllBrokenLinks value="false" />

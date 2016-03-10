@@ -6,12 +6,19 @@ using Onero.Loader.Broken;
 
 namespace Onero.Dialogs
 {
-    //TODO: Rename this form to BrokenItemEditor
-    public partial class BrokenItem : Form
+    public partial class BrokenItemEditor : Form
     {
-        public BrokenItem()
+        public BrokenItemEditor()
         {
             InitializeComponent();
+        }
+
+        private void BrokenItem_Load(object sender, EventArgs e)
+        {
+            if (RuleScope == 0)
+            {
+                scopeCombobox.SelectedIndex = 0;
+            }
         }
 
         #region Properties
@@ -46,7 +53,6 @@ namespace Onero.Dialogs
 
         #endregion
 
-        //TODO: Make generic and to the base class - if doable
         #region Get / set data item
 
         private Broken _rule;
@@ -80,8 +86,6 @@ namespace Onero.Dialogs
             {
                 urlTextbox.Text = string.Join(", ", rule.Urls);
             }
-
-            //urlTextbox.Enabled = scopeCombobox.SelectedIndex > 0;
         }
 
         #endregion
@@ -93,21 +97,6 @@ namespace Onero.Dialogs
                 RuleExecutionScope scope;
                 RuleExecutionScope.TryParse(scopeCombobox.SelectedItem as string, true, out scope);
                 return scope;
-            }
-            //set { scopeCombobox.SelectedItem = value; }
-        }
-
-        //private void ScopeComboboxChanged(object sender, EventArgs e)
-        //{
-        //    var combobox = sender as ComboBox;
-        //    //urlTextbox.Enabled = combobox.SelectedIndex > 0;
-        //}
-
-        private void BrokenItem_Load(object sender, EventArgs e)
-        {
-            if (RuleScope == 0)
-            {
-                scopeCombobox.SelectedIndex = 0;
             }
         }
     }

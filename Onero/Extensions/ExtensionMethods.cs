@@ -121,5 +121,15 @@ namespace Onero.Extensions
         {
             return Profiles.EnabledOrDefault(profiles);
         }
+
+        public static string GetSelectedString(this CheckedListBox checkedListBox)
+        {
+            if (checkedListBox.SelectedItem == null)
+            {
+                return string.Empty;
+            }
+
+            return checkedListBox.SelectedItem as string;
+        }
     }
 }

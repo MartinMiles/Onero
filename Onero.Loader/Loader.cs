@@ -55,11 +55,8 @@ namespace Onero.Loader
                             result.PageLoadTime = timer.ElapsedMilliseconds;
 
                             //TODO: Later move to actions factory
-                            if (settings.Profile.CreateScreenshots)
-                            {
-                                var screenshotAction = new MakeScreenshotAction(driver, settings)  { Order = order };
-                                screenshotAction.Execute();
-                            }
+                            var screenshotAction = new MakeScreenshotAction(driver, settings)  { Order = order };
+                            screenshotAction.Execute();
 
                             var brokenLinksAction = new BrokenLinksAction(driver, settings);
                             result.BrokenLinksResult = brokenLinksAction.Execute();
@@ -92,6 +89,8 @@ namespace Onero.Loader
                 {
                     Logger.Log(e);
                 }
+
+                throw;
             }
         }
     }

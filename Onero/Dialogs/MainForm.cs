@@ -22,6 +22,11 @@ namespace Onero.Dialogs
         private const string PROGRESS_COMPLETED = "Progress: completed {0} pages";
         private const string INVALID_CRAWLING_MODE = "Crawling mode not specified correctly";
 
+        // TODO: Move messages into their own static class ???
+        private const string BROWSER_MISSING_CHROME = "Chrome browser is not found. Please install";
+        private const string BROWSER_MISSING_OPERA = "Opera browser is not found. Please install";
+        private const string OS_NOT_SUPPORTED = "OS is not supported";
+
         private const string START_BUTTON = "Start";
         private const string CANCEL_BUTTON = "Cancel";
         private const string CANCELLING_BUTTON = "Cancelling...";
@@ -134,6 +139,11 @@ namespace Onero.Dialogs
 
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (e.Error != null)
+            {
+                ProcessError(e.Error);
+            }
+
             startButton.Text = START_BUTTON;
             startButton.Enabled = true;
             startToolStripMenuItem.Text = START_BUTTON;
@@ -146,6 +156,29 @@ namespace Onero.Dialogs
             BlockUserInterfaceOnRun(false);
 
             Results.WriteCSV(results, settings);
+        }
+
+        private void ProcessError(Exception excp)
+        {
+            if (excp is InvalidOperationException)
+            {
+                if (excp.Source == "WebDriver" && excp.Message.Contains("Chrome"))
+                {
+                    MessageBox.Show(BROWSER_MISSING_CHROME);
+                }
+                else if (excp.Source == "WebDriver" && excp.Message.Contains("Opera"))
+                {
+                    MessageBox.Show(BROWSER_MISSING_OPERA);
+                }
+            }
+
+            if (excp is Win32Exception)
+            {
+                if (excp.Source == "System" && excp.Message.Contains("this OS platform"))
+                {
+                    MessageBox.Show(OS_NOT_SUPPORTED);
+                }
+            }
         }
 
         #endregion
@@ -166,7 +199,7 @@ namespace Onero.Dialogs
             startToolStripMenuItem.Enabled = true;
             environmentLinksItems.Enabled = true;
 
-            linksGroupbox.Text = string.Format("Pages to process ({0})", UrlToProcess.Count);
+            linksGroupbox.Text = $"Pages to process ({UrlToProcess.Count})";
         }
 
         #endregion
@@ -419,46 +452,6 @@ namespace Onero.Dialogs
             startToolStripMenuItem.Enabled = startButton.Enabled;
         }
 
-        private void TestClick(object sender, EventArgs e)
-        {
-            //ReadWebApi("http://test01/sitecore/api/ssc/item/0DE95AE4-41AB-4D01-9EB0-67441B7C2450/children?database=master");
-
-            //ParseWebApi(apiEndpoint.Text, apiLogin.Text);
-
-            const string WebApi = "http://test02/?sc_itemid={110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}";
-            const string URL1 = "https://tfl.gov.uk/\nhttp://tfl.gov.uk/plan-a-journey/\nhttp://tfl.gov.uk/plan-a-journey/results";
-
-            //webApiMode.Checked = true;
-            apiEndpoint.Text = "http://test02/-/item/v1/?query=/sitecore/content/*";
-            apiLogin.Text = "sitecore\\admin";
-            apiPassword.Text = "b";
-            sitemapHost.Text = "https://tfl.gov.uk";
-            sitemapFilename.Text = "sitemap.xml";
-
-            var doc = new XmlDocument();
-            doc.Load(string.Format(new CollectionOf<Rule>(CurrentProfileName).FilePath));
-
-            environmentLinksItems.Clear();
-            environmentLinksItems.Text = WebApi;
-            //results = new List<Result>
-            //{
-            //    new Result(URL1)
-            //    {
-            //        PageResult = ResultCode.Successfull,
-            //        PageLoadTime = 1572,
-            //        FormResults = new Dictionary<WebForm, ResultCode>
-            //        {
-            //            { new WebForm(doc.DocumentElement.ChildNodes[0]), ResultCode.Successfull }  
-            //        },
-            //        RuleResults = new Dictionary<Rule, ResultCode>
-            //        {
-            //          { new Rule("Has_top_menu_items", "return $('#top_menu_items').length;"), ResultCode.Successfull }  
-            //        }
-
-            //    }
-            //};
-        }
-
         #region Menu items
 
         private void DrawProfilesMenu()
@@ -602,6 +595,46 @@ namespace Onero.Dialogs
             {
                 // MessageBox.Show(RESULT_FOLDER_MISSING);
             }
+        }
+
+        private void TestClick(object sender, EventArgs e)
+        {
+            //ReadWebApi("http://test01/sitecore/api/ssc/item/0DE95AE4-41AB-4D01-9EB0-67441B7C2450/children?database=master");
+
+            //ParseWebApi(apiEndpoint.Text, apiLogin.Text);
+
+            const string WebApi = "http://test02/?sc_itemid={110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}";
+            const string URL1 = "https://tfl.gov.uk/\nhttp://tfl.gov.uk/plan-a-journey/\nhttp://tfl.gov.uk/plan-a-journey/results";
+
+            //webApiMode.Checked = true;
+            apiEndpoint.Text = "http://test02/-/item/v1/?query=/sitecore/content/*";
+            apiLogin.Text = "sitecore\\admin";
+            apiPassword.Text = "b";
+            sitemapHost.Text = "https://tfl.gov.uk";
+            sitemapFilename.Text = "sitemap.xml";
+
+            var doc = new XmlDocument();
+            doc.Load(string.Format(new CollectionOf<Rule>(CurrentProfileName).FilePath));
+
+            environmentLinksItems.Clear();
+            environmentLinksItems.Text = WebApi;
+            //results = new List<Result>
+            //{
+            //    new Result(URL1)
+            //    {
+            //        PageResult = ResultCode.Successfull,
+            //        PageLoadTime = 1572,
+            //        FormResults = new Dictionary<WebForm, ResultCode>
+            //        {
+            //            { new WebForm(doc.DocumentElement.ChildNodes[0]), ResultCode.Successfull }  
+            //        },
+            //        RuleResults = new Dictionary<Rule, ResultCode>
+            //        {
+            //          { new Rule("Has_top_menu_items", "return $('#top_menu_items').length;"), ResultCode.Successfull }  
+            //        }
+
+            //    }
+            //};
         }
     }
 }

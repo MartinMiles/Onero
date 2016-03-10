@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Onero.Collections;
+using Onero.Extensions;
 using Onero.Loader.Broken;
 using Onero.Loader.Interfaces;
 
@@ -10,61 +11,53 @@ namespace Onero.Dialogs
 {
     public partial class BrokenItems : Form
     {
+        private Dictionary<Type, IEnumerable<Broken>> items;
+        private Dictionary<Type, CheckedListBox> checkListBoxes;
+        private Dictionary<Type, Button> addNewButtons;
+
         #region Private items collections and getter / setter
 
-        private IEnumerable<Broken> _links;
-        private IEnumerable<Broken> _images;
-        private IEnumerable<Broken> _scripts;
-        private IEnumerable<Broken> _styles;
-
-        private IEnumerable<Broken> Get<T>()
+        private void BrokenItems_Load(object sender, EventArgs e)
         {
-            if (typeof (T) == typeof (BrokenLink))
-            {
-                return _links;
-            }
-            if (typeof (T) == typeof (BrokenImage))
-            {
-                return _images;
-            }
-            if (typeof (T) == typeof (BrokenScript))
-            {
-                return _scripts;
-            }
-            if (typeof (T) == typeof (BrokenStyle))
-            {
-                return _styles;
-            }
+            ReadControls();
 
-            throw new ArgumentOutOfRangeException($"Type not supported: {typeof (T)}");
+            ReadCollections();
+
+            EnsureVisibility();
+
+            DrawChecklists();
+
+            saveButton.Enabled = false;
         }
 
-        private void Set<T>(IEnumerable<Broken> items)
+        private void ReadControls()
         {
-            if (typeof (T) == typeof (BrokenLink))
+            checkListBoxes = new Dictionary<Type, CheckedListBox>
             {
-                _links = items;
-            }
-            else if (typeof (T) == typeof (BrokenImage))
+                {typeof (BrokenLink), linksCheckList},
+                {typeof (BrokenImage), imagesCheckList},
+                {typeof (BrokenScript), scriptsCheckList},
+                {typeof (BrokenStyle), stylesCheckList}
+            };
+
+            addNewButtons = new Dictionary<Type, Button>
             {
-                _images = items;
-            }
-            else if (typeof (T) == typeof (BrokenScript))
-            {
-                _scripts = items;
-            }
-            else if (typeof (T) == typeof (BrokenStyle))
-            {
-                _styles = items;
-            }
+                {typeof (BrokenLink), addNewLinkItem},
+                {typeof (BrokenImage), addNewImageItem},
+                {typeof (BrokenScript), addNewScriptItem},
+                {typeof (BrokenStyle), addNewStyleItem}
+            };
         }
 
         private void ReadCollections()
         {
-            _links = new CollectionOf<BrokenLink>(CurrentProfile.Name).Read<BrokenLink>();
-            _images = new CollectionOf<BrokenImage>(CurrentProfile.Name).Read<BrokenImage>();
-            _scripts = new CollectionOf<BrokenScript>(CurrentProfile.Name).Read<BrokenScript>();
-            _styles = new CollectionOf<BrokenStyle>(CurrentProfile.Name).Read<BrokenStyle>();            
+            items = new Dictionary<Type, IEnumerable<Broken>>
+            {
+                {typeof (BrokenLink), new CollectionOf<BrokenLink>(CurrentProfile.Name).Read<BrokenLink>()},
+                {typeof (BrokenImage), new CollectionOf<BrokenImage>(CurrentProfile.Name).Read<BrokenImage>()},
+                {typeof (BrokenScript), new CollectionOf<BrokenScript>(CurrentProfile.Name).Read<BrokenScript>()},
+                {typeof (BrokenStyle), new CollectionOf<BrokenStyle>(CurrentProfile.Name).Read<BrokenStyle>()}
+            };
         }
 
         #endregion
@@ -87,10 +80,7 @@ namespace Onero.Dialogs
                 CurrentProfile.FindAllBrokenScripts = testAllScripts.Checked;
                 CurrentProfile.FindAllBrokenStyles = testAllStyles.Checked;
 
-                bool result = SaveItems<BrokenLink>(_links, linksCheckList.CheckedItems)
-                              && SaveItems<BrokenImage>(_images, imagesCheckList.CheckedItems)
-                              && SaveItems<BrokenScript>(_scripts, scriptsCheckList.CheckedItems)
-                              && SaveItems<BrokenStyle>(_styles, stylesCheckList.CheckedItems);
+                bool result = SaveItems<BrokenLink>() && SaveItems<BrokenImage>() && SaveItems<BrokenScript>() && SaveItems<BrokenStyle>();
 
                 if (result)
                 {
@@ -105,8 +95,11 @@ namespace Onero.Dialogs
             Close();
         }
 
-        private bool SaveItems<T>(IEnumerable<Broken> items, CheckedListBox.CheckedItemCollection checkedNames) where T : Broken
+        private bool SaveItems<T>() where T : Broken
         {
+            var items = this.items[typeof(T)];
+            var checkedNames = checkListBoxes[typeof(T)].CheckedItems;
+
             foreach (T link in items)
             {
                 link.Enabled = checkedNames.Contains(link.NameWithPrefix);
@@ -127,47 +120,23 @@ namespace Onero.Dialogs
 
         #endregion
 
-        private void BrokenItems_Load(object sender, EventArgs e)
-        {
-            ReadCollections();
-
-            EnsureVisibility();
-
-            DrawChecklists();
-
-            saveButton.Enabled = false;
-        }
 
         private void DrawChecklists()
         {
-            //TODO: Generalize here below
+            DrawChecklists<BrokenLink>();
+            DrawChecklists<BrokenImage>();
+            DrawChecklists<BrokenScript>();
+            DrawChecklists<BrokenStyle>();
+        }
 
-            linksCheckList.Items.Clear();
-            for (int i = 0; i < _links.Count(); i++)
-            {
-                var item = _links.ElementAt(i);
-                linksCheckList.Items.Add(item.NameWithPrefix, item.Enabled);
-            }
+        private void DrawChecklists<T>()
+        {
+            checkListBoxes[typeof(T)].Items.Clear();
 
-            imagesCheckList.Items.Clear();
-            for (int i = 0; i < _images.Count(); i++)
+            for (int i = 0; i < items[typeof(T)].Count(); i++)
             {
-                var item = _images.ElementAt(i);
-                imagesCheckList.Items.Add(item.NameWithPrefix, item.Enabled);
-            }
-
-            scriptsCheckList.Items.Clear();
-            for (int i = 0; i < _scripts.Count(); i++)
-            {
-                var item = _scripts.ElementAt(i);
-                scriptsCheckList.Items.Add(item.NameWithPrefix, item.Enabled);
-            }
-
-            stylesCheckList.Items.Clear();
-            for (int i = 0; i < _styles.Count(); i++)
-            {
-                var item = _styles.ElementAt(i);
-                stylesCheckList.Items.Add(item.NameWithPrefix, item.Enabled);
+                var item = items[typeof(T)].ElementAt(i);
+                checkListBoxes[typeof(T)].Items.Add(item.NameWithPrefix, item.Enabled);
             }
         }
 
@@ -179,28 +148,27 @@ namespace Onero.Dialogs
         #region Double click handlers
         private void LinksCheckListDoubleCLick(object sender, EventArgs e)
         {
-            CheckedListBoxDoubleClick<BrokenLink>(GetSelectedItem(sender));
+            CheckedListBoxDoubleClick<BrokenLink>((sender as CheckedListBox).GetSelectedString());
         }
 
         private void ImagesCheckListDoubleCLick(object sender, EventArgs e)
         {
-            CheckedListBoxDoubleClick<BrokenImage>(GetSelectedItem(sender));
+            CheckedListBoxDoubleClick<BrokenImage>((sender as CheckedListBox).GetSelectedString());
         }
 
         private void ScriptsCheckListDoubleCLick(object sender, EventArgs e)
         {
-            CheckedListBoxDoubleClick<BrokenScript>(GetSelectedItem(sender));
+            CheckedListBoxDoubleClick<BrokenScript>((sender as CheckedListBox).GetSelectedString());
         }
 
         private void StylesCheckListDoubleCLick(object sender, EventArgs e)
         {
-            CheckedListBoxDoubleClick<BrokenStyle>(GetSelectedItem(sender));
+            CheckedListBoxDoubleClick<BrokenStyle>((sender as CheckedListBox).GetSelectedString());
         }
 
         private void CheckedListBoxDoubleClick<T>(string selectedItemName) where T : Broken, new()
         {
-            // TODO: Replace this in favor of locally store collection (_links or _images) and possibly generic. To get rid of if (typeof (T) == typeof (BrokenLink)) below
-            var items = Get<T>();
+            var items = this.items[typeof (T)];
 
             Broken rule = items.FirstOrDefault(r => r.NameWithPrefix == selectedItemName);
 
@@ -209,10 +177,12 @@ namespace Onero.Dialogs
                 return;
             }
 
-            var editorForm = new BrokenItem {StartPosition = FormStartPosition.CenterParent};
-            editorForm.Title = $"{rule.Name} ({(rule.Enabled ? "enabled" : "disabled")})";
-
-            editorForm.Rule = rule;
+            var editorForm = new BrokenItemEditor
+            {
+                StartPosition = FormStartPosition.CenterParent,
+                Title = $"{rule.Name} ({(rule.Enabled ? "enabled" : "disabled")})",
+                Rule = rule
+            };
 
             var dialogResult = editorForm.ShowDialog();
             if (dialogResult == DialogResult.OK)
@@ -228,88 +198,49 @@ namespace Onero.Dialogs
                 return;
             }
 
-            // temporal fix
-            Set<T>(items);
+            this.items[typeof (T)] = items;
 
             DrawChecklists();
-
             editorForm.Dispose();
-
             saveButton.Enabled = true;
         }
 
         #endregion
 
-        //TODO: Duplicated with the one at RulesList
-        private string GetSelectedItem(object sender)
-        {
-            var clb = sender as CheckedListBox;
-
-            if (clb.SelectedItem == null)
-            {
-                return string.Empty;
-            }
-
-            return clb.SelectedItem as string;
-        }
-
         #region Add new button handler
 
         private void AddNewLinkItemClicked(object sender, EventArgs e)
         {
-            AddNewClick<BrokenLink>(((Control) sender).Name);
+            AddNewClick<BrokenLink>();
         }
 
         private void AddNewImageItemClicked(object sender, EventArgs e)
         {
-            AddNewClick<BrokenImage>(((Control) sender).Name);
+            AddNewClick<BrokenImage>();
         }
 
         private void AddNewScriptItemClicked(object sender, EventArgs e)
         {
-            AddNewClick<BrokenScript>(((Control) sender).Name);
+            AddNewClick<BrokenScript>();
         }
 
         private void AddNewStyleItemClicked(object sender, EventArgs e)
         {
-            AddNewClick<BrokenStyle>(((Control) sender).Name);
+            AddNewClick<BrokenStyle>();
         }
 
-        private void AddNewClick<T>(string name) where T : Broken, new()
+        private void AddNewClick<T>() where T : Broken, new()
         {
-            var editorForm = new BrokenItem
+            var editorForm = new BrokenItemEditor
             {
                 StartPosition = FormStartPosition.CenterParent,
-
-                // TODO: Make widow title change (and for similar forms as well, possibly inherriance)
                 Title = "Please enter a new broken links pattern",
                 Rule = (T) Activator.CreateInstance(typeof (T), new[] {"", ""})
             };
 
             if (editorForm.ShowDialog() == DialogResult.OK)
             {
-                //TODO: Generalize here below
-
-                if (name == "addNewLinkItem")
-                {
-                    _links = _links.Concat(new[] {editorForm.Rule});
-
-                }
-                else if (name == "addNewImageItem")
-                {
-                    _images = _images.Concat(new[] {editorForm.Rule});
-
-                }
-                else if (name == "addNewScriptItem")
-                {
-                    _scripts = _scripts.Concat(new[] {editorForm.Rule});
-
-                }
-                else if (name == "addNewStyleItem")
-                {
-                    _styles = _styles.Concat(new[] {editorForm.Rule});
-
-                }
+                items[typeof(T)] = items[typeof(T)].Concat(new[] { editorForm.Rule });
 
                 DrawChecklists();
                 saveButton.Enabled = true;
@@ -320,45 +251,32 @@ namespace Onero.Dialogs
 
         #endregion
 
-        #region Refactor: Test all CheckChanged 
+        #region 'Test all' checkbox change handlers
 
         private void TestAllLinksCheckChanged(object sender, EventArgs e)
         {
-            linksCheckList.Visible = !(sender as CheckBox).Checked;
-            addNewLinkItem.Visible = !(sender as CheckBox).Checked;
-
-            if (e != null)
-            {
-                saveButton.Enabled = true;
-            }
+            TestAllLinksCheckChanged<BrokenLink>(sender, e);
         }
 
         private void TestAllImagesCheckChanged(object sender, EventArgs e)
         {
-            imagesCheckList.Visible = !(sender as CheckBox).Checked;
-            addNewImageItem.Visible = !(sender as CheckBox).Checked;
-
-            if (e != null)
-            {
-                saveButton.Enabled = true;
-            }
+            TestAllLinksCheckChanged<BrokenImage>(sender, e);
         }
 
         private void TestAllScriptsCheckChanged(object sender, EventArgs e)
         {
-            scriptsCheckList.Visible = !(sender as CheckBox).Checked;
-            addNewScriptItem.Visible = !(sender as CheckBox).Checked;
-
-            if (e != null)
-            {
-                saveButton.Enabled = true;
-            }
+            TestAllLinksCheckChanged<BrokenScript>(sender, e);
         }
-                     
+
         private void TestAllStylesCheckChanged(object sender, EventArgs e)
         {
-            stylesCheckList.Visible = !(sender as CheckBox).Checked;
-            addNewStyleItem.Visible = !(sender as CheckBox).Checked;
+            TestAllLinksCheckChanged<BrokenStyle>(sender, e);
+        }
+
+        private void TestAllLinksCheckChanged<T>(object sender, EventArgs e) where T : Broken
+        {
+            checkListBoxes[typeof(T)].Visible = !(sender as CheckBox).Checked;
+            addNewButtons[typeof(T)].Visible = !(sender as CheckBox).Checked;
 
             if (e != null)
             {
@@ -381,6 +299,7 @@ namespace Onero.Dialogs
             TestAllStylesCheckChanged(testAllStyles, null);
         }
 
+        // checkbox 'proper' handler
         //private void linksCheckList_ItemCheck(object sender, ItemCheckEventArgs e)
         //{
         //    var checkedListBox = sender as CheckedListBox;

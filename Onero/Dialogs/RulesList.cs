@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Onero.Collections;
+using Onero.Extensions;
 using Onero.Loader;
 
 namespace Onero.Dialogs
@@ -37,23 +38,10 @@ namespace Onero.Dialogs
             }
         }
 
-        // TODO: Duplicates
-        private string GetSelectedItem(object sender)
-        {
-            var clb = sender as CheckedListBox;
-
-            if (clb.SelectedItem == null)
-            {
-                return string.Empty;
-            }
-
-            return clb.SelectedItem as string;
-        }
-
         // Runs editor window and saves results once editor is closed.
         private void CheckedListBoxDoubleClick(object sender, EventArgs e)
         {
-            var rule = rules.FirstOrDefault(r => r.NameWithPrefix == GetSelectedItem(sender));
+            var rule = rules.FirstOrDefault(r => r.NameWithPrefix == (sender as CheckedListBox).GetSelectedString());
 
             if (rule == null)
             {

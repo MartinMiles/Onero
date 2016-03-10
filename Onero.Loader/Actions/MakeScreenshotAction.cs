@@ -18,20 +18,23 @@ namespace Onero.Loader.Actions
 
         public override dynamic Execute()
         {
-            Directory.CreateDirectory(settings.Profile.OutputDirectory);
-
-            var screnshotsDir = string.Format("{0}\\Screenshots", settings.Profile.OutputDirectory);
-            if (!Directory.Exists(screnshotsDir))
+            if (settings.Profile.CreateScreenshots)
             {
-                Directory.CreateDirectory(screnshotsDir);
-            }
+                Directory.CreateDirectory(settings.Profile.OutputDirectory);
 
-            string fileFullPath = string.Format("{0}\\Screenshots\\{1}.jpg", settings.Profile.OutputDirectory, Order);
-            if (driver is RemoteWebDriver)
-            {
-                (driver as RemoteWebDriver).GetScreenshot().SaveAsFile(fileFullPath, ImageFormat.Png);
+                var screnshotsDir = string.Format("{0}\\Screenshots", settings.Profile.OutputDirectory);
+                if (!Directory.Exists(screnshotsDir))
+                {
+                    Directory.CreateDirectory(screnshotsDir);
+                }
 
-                LogUrl(string.Format("{0}. {1}{2}", Order, driver.Url, Environment.NewLine));
+                string fileFullPath = string.Format("{0}\\Screenshots\\{1}.jpg", settings.Profile.OutputDirectory, Order);
+                if (driver is RemoteWebDriver)
+                {
+                    (driver as RemoteWebDriver).GetScreenshot().SaveAsFile(fileFullPath, ImageFormat.Png);
+
+                    LogUrl(string.Format("{0}. {1}{2}", Order, driver.Url, Environment.NewLine));
+                }
             }
 
             return null;

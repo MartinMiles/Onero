@@ -7,6 +7,11 @@ namespace Onero.Loader
         [Description("Don't display browser")]
         BrowserHidden = 1,
 
+        [Description("Internet Explorer")]
+        IE,
+
+        Edge,
+
         [Description("Run in Firefox")]
         Firefox,
 

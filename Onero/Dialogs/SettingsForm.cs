@@ -227,9 +227,11 @@ namespace Onero.Dialogs
                 switch (browserCombobox.SelectedIndex)
                 {
                     case 0 : return Browser.BrowserHidden;
-                    case 1 : return Browser.Firefox;
-                    case 2 : return Browser.Chrome;
-                    case 3 : return Browser.Chrome;
+                    case 1 : return Browser.IE;
+                    case 2 : return Browser.Edge;
+                    case 3 : return Browser.Firefox;
+                    case 4 : return Browser.Chrome;
+                    case 5 : return Browser.Opera;
                 }
 
                 throw new NotImplementedException("Browser not supported");

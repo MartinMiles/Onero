@@ -57,7 +57,7 @@ namespace Onero.Loader.Actions
 
             var hrefs = driver
                 .FindElements(By.TagName(tagName))
-                .Where(e => Filter(e, filterAttributeName, filterAttributeValue))
+                .Where(e => FilterByAttribute(e, filterAttributeName, filterAttributeValue))
                 .Select(l => l.GetAttribute(attributeName))
                 .Where(i=>!string.IsNullOrWhiteSpace(i))
                 .Distinct();
@@ -101,11 +101,11 @@ namespace Onero.Loader.Actions
             return brokenLinks;
         }
 
-        private bool Filter(IWebElement e, string filterAttributeName, string filterAttributeValue)
+        private bool FilterByAttribute(IWebElement e, string name, string value)
         {
-            return (filterAttributeName == null && filterAttributeValue == null) ||
-                   (!string.IsNullOrWhiteSpace(e.GetAttribute(filterAttributeName))
-                    && e.GetAttribute(filterAttributeName).Equals(filterAttributeValue, StringComparison.InvariantCultureIgnoreCase));
+            return (name == null && value == null) ||
+                   (!string.IsNullOrWhiteSpace(e.GetAttribute(name))
+                    && e.GetAttribute(name).Equals(value, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

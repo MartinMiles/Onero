@@ -169,7 +169,7 @@ namespace Onero
             return true;
         }
 
-        public static bool IsValid(this BrokenItem editor)
+        public static bool IsValid(this BrokenItemEditor editor)
         {
             if (String.IsNullOrWhiteSpace(editor.nameTextbox.Text))
             {

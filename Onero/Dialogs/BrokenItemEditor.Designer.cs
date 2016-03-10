@@ -1,6 +1,6 @@
 ﻿namespace Onero.Dialogs
 {
-    partial class BrokenItem
+    partial class BrokenItemEditor
     {
         /// <summary>
         /// Required designer variable.
@@ -141,7 +141,7 @@
             this.deleteButton.UseVisualStyleBackColor = true;
             this.deleteButton.Click += new System.EventHandler(this.DeleteClick);
             // 
-            // BrokenItem
+            // BrokenItemEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -153,7 +153,7 @@
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "BrokenItem";
+            this.Name = "BrokenItemEditor";
             this.Text = "Broken items";
             this.Load += new System.EventHandler(this.BrokenItem_Load);
             this.groupBox1.ResumeLayout(false);
