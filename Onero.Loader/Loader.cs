@@ -54,7 +54,9 @@ namespace Onero.Loader
 
                             result.PageLoadTime = timer.ElapsedMilliseconds;
 
-                            //TODO: Later move to actions factory
+                            var dataExtractAction = new DataExtractAction(driver, settings);
+                            result.DataExtracts = dataExtractAction.Execute();
+
                             var screenshotAction = new MakeScreenshotAction(driver, settings)  { Order = order };
                             screenshotAction.Execute();
 

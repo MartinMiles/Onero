@@ -10,6 +10,7 @@ namespace Onero.Loader.Results
         public long PageLoadTime { get; set; }
         public Dictionary<Rule, ResultCode> RuleResults { get; set; }
         public Dictionary<WebForm, ResultCode> FormResults { get; set; }
+        public Dictionary<DataExtractItem, string> DataExtracts { get; set; }
 
         public BrokenLinksResult BrokenLinksResult { get; set; }
 
@@ -39,7 +40,7 @@ namespace Onero.Loader.Results
 
         public override string ToString()
         {
-            return string.Format("{0} - {1}", Url, IsSuccessful);
+            return $"{Url} - {IsSuccessful}";
         }
     }
 }

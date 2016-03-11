@@ -65,6 +65,9 @@
     <Compile Include="Clients\EmptyClient.cs" />
     <Compile Include="Clients\IParseable.cs" />
     <Compile Include="Collections\BaseCollection.cs" />
+    <Compile Include="Dialogs\BaseRuleEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Dialogs\BrokenItems.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +79,18 @@
     </Compile>
     <Compile Include="Dialogs\BrokenItemEditor.Designer.cs">
       <DependentUpon>BrokenItemEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DataExtractor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DataExtractor.Designer.cs">
+      <DependentUpon>DataExtractor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ExtractorEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ExtractorEditor.Designer.cs">
+      <DependentUpon>ExtractorEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Enums\CrawlingMode.cs" />
     <Compile Include="Dialogs\About.cs">
@@ -147,6 +162,12 @@
     <EmbeddedResource Include="Dialogs\BrokenItemEditor.resx">
       <DependentUpon>BrokenItemEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\DataExtractor.resx">
+      <DependentUpon>DataExtractor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ExtractorEditor.resx">
+      <DependentUpon>ExtractorEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FormsEditor.resx">
       <DependentUpon>FormsEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -213,12 +234,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Onero.Loader\Onero.Loader.csproj">
-      <Project>{65f29d97-d838-41bd-93ad-4369aa176be8}</Project>
-      <Name>Onero.Loader</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Drivers\chromedriver.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -254,8 +269,28 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Settings\OneroTestSite\DataExtractItems.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Settings\OneroTestSite\Forms.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Settings\OneroTestSite\links.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Settings\OneroTestSite\Rules.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Settings\OneroTestSite\Settings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Onero.Loader\Onero.Loader.csproj">
+      <Project>{65f29d97-d838-41bd-93ad-4369aa176be8}</Project>
+      <Name>Onero.Loader</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

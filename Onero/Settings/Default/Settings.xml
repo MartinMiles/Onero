@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<profile enabled="true">
+<profile enabled="false">
   <Screenshots value="true" />
   <VerboseMode value="true" />
   <CreateErrorLog value="true" />
-  <Browser value="IE" />
+  <Browser value="Firefox" />
   <OutputDirectory value="e:\Projects\Onero\Onero\bin\Debug\Results\Default" />
   <Timeout value="60" />
   <FindAllBrokenLinks value="false" />

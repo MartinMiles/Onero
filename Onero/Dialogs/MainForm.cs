@@ -230,6 +230,7 @@ namespace Onero.Dialogs
 
                 settings.Rules = new CollectionOf<Rule>(CurrentProfileName).Read<Rule>().Where(r => r.Enabled);
                 settings.Forms = new CollectionOf<Form>(CurrentProfileName).Read<WebForm>().Where(f => f.Enabled);
+                settings.DataExtractors = new CollectionOf<DataExtractItem>(CurrentProfileName).Read<DataExtractItem>().Where(f => f.Enabled);
                 settings.BrokenLinks = new CollectionOf<BrokenLink>(CurrentProfileName).Read<BrokenLink>().Where(f => f.Enabled);
                 settings.BrokenImages = new CollectionOf<BrokenImage>(CurrentProfileName).Read<BrokenImage>().Where(f => f.Enabled);
                 settings.BrokenScripts = new CollectionOf<BrokenScript>(CurrentProfileName).Read<BrokenScript>().Where(f => f.Enabled);
@@ -407,7 +408,7 @@ namespace Onero.Dialogs
 
                     foreach (XmlNode node in doc.DocumentElement.ChildNodes)
                     {
-                        if (node.Attributes["url"] != null)
+                        if (node.NodeType != XmlNodeType.Comment && node.Attributes["url"] != null)
                         {
                             links.Add(node.Attributes["url"].Value);
                         }
@@ -577,6 +578,29 @@ namespace Onero.Dialogs
                 }
 
                 Profiles.Save(profiles);
+
+                form.Dispose();
+
+            }
+        }
+
+        private void DataExtractor_Click(object sender, EventArgs e)
+        {
+            var form = new DataExtractor
+            {
+                StartPosition = FormStartPosition.CenterParent,
+                CurrentProfile = settings.Profile
+            };
+
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                //var item = profiles.Select((p, i) => new { Profile = p, Index = i }).LastOrDefault(x => x.Profile.Name == form.CurrentProfile.Name);
+                //if (item != null)
+                //{
+                //    profiles[item.Index] = form.CurrentProfile as Profile;
+                //}
+
+                //Profiles.Save(profiles);
 
                 form.Dispose();
 

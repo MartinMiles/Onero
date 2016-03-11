@@ -57,7 +57,9 @@ namespace Onero.Dialogs
             urlTextbox.Enabled = combobox.SelectedIndex > 0;
         }
 
-        #region Get / set data item (rule)
+
+        //TODO: Etire region rework into base class
+        #region TO:BASE Get / set data item (rule)
 
         private Rule _rule;
 

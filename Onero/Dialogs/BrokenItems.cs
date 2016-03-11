@@ -15,8 +15,6 @@ namespace Onero.Dialogs
         private Dictionary<Type, CheckedListBox> checkListBoxes;
         private Dictionary<Type, Button> addNewButtons;
 
-        #region Private items collections and getter / setter
-
         private void BrokenItems_Load(object sender, EventArgs e)
         {
             ReadControls();
@@ -29,6 +27,8 @@ namespace Onero.Dialogs
 
             saveButton.Enabled = false;
         }
+
+        #region Private items collections and getter / setter
 
         private void ReadControls()
         {

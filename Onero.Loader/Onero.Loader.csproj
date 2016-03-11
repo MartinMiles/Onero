@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\BrokenLinksAction.cs" />
+    <Compile Include="Actions\DataExtractAction.cs" />
     <Compile Include="BaseItem.cs" />
     <Compile Include="Broken\Broken.cs" />
     <Compile Include="Broken\BrokenImage.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Broken\BrokenScript.cs" />
     <Compile Include="Broken\BrokenStyle.cs" />
     <Compile Include="Browser.cs" />
+    <Compile Include="DataExtractItem.cs" />
     <Compile Include="DriverFactory.cs" />
     <Compile Include="Interfaces\IProfile.cs" />
     <Compile Include="Loader.cs" />

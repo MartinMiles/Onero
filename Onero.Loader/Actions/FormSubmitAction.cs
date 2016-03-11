@@ -33,7 +33,7 @@ namespace Onero.Loader.Actions
                         if (regexUrl.IsMatch(currentUrl))
                         {
                             var resultCode = ResultCode.NotFinished;
-                            var artefact = String.Empty;
+                            var oldUrl = driver.Url.TrimEnd('/');
 
                             try
                             {
@@ -57,7 +57,6 @@ namespace Onero.Loader.Actions
 
                                     //TODO: Refactor this to somehing properly handling redirect - while URL not changes instead of
                                     int i = 0;
-                                    var oldUrl = driver.Url.TrimEnd('/');
                                     while (i <= settings.Profile.Timeout * 10 && oldUrl == driver.Url.TrimEnd('/'))
                                     {
                                         Thread.Sleep(100);
@@ -107,16 +106,6 @@ namespace Onero.Loader.Actions
             }
 
             return result;
-        }
-
-        private By BySelector(string selector)
-        {
-            switch (selector.First())
-            {
-                case '#': return By.Id(selector.TrimStart('#'));
-                case '.': return By.ClassName(selector.TrimStart('.'));
-                default: return By.TagName(selector);
-            }
         }
     }
 }
