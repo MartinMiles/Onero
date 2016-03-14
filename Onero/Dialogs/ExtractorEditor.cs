@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Onero.Loader;
 
 namespace Onero.Dialogs
 {
-    internal partial class ExtractorEditor : BaseRuleEditor_DataExtractItem
+    internal partial class ExtractorEditor : BaseRuleEditor_DataExtractItem, IEditorForm
     {
         #region Override properties
-
         public override TextBox NameTextBox => nameTextbox;
         public override TextBox EditBox => editBox;
         public override TextBox UrlTextBox => urlTextbox;
@@ -39,7 +32,10 @@ namespace Onero.Dialogs
 
         protected void Save_Click(object sender, EventArgs e)
         {
-            base.Save_Click(sender, e);
+            //if (this.IsValid())
+            {
+                base.Save_Click(sender, e);
+            }
         }
 
         protected void Delete_Click(object sender, EventArgs e)
@@ -55,6 +51,22 @@ namespace Onero.Dialogs
         protected void RulesScopeCombobox_Changed(object sender, EventArgs e)
         {
             base.RulesScopeCombobox_Changed(sender, e);
+        }
+
+        #endregion
+
+        #region Entity get /set overrides
+
+        protected override DataExtractItem GetEntity(DataExtractItem entity)
+        {
+            entity.RemoveWhitespaces = removeWhitespacesCheckbox.Checked;
+            return entity;
+        }
+
+        protected override void SetEntity(Rule entity)
+        {
+            base.SetEntity(entity);
+            removeWhitespacesCheckbox.Checked = (entity as DataExtractItem).RemoveWhitespaces;
         }
 
         #endregion

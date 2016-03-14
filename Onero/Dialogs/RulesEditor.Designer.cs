@@ -72,7 +72,7 @@
             this.saveButton.TabIndex = 5;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.SaveClick);
+            this.saveButton.Click += new System.EventHandler(this.Save_Click);
             // 
             // cancelButton
             // 
@@ -83,7 +83,7 @@
             this.cancelButton.TabIndex = 6;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.CancelClick);
+            this.cancelButton.Click += new System.EventHandler(this.Cancel_Click);
             // 
             // message
             // 
@@ -101,7 +101,7 @@
             this.deleteButton.TabIndex = 7;
             this.deleteButton.Text = "Delete";
             this.deleteButton.UseVisualStyleBackColor = true;
-            this.deleteButton.Click += new System.EventHandler(this.DeleteClick);
+            this.deleteButton.Click += new System.EventHandler(this.Delete_Click);
             // 
             // groupBox1
             // 
@@ -153,7 +153,7 @@
             this.ruleScopeCombobox.Name = "ruleScopeCombobox";
             this.ruleScopeCombobox.Size = new System.Drawing.Size(158, 21);
             this.ruleScopeCombobox.TabIndex = 3;
-            this.ruleScopeCombobox.SelectedIndexChanged += new System.EventHandler(this.RulesScopeComboboxChanged);
+            this.ruleScopeCombobox.SelectedIndexChanged += new System.EventHandler(this.RulesScopeCombobox_Changed);
             // 
             // label2
             // 

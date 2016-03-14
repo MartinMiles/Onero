@@ -5,11 +5,23 @@ using Onero.Loader;
 
 namespace Onero.Dialogs
 {
-    #region This is an intermediate walkaround classes to support inherritance for WinForms
+    #region This is a walkaround 'man-in-the-middle' classes to support inherritance for WinForms
 
     public class BaseRuleEditor_DataExtractItem : BaseRuleEditor<DataExtractItem>
     {
         public BaseRuleEditor_DataExtractItem()
+        {
+        }
+
+        protected void InitializeComponent()
+        {
+            base.InitializeComponent();
+        }
+    }
+
+    public class BaseRuleEditor_Rule : BaseRuleEditor<Rule>
+    {
+        public BaseRuleEditor_Rule()
         {
         }
 
@@ -25,8 +37,9 @@ namespace Onero.Dialogs
     {
         const string IMPLEMENT_ERROR = "Should be implemented in the derived class";
 
-        #region Form properties to inherit
+        private T _entity;
 
+        #region Form properties to inherit
 
         public virtual TextBox NameTextBox
         {
@@ -62,7 +75,6 @@ namespace Onero.Dialogs
 
         protected void InitializeComponent()
         {
-            //Button1.Click += button1_Click;
         }
 
         #region Standard properties to inherit
@@ -87,9 +99,7 @@ namespace Onero.Dialogs
 
         #region Get or set entity
 
-        private T _entity;
-
-        public T Entity
+        public Rule Entity
         {
             get { return GetEntity(); }
             set { SetEntity(value); }
@@ -107,16 +117,18 @@ namespace Onero.Dialogs
                 _entity.Urls = UrlTextBox.Text.Split(',').Select(r => r.Trim()).ToList();
             }
 
-            //TODO: rule type also should be here when more than just 'text' appear
-            // TODO: Delegate this to derived
-            //_entity.RemoveWhitespaces = removeWhitespacesCheckbox.Checked;
-
-            return _entity;
+            return GetEntity(_entity);
         }
 
-        private void SetEntity(T rule)
+        // TODO: Maybe generic?
+        protected virtual T GetEntity(T entity)
         {
-            _entity = rule;
+            return entity;
+        }
+
+        protected virtual void SetEntity(Rule rule)
+        {
+            _entity = rule as T;
 
             NameTextBox.Text = rule.Name;
             EditBox.Text = rule.Condition;
@@ -129,9 +141,6 @@ namespace Onero.Dialogs
                 UrlTextBox.Text = string.Join(", ", rule.Urls);
             }
 
-            // TODO: Delegate this to derived
-            //removeWhitespacesCheckbox.Checked = _entity.RemoveWhitespaces;
-
             UrlTextBox.Enabled = RuleScopeComboBox.SelectedIndex > 0;
         }
 
@@ -141,10 +150,7 @@ namespace Onero.Dialogs
 
         protected void Save_Click(object sender, EventArgs e)
         {
-            //if (this.IsValid())
-            {
-                DialogResult = DialogResult.OK;
-            }
+            DialogResult = DialogResult.OK;
         }
 
         protected void Delete_Click(object sender, EventArgs e)

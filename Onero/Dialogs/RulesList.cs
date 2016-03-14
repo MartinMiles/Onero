@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 using Onero.Collections;
 using Onero.Extensions;
@@ -8,122 +9,55 @@ using Onero.Loader;
 
 namespace Onero.Dialogs
 {
-    public partial class RulesList : Form
+    public partial class RulesList : BaseRulesList_Rule
     {
-        private IEnumerable<Rule> rules;
-
-        public string CurrentProfileName { get; internal set; }
-
         public RulesList()
         {
             InitializeComponent();
         }
 
-        private void FormLoad(object sender, EventArgs e)
+        private void Form_Load(object sender, EventArgs e)
         {
-            rules = new CollectionOf<Rule>(CurrentProfileName).Read<Rule>();
-            DrawRulesList();
-            saveButton.Enabled = false;
+            rules = new CollectionOf<Rule>(CurrentProfile.Name).Read<Rule>();
+            Form_Load();
         }
 
-        private void DrawRulesList()
-        {
-            rulesCheckList.Items.Clear();
+        #region Override properties
 
-            for (int i = 0; i < rules.Count(); i++)
-            {
-                var rule = rules.ElementAt(i);
-                rulesCheckList.Items.Add(rule.NameWithPrefix, rule.Enabled);
-            }
+        public override CheckedListBox RulesCheckList => rulesCheckList;
+        public override Button ButtonSave => saveButton;
+        public override Button ButtonAdd => addNew;
+        public override Button ButtonCancel => cancelButton;
+
+        #endregion
+
+        #region EventHandlers: Just to make designer work
+
+        protected void Save_Click(object sender, EventArgs e)
+        {
+            base.Save_Click(sender, e);
         }
 
-        // Runs editor window and saves results once editor is closed.
-        private void CheckedListBoxDoubleClick(object sender, EventArgs e)
+        protected void Cancel_Click(object sender, EventArgs e)
         {
-            var rule = rules.FirstOrDefault(r => r.NameWithPrefix == (sender as CheckedListBox).GetSelectedString());
-
-            if (rule == null)
-            {
-                return;
-            }
-
-            var editorForm = new RulesEditor { StartPosition = FormStartPosition.CenterParent };
-            //editorForm.Message = "Note: to save rules changes into a file - hit 'Save rules' on the\nprevious screen. This screen only modifies but not saves rules";
-            editorForm.Title = string.Format("Rule: {0} ({1})", rule.Name, rule.Enabled ? "enabled" : "disabled");
-
-            editorForm.Rule = rule;
-
-            var dialogResult = editorForm.ShowDialog();
-            if (dialogResult == DialogResult.OK)
-            {
-                rule = editorForm.Rule;
-            }
-            else if (dialogResult == DialogResult.Yes)
-            {
-                rules = rules.Where(r => r != rule);
-            }
-            else
-            {
-                return;
-            }
-
-            DrawRulesList();
-
-            editorForm.Dispose();
-
-            saveButton.Enabled = true;
+            base.Cancel_Click(sender, e);
         }
 
-        private void SaveRulesButtonClick(object sender, EventArgs e)
+        protected void AddNew_Click(object sender, EventArgs e)
         {
-            var checkedRulesNames = rulesCheckList.CheckedItems;
-            foreach (Rule rule in rules)
-            {
-                rule.Enabled = checkedRulesNames.Contains(rule.NameWithPrefix);
-            }
-
-            try
-            {
-                new CollectionOf<Rule>(CurrentProfileName).Save(rules);
-
-                saveButton.Enabled = false;
-                Text = "Rules Editor - Successfully saved";
-                cancelButton.Text = "Close";
-            }
-            catch (Exception excp)
-            {
-                MessageBox.Show(excp.Message);
-            }
+            base.AddNew_Click(sender, e);
         }
 
-        private void CancelClick(object sender, EventArgs e)
+        protected void CheckedListBox_SingleClick(object sender, EventArgs e)
         {
-            Close();
+            base.CheckedListBox_SingleClick(sender, e);
         }
 
-        private void CheckedListBoxSingleClick(object sender, EventArgs e)
+        protected void CheckedListBox_DoubleClick(object sender, EventArgs e)
         {
-            saveButton.Enabled = true;
+            base.CheckedListBox_DoubleClick(sender, e);
         }
 
-        private void AddNewClick(object sender, EventArgs e)
-        {
-            var editorForm = new RulesEditor
-            {
-                StartPosition = FormStartPosition.CenterParent,
-                Title = "Please enter a new rule:",
-                Rule = new Rule(String.Empty, String.Empty)
-            };
-
-            if (editorForm.ShowDialog() == DialogResult.OK)
-            {
-                rules = rules.Concat(new[] { editorForm.Rule });
-                DrawRulesList();
-
-                saveButton.Enabled = true;
-            }
-
-            editorForm.Dispose();
-        }
+        #endregion
     }
 }

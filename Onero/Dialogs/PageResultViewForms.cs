@@ -61,7 +61,7 @@ namespace Onero.Dialogs
 
             var editorForm = new RulesEditor { StartPosition = FormStartPosition.CenterParent };
 
-            editorForm.Rule = RulesCollection.First(r => r.Name == ruleName);
+            editorForm.Entity = RulesCollection.First(r => r.Name == ruleName);
 
             ////editorForm.Message = "Note: to save rules changes into a file - hit 'Save rules' on the\nprevious screen. This screen only modifies but not saves rules";
             //editorForm.Title = string.Format("Rule: {0} ({1})", rule.Name, rule.Enabled ? "enabled" : "disabled");

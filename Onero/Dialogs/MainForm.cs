@@ -528,7 +528,7 @@ namespace Onero.Dialogs
             var form = new RulesList
             {
                 StartPosition = FormStartPosition.CenterParent,
-                CurrentProfileName = settings.Profile.Name
+                CurrentProfile = settings.Profile
             };
 
             form.ShowDialog();

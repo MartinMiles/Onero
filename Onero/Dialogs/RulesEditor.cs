@@ -1,105 +1,51 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
-using Onero.Loader;
 
 namespace Onero.Dialogs
 {
-    public partial class RulesEditor : Form
+    public partial class RulesEditor : BaseRuleEditor_Rule, IEditorForm //Form
     {
+        #region Override properties
+        public override TextBox NameTextBox => nameTextbox;
+        public override TextBox EditBox => editBox;
+        public override TextBox UrlTextBox => urlTextbox;
+        public override ComboBox RuleScopeComboBox => ruleScopeCombobox;
+
+        public override Button ButtonSave => saveButton;
+        public override Button ButtonDelete => deleteButton;
+        public override Button ButtonCancel => cancelButton;
+
+        #endregion
+
         public RulesEditor()
         {
             InitializeComponent();
         }
 
-        private void CancelClick(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
-        }
+        #region EventHandlers: Just to make designer work
 
-        private void SaveClick(object sender, EventArgs e)
+        private void Save_Click(object sender, EventArgs e)
         {
             if (this.IsValid())
             {
-                DialogResult = DialogResult.OK;
+                base.Save_Click(sender, e);
             }
         }
 
-        private void DeleteClick(object sender, EventArgs e)
+        private void Delete_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Yes;
+            base.Delete_Click(sender, e);
+
         }
 
-        #region Properties
-
-        public string Title
+        private void Cancel_Click(object sender, EventArgs e)
         {
-            get { return label.Text; }
-            set { label.Text = value; }
+            base.Cancel_Click(sender, e);
         }
 
-        #endregion
-
-        public RuleExecutionScope RuleScope
+        protected void RulesScopeCombobox_Changed(object sender, EventArgs e)
         {
-            get
-            {
-                RuleExecutionScope scope;
-                RuleExecutionScope.TryParse(ruleScopeCombobox.SelectedItem as string, true, out scope);
-                return scope;
-            }
-        }
-
-        private void RulesScopeComboboxChanged(object sender, EventArgs e)
-        {
-            var combobox = sender as ComboBox;
-            urlTextbox.Enabled = combobox.SelectedIndex > 0;
-        }
-
-
-        //TODO: Etire region rework into base class
-        #region TO:BASE Get / set data item (rule)
-
-        private Rule _rule;
-
-        public Rule Rule
-        {
-            get { return GetRule(); }
-            set { SetRule(value); }
-        }
-
-        private Rule GetRule()
-        {
-            _rule.Name = nameTextbox.Text.Trim();
-            _rule.Condition = editBox.Text.Trim();
-
-            _rule.RuleExecutionScope = RuleScope;
-
-            if (_rule.RuleExecutionScope != RuleExecutionScope.Everywhere)
-            {
-                _rule.Urls = urlTextbox.Text.Split(',').Select(r => r.Trim()).ToList();
-            }
-
-            return _rule;
-        }
-
-        private void SetRule(Rule rule)
-        {
-            _rule = rule;
-
-            nameTextbox.Text = rule.Name;
-            editBox.Text = rule.Condition;
-
-            ruleScopeCombobox.SelectedItem = rule.RuleExecutionScope.ToString();
-
-            if ((rule.RuleExecutionScope == RuleExecutionScope.Include ||
-                 rule.RuleExecutionScope == RuleExecutionScope.Exclude) && rule.Urls != null)
-            {
-                urlTextbox.Text = string.Join(", ", rule.Urls);
-            }
-
-            urlTextbox.Enabled = ruleScopeCombobox.SelectedIndex > 0;
+            base.RulesScopeCombobox_Changed(sender, e);
         }
 
         #endregion

@@ -87,8 +87,8 @@
             this.rulesCheckList.Name = "rulesCheckList";
             this.rulesCheckList.Size = new System.Drawing.Size(275, 315);
             this.rulesCheckList.TabIndex = 1;
-            this.rulesCheckList.Click += new System.EventHandler(this.CheckedListBoxSingleClick);
-            this.rulesCheckList.DoubleClick += new System.EventHandler(this.CheckedListBoxDoubleClick);
+            this.rulesCheckList.Click += new System.EventHandler(this.CheckedListBox_SingleClick);
+            this.rulesCheckList.DoubleClick += new System.EventHandler(this.CheckedListBox_DoubleClick);
             // 
             // DataExtractor
             // 

@@ -57,8 +57,8 @@
             this.rulesCheckList.Name = "rulesCheckList";
             this.rulesCheckList.Size = new System.Drawing.Size(275, 315);
             this.rulesCheckList.TabIndex = 1;
-            this.rulesCheckList.Click += new System.EventHandler(this.CheckedListBoxSingleClick);
-            this.rulesCheckList.DoubleClick += new System.EventHandler(this.CheckedListBoxDoubleClick);
+            this.rulesCheckList.Click += new System.EventHandler(this.CheckedListBox_SingleClick);
+            this.rulesCheckList.DoubleClick += new System.EventHandler(this.CheckedListBox_DoubleClick);
             // 
             // saveButton
             // 
@@ -68,7 +68,7 @@
             this.saveButton.TabIndex = 3;
             this.saveButton.Text = "Save rules";
             this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.SaveRulesButtonClick);
+            this.saveButton.Click += new System.EventHandler(this.Save_Click);
             // 
             // messageLabel
             // 
@@ -87,7 +87,7 @@
             this.cancelButton.TabIndex = 4;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.CancelClick);
+            this.cancelButton.Click += new System.EventHandler(this.Cancel_Click);
             // 
             // addNew
             // 
@@ -97,7 +97,7 @@
             this.addNew.TabIndex = 2;
             this.addNew.Text = "Add new";
             this.addNew.UseVisualStyleBackColor = true;
-            this.addNew.Click += new System.EventHandler(this.AddNewClick);
+            this.addNew.Click += new System.EventHandler(this.AddNew_Click);
             // 
             // RulesList
             // 
@@ -114,7 +114,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "RulesList";
             this.Text = "Rules List";
-            this.Load += new System.EventHandler(this.FormLoad);
+            this.Load += new System.EventHandler(this.Form_Load);
             this.rulesGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
