@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Onero.Loader.Results;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 
@@ -13,7 +14,7 @@ namespace Onero.Loader.Actions
 
         public override dynamic Execute()
         {
-            var results = new Dictionary<DataExtractItem, string>();
+            var _results = new List<DataExtractResult>();
 
             foreach (var rule in settings.DataExtractors)
             {
@@ -27,23 +28,24 @@ namespace Onero.Loader.Actions
                     if (driver is RemoteWebDriver)
                     {
                         var element = driver.FindElement(BySelector(rule.Condition));
-                        results.Add(rule, element.Text);
+                        _results.Add(new DataExtractResult(rule, driver.Url, ResultCode.Successful, element.Text));
                     }
                 }
+                // TODO: Work out OTHER exceptions and errors; test unusual use-cases
                 catch (InvalidOperationException e)
                 {
                     if (e.Message.Contains("$ is not defined"))
                     {
-                        //resultCode = ResultCode.NoJquery;
+                        _results.Add(new DataExtractResult(ResultCode.NoJquery));
                     }
                     else if (e.Message.Contains("Parse error"))
                     {
-                        //resultCode = ResultCode.RuleParseError;
+                        _results.Add(new DataExtractResult(ResultCode.RuleParseError));
                     }
                 }
             }
 
-            return results;
+            return _results;
         }
     }
 }

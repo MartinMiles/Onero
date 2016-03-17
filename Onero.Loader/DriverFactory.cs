@@ -29,10 +29,7 @@ namespace Onero.Loader
             _profile = profile;
         }
 
-        public RemoteWebDriver Driver
-        {
-            get { return _driver ?? ResolveDriver(); }
-        }
+        public RemoteWebDriver Driver => _driver ?? ResolveDriver();
 
         private RemoteWebDriver ResolveDriver()
         {

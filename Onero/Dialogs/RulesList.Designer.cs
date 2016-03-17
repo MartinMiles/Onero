@@ -1,4 +1,6 @@
-﻿namespace Onero.Dialogs
+﻿using System.Windows.Forms;
+
+namespace Onero.Dialogs
 {
     partial class RulesList
     {
@@ -29,7 +31,7 @@
         private void InitializeComponent()
         {
             this.rulesGroupBox = new System.Windows.Forms.GroupBox();
-            this.rulesCheckList = new System.Windows.Forms.CheckedListBox();
+            this.rulesCheckList = new CheckedListBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.messageLabel = new System.Windows.Forms.Label();
             this.cancelButton = new System.Windows.Forms.Button();
@@ -125,7 +127,7 @@
 
         private System.Windows.Forms.GroupBox rulesGroupBox;
         private System.Windows.Forms.Button saveButton;
-        private System.Windows.Forms.CheckedListBox rulesCheckList;
+        private CheckedListBox rulesCheckList;
         private System.Windows.Forms.Label messageLabel;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button addNew;

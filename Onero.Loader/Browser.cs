@@ -12,7 +12,6 @@ namespace Onero.Loader
 
         Edge,
 
-        [Description("Run in Firefox")]
         Firefox,
 
         Chrome,

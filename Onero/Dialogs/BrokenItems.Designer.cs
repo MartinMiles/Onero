@@ -72,9 +72,9 @@
             this.testAllLinks.CheckState = System.Windows.Forms.CheckState.Checked;
             this.testAllLinks.Location = new System.Drawing.Point(10, 29);
             this.testAllLinks.Name = "testAllLinks";
-            this.testAllLinks.Size = new System.Drawing.Size(185, 17);
+            this.testAllLinks.Size = new System.Drawing.Size(167, 17);
             this.testAllLinks.TabIndex = 2;
-            this.testAllLinks.Text = "Test all the pages for broken links";
+            this.testAllLinks.Text = "Test all pages for broken links";
             this.testAllLinks.UseVisualStyleBackColor = true;
             this.testAllLinks.CheckedChanged += new System.EventHandler(this.TestAllLinksCheckChanged);
             // 
@@ -151,9 +151,9 @@
             this.testAllImages.CheckState = System.Windows.Forms.CheckState.Checked;
             this.testAllImages.Location = new System.Drawing.Point(10, 29);
             this.testAllImages.Name = "testAllImages";
-            this.testAllImages.Size = new System.Drawing.Size(185, 17);
+            this.testAllImages.Size = new System.Drawing.Size(167, 17);
             this.testAllImages.TabIndex = 13;
-            this.testAllImages.Text = "Test all the pages for broken links";
+            this.testAllImages.Text = "Test all pages for broken links";
             this.testAllImages.UseVisualStyleBackColor = true;
             this.testAllImages.CheckedChanged += new System.EventHandler(this.TestAllImagesCheckChanged);
             // 
@@ -201,9 +201,9 @@
             this.testAllStyles.CheckState = System.Windows.Forms.CheckState.Checked;
             this.testAllStyles.Location = new System.Drawing.Point(10, 29);
             this.testAllStyles.Name = "testAllStyles";
-            this.testAllStyles.Size = new System.Drawing.Size(190, 17);
+            this.testAllStyles.Size = new System.Drawing.Size(177, 17);
             this.testAllStyles.TabIndex = 13;
-            this.testAllStyles.Text = "Test all the pages for broken styles";
+            this.testAllStyles.Text = "Test the pages for broken styles";
             this.testAllStyles.UseVisualStyleBackColor = true;
             this.testAllStyles.CheckedChanged += new System.EventHandler(this.TestAllStylesCheckChanged);
             // 
@@ -251,9 +251,9 @@
             this.testAllScripts.CheckState = System.Windows.Forms.CheckState.Checked;
             this.testAllScripts.Location = new System.Drawing.Point(10, 29);
             this.testAllScripts.Name = "testAllScripts";
-            this.testAllScripts.Size = new System.Drawing.Size(160, 17);
+            this.testAllScripts.Size = new System.Drawing.Size(173, 17);
             this.testAllScripts.TabIndex = 2;
-            this.testAllScripts.Text = "Test pages for broken scrips";
+            this.testAllScripts.Text = "Test all pages for broken scrips";
             this.testAllScripts.UseVisualStyleBackColor = true;
             this.testAllScripts.CheckedChanged += new System.EventHandler(this.TestAllScriptsCheckChanged);
             // 
@@ -299,7 +299,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "BrokenItems";
             this.Text = "Find broken items";
-            this.Load += new System.EventHandler(this.BrokenItems_Load);
+            this.Load += new System.EventHandler(this.Form_Load);
             this.rulesGroupBox.ResumeLayout(false);
             this.rulesGroupBox.PerformLayout();
             this.imagesGroupBox.ResumeLayout(false);

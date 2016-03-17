@@ -49,6 +49,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\ActionsFactory.cs" />
     <Compile Include="Actions\BrokenLinksAction.cs" />
     <Compile Include="Actions\DataExtractAction.cs" />
     <Compile Include="BaseItem.cs" />
@@ -60,6 +61,8 @@
     <Compile Include="Browser.cs" />
     <Compile Include="DataExtractItem.cs" />
     <Compile Include="DriverFactory.cs" />
+    <Compile Include="Results\DataExtractResult.cs" />
+    <Compile Include="XmlExtensionMethods.cs" />
     <Compile Include="Interfaces\IProfile.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Actions\FormSubmitAction.cs" />

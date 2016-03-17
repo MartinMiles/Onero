@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
@@ -8,6 +9,14 @@ namespace Onero.Loader
 {
     public class Rule : BaseItem
     {
+        internal static class Attributes
+        {
+            internal const string NAME = "name";
+            internal const string TYPE = "type";
+            internal const string ENABLED = "enabled";
+            internal const string CONDITION = "condition";
+        }
+
         private readonly Dictionary<RuleExecutionScope, string> ruleScopePrefixes = new Dictionary<RuleExecutionScope, string>
         {
             {RuleExecutionScope.Everywhere, " -  [ALL]  -  "},
@@ -51,28 +60,12 @@ namespace Onero.Loader
 
             if (RuleExecutionScope == RuleExecutionScope.Include)
             {
-                foreach (var includePath in Urls)
-                {
-                    var includeRegex = new Regex(includePath, RegexOptions.IgnoreCase);
-                    if (includeRegex.IsMatch(url.TrimEnd('/')))
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
+                return Urls.Select(u => new Regex(u, RegexOptions.IgnoreCase)).Any(r => r.IsMatch(url.TrimEnd('/')));
             }
 
             if (RuleExecutionScope == RuleExecutionScope.Exclude)
             {
-                foreach (var excludePath in Urls)
-                {
-                    var includeRegex = new Regex(excludePath, RegexOptions.IgnoreCase);
-                    if (includeRegex.IsMatch(url.TrimEnd('/')))
-                    {
-                        return false;
-                    }
-                }
+                return Urls.Select(u => new Regex(u, RegexOptions.IgnoreCase)).All(r => !r.IsMatch(url.TrimEnd('/')));
             }
 
             return true;
@@ -93,18 +86,16 @@ namespace Onero.Loader
 
         protected override void Parse()
         {
-            Name = node.Attributes["name"].Value;
-
-            if (node.Attributes["enabled"] != null)
-            {
-                Enabled = bool.Parse(node.Attributes["enabled"].Value);
-            }
+            Name = node.StringAttribute(Attributes.NAME);
+            Enabled = node.BoolAttribute(Attributes.ENABLED);
 
             Condition = GetTextValue(node.ChildNodes).Trim();
 
-            if (node.Attributes["type"] != null)
+            var _type = node.ParseEnum<RuleExecutionScope>(Attributes.TYPE);
+
+            if (node.Attributes[Attributes.TYPE] != null)
             {
-                var type = node.Attributes["type"].Value.ToLower().Trim();
+                var type = node.Attributes[Attributes.TYPE].Value.ToLower().Trim();
 
                 Urls = new List<string>();
 
@@ -126,13 +117,13 @@ namespace Onero.Loader
         public override XElement Save()
         {
             var node = new XElement("rule");
-            node.SetAttributeValue("name", Name);
-            node.SetAttributeValue("enabled", Enabled);
-            node.Add(new XElement("condition", Condition));
+            node.SetAttributeValue(Attributes.NAME, Name);
+            node.SetAttributeValue(Attributes.ENABLED, Enabled);
+            node.Add(new XElement(Attributes.CONDITION, Condition));
 
             if (RuleExecutionScope == RuleExecutionScope.Include || RuleExecutionScope == RuleExecutionScope.Exclude)
             {
-                node.SetAttributeValue("type", RuleExecutionScope == RuleExecutionScope.Include ? "include" : "exclude");
+                node.SetAttributeValue(Attributes.TYPE, RuleExecutionScope == RuleExecutionScope.Include ? "include" : "exclude");
 
                 foreach (string url in Urls)
                 {

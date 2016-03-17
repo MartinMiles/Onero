@@ -323,20 +323,22 @@ namespace Onero.Dialogs
             var clickedPageResult = results.FirstOrDefault(r => r.Url == clickedLine);
             if (clickedPageResult != null)
             {
-                var form = new PageResultViewForms
+                var form = new PageResultViewForms(settings)
                 {
                     StartPosition = FormStartPosition.CenterParent,
                     PageResult = clickedPageResult,
-                    CurrentProfileName = settings.Profile.Name,
-                    RulesCollection = settings.Rules,
-                    FormsCollection = settings.Forms
+                    //CurrentProfileName = settings.Profile.Name,
+                    //RulesCollection = settings.Rules,
+                    //FormsCollection = settings.Forms
+                    //Settings = settings
                 };
 
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    // do we need to save rules from here?
-                    settings.Rules = form.RulesCollection;
-                    settings.Forms = form.FormsCollection;
+                    // do we need to save rules and forms from here?
+
+                    //settings.Rules = form.RulesCollection;
+                    //settings.Forms = form.FormsCollection;
                 }
 
                 form.Dispose();

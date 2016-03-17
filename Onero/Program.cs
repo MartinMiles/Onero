@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using System.Xml;
 using Onero.Collections;
 using Onero.Dialogs;
@@ -24,14 +23,14 @@ namespace Onero
                 var settings = new LoaderSettings { Profile = Profiles.Current };
                 Application.Run(new MainForm(settings));
             }
-            catch (XmlException)
+            catch (XmlException e)
             {
                 MessageBox.Show(CONFIGURATION_FAILED);
             }
-            //catch (Exception)
-            //{
-            //    MessageBox.Show(GENERAL_EXCEPTION);
-            //}
+            catch (Exception e)
+            {
+                MessageBox.Show(GENERAL_EXCEPTION);
+            }
         }
     }
 }

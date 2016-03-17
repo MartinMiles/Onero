@@ -11,55 +11,6 @@ namespace Onero.Extensions
 {
     public static class ExtensionMethods
     {
-        internal delegate bool TryParse<T>(string str, out T value);
-
-        internal static T GetValue<T>(this string str, TryParse<T> parseFunc)
-        {
-            T val;
-            parseFunc(str, out val);
-            return val;
-        }
-
-        internal static bool BoolAttribute(this XmlNode node, string attributeName, bool defaultValue = false)
-        {
-            if (node.Attributes[attributeName] != null)
-            {
-                return node.Attributes[attributeName].Value.GetValue<bool>(bool.TryParse);
-            }
-
-            return defaultValue;
-        }
-
-        internal static T ParseEnum<T>(this XmlNode node, string attributeName)
-        {
-            if (node.Attributes[attributeName] != null)
-            {
-                return (T)Enum.Parse(typeof(T), node.Attributes[attributeName].Value, true);
-            }
-
-            return default(T);
-        }
-
-        internal static int IntAttribute(this XmlNode node, string attributeName)
-        {
-            if (node.Attributes[attributeName] != null)
-            {
-                return node.Attributes[attributeName].Value.GetValue<int>(int.TryParse);
-            }
-
-            return 0;
-        }
-        
-        internal static string StringAttribute(this XmlNode node, string attributeName)
-        {
-            if (node.Attributes[attributeName] != null)
-            {
-                return node.Attributes[attributeName].Value;
-            }
-
-            return string.Empty;
-        }
-
         public static T Parse<T>(this string input, T defaultValue)
         {
             if (string.IsNullOrWhiteSpace(input))

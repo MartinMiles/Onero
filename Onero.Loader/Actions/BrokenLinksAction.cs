@@ -21,31 +21,21 @@ namespace Onero.Loader.Actions
             {
                 Links = GetValue(settings.Profile.FindAllBrokenLinks, settings.BrokenLinks, "a", "href"),
                 Images = GetValue(settings.Profile.FindAllBrokenImages, settings.BrokenImages, "img", "src"),
-                Scripts = GetValue(settings.Profile.FindAllBrokenScripts, settings.BrokenScripts, "script", "src", "type", "text/javascript"),
+                Scripts = GetValue(settings.Profile.FindAllBrokenScripts, settings.BrokenScripts, "script", "src"/*, "type", "text/javascript"*/),
                 Styles = GetValue(settings.Profile.FindAllBrokenStyles, settings.BrokenStyles, "link", "href", "rel", "stylesheet")
             };
         }
 
-        private IEnumerable<string> GetValue(bool findAll, IEnumerable<Broken.Broken> items, string tag, string attr, string filterAttributeName = null, string filterAttributeValue = null)
+        private IEnumerable<string> GetValue(bool findOnEveryPage, IEnumerable<Broken.Broken> items, string tag, string attr, string filterAttributeName = null, string filterAttributeValue = null)
         {
-            if (findAll)
+            if (findOnEveryPage)
             {
-                return VerifyLinks(tag, attr);
+                return VerifyLinks(tag, attr, filterAttributeName, filterAttributeValue);
             }
-            else
-            {
-                if (items.Any())
-                {
-                    foreach (var rule in items)
-                    {
-                        if (!rule.ShouldRunOnThePage(driver.Url))
-                        {
-                            continue;
-                        }
-                    }
 
-                    return VerifyLinks(tag, attr, filterAttributeName, filterAttributeValue);
-                }
+            if (items != null && items.Any(r => r.ShouldRunOnThePage(driver.Url)))
+            {
+                return VerifyLinks(tag, attr, filterAttributeName, filterAttributeValue);
             }
 
             return new List<string>();
@@ -64,6 +54,11 @@ namespace Onero.Loader.Actions
 
             foreach (var href in hrefs)
             {
+                if (href.StartsWith("javascript:"))
+                {
+                    continue;
+                }
+
                 try
                 {
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(href);
@@ -75,27 +70,17 @@ namespace Onero.Loader.Actions
                         brokenLinks.Add(href);
                     }
                 }
+                catch (NotSupportedException e)
+                {
+                    brokenLinks.Add(href);
+                }
                 catch (WebException e)
                 {
                     brokenLinks.Add(href);
                 }
                 catch (ArgumentNullException e)
                 {
-                    int k = 0;
-                    //brokenLinks.Add(href);
                 }
-
-                //using (WebClient client = new WebClient())
-                //{
-                //    try
-                //    {
-                //        string s = client.DownloadString(href);
-                //    }
-                //    catch (Exception)
-                //    {
-                //        brokenLinks.Add(href);
-                //    }
-                //}
             }
 
             return brokenLinks;

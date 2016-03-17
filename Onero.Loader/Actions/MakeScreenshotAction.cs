@@ -6,7 +6,7 @@ using OpenQA.Selenium.Remote;
 
 namespace Onero.Loader.Actions
 {
-    public class MakeScreenshotAction : BaseAction, IAction
+    public class MakeScreenshotAction : BaseAction
     {
         private const string SCREENSHOT_URL_LIST_FILE = "urls.txt";
 
@@ -22,22 +22,22 @@ namespace Onero.Loader.Actions
             {
                 Directory.CreateDirectory(settings.Profile.OutputDirectory);
 
-                var screnshotsDir = string.Format("{0}\\Screenshots", settings.Profile.OutputDirectory);
+                var screnshotsDir = $"{settings.Profile.OutputDirectory}\\Screenshots";
                 if (!Directory.Exists(screnshotsDir))
                 {
                     Directory.CreateDirectory(screnshotsDir);
                 }
 
-                string fileFullPath = string.Format("{0}\\Screenshots\\{1}.jpg", settings.Profile.OutputDirectory, Order);
+                string fileFullPath = $"{settings.Profile.OutputDirectory}\\Screenshots\\{Order}.jpg";
                 if (driver is RemoteWebDriver)
                 {
                     (driver as RemoteWebDriver).GetScreenshot().SaveAsFile(fileFullPath, ImageFormat.Png);
 
-                    LogUrl(string.Format("{0}. {1}{2}", Order, driver.Url, Environment.NewLine));
+                    LogUrl($"{Order}. {driver.Url}{Environment.NewLine}");
                 }
             }
 
-            return null;
+            return true;
         }
 
         private void LogUrl(string line)
@@ -51,9 +51,6 @@ namespace Onero.Loader.Actions
             File.AppendAllText(LogFileName, line);
         }
 
-        private string LogFileName
-        {
-            get { return string.Format("{0}\\{1}", settings.Profile.OutputDirectory, SCREENSHOT_URL_LIST_FILE); }
-        }
+        private string LogFileName => $"{settings.Profile.OutputDirectory}\\{SCREENSHOT_URL_LIST_FILE}";
     }
 }

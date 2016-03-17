@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Onero.Collections;
@@ -15,7 +16,7 @@ namespace Onero.Dialogs
         private Dictionary<Type, CheckedListBox> checkListBoxes;
         private Dictionary<Type, Button> addNewButtons;
 
-        private void BrokenItems_Load(object sender, EventArgs e)
+        private void Form_Load(object sender, EventArgs e)
         {
             ReadControls();
 
@@ -39,6 +40,13 @@ namespace Onero.Dialogs
                 {typeof (BrokenScript), scriptsCheckList},
                 {typeof (BrokenStyle), stylesCheckList}
             };
+
+            foreach (var checkedListBoxPair in checkListBoxes)
+            {
+                // CheckedListBox support
+                checkedListBoxPair.Value.MouseDown += CheckedListExtensions.MouseDownClick;
+                checkedListBoxPair.Value.ItemCheck += CheckedListExtensions.ItemChecked;
+            }
 
             addNewButtons = new Dictionary<Type, Button>
             {
@@ -146,28 +154,36 @@ namespace Onero.Dialogs
         }
 
         #region Double click handlers
+
         private void LinksCheckListDoubleCLick(object sender, EventArgs e)
         {
-            CheckedListBoxDoubleClick<BrokenLink>((sender as CheckedListBox).GetSelectedString());
+            CheckedListBoxDoubleClick<BrokenLink>(sender as CheckedListBox);
         }
 
         private void ImagesCheckListDoubleCLick(object sender, EventArgs e)
         {
-            CheckedListBoxDoubleClick<BrokenImage>((sender as CheckedListBox).GetSelectedString());
+            CheckedListBoxDoubleClick<BrokenImage>(sender as CheckedListBox);
         }
 
         private void ScriptsCheckListDoubleCLick(object sender, EventArgs e)
         {
-            CheckedListBoxDoubleClick<BrokenScript>((sender as CheckedListBox).GetSelectedString());
+            CheckedListBoxDoubleClick<BrokenScript>(sender as CheckedListBox);
         }
 
         private void StylesCheckListDoubleCLick(object sender, EventArgs e)
         {
-            CheckedListBoxDoubleClick<BrokenStyle>((sender as CheckedListBox).GetSelectedString());
+            CheckedListBoxDoubleClick<BrokenStyle>(sender as CheckedListBox);
         }
 
-        private void CheckedListBoxDoubleClick<T>(string selectedItemName) where T : Broken, new()
+        private void CheckedListBoxDoubleClick<T>(CheckedListBox sender) where T : Broken, new()
         {
+            if (!sender.MouseHitsItemText())
+            {
+                return;
+            }
+
+            var selectedItemName = sender.GetSelectedString();
+
             var items = this.items[typeof (T)];
 
             Broken rule = items.FirstOrDefault(r => r.NameWithPrefix == selectedItemName);
@@ -200,7 +216,7 @@ namespace Onero.Dialogs
 
             this.items[typeof (T)] = items;
 
-            DrawChecklists();
+            DrawChecklists<T>();
             editorForm.Dispose();
             saveButton.Enabled = true;
         }
@@ -242,7 +258,7 @@ namespace Onero.Dialogs
             {
                 items[typeof(T)] = items[typeof(T)].Concat(new[] { editorForm.Rule });
 
-                DrawChecklists();
+                DrawChecklists<T>();
                 saveButton.Enabled = true;
             }
 

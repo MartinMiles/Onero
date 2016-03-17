@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Onero.Collections;
+using Onero.Extensions;
 using Onero.Loader;
 
 namespace Onero.Dialogs
@@ -21,20 +22,26 @@ namespace Onero.Dialogs
         private void FormLoad(object sender, EventArgs e)
         {
             forms = new CollectionOf<WebForm>(CurrentProfileName).Read<WebForm>().ToList();
+
             DrawFormsList();
 
             saveButton.Enabled = false;
+
+            formsCheckList.MouseDown += CheckedListExtensions.MouseDownClick;
+            formsCheckList.ItemCheck += CheckedListExtensions.ItemChecked;
         }
 
         private void DrawFormsList()
         {
             formsCheckList.Items.Clear();
 
+            CheckedListExtensions.AuthorizeCheck = true;
             for (int i = 0; i < forms.Count; i++)
             {
                 var rule = forms.ElementAt(i);
                 formsCheckList.Items.Add(rule.Name, rule.Enabled);
             }
+            CheckedListExtensions.AuthorizeCheck = false;
         }
 
         private void SaveFormsButtonClick(object sender, EventArgs e)
@@ -71,6 +78,11 @@ namespace Onero.Dialogs
 
         private void CheckedListBoxDoubleClick(object sender, EventArgs e)
         {
+            if (!(sender as CheckedListBox).MouseHitsItemText())
+            {
+                return;
+            }
+
             var clb = sender as CheckedListBox;
             var clickedItem = clb.SelectedItem;
 
@@ -83,13 +95,13 @@ namespace Onero.Dialogs
             if (dialogResult == DialogResult.OK)
             {
                 form = editorForm.Form;
+                DrawFormsList();
             }
             else if (dialogResult == DialogResult.Yes)
             {
                 forms = forms.Where(r => r != form).ToList();
+                DrawFormsList();
             }
-
-            DrawFormsList();
 
             editorForm.Dispose();
 

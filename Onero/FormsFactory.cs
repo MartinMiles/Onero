@@ -6,14 +6,6 @@ using Onero.Loader;
 
 namespace Onero
 {
-    public interface IEditorForm
-    {
-        Rule Entity { get; set; }
-        string Title { get; set; }
-        DialogResult ShowDialog();
-        void Dispose();
-    }
-
     public class FormsFactory
     {
         static readonly Dictionary<Type, Func<IEditorForm>> forms = 

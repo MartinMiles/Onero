@@ -95,6 +95,7 @@
     <Compile Include="Dialogs\ExtractorEditor.Designer.cs">
       <DependentUpon>ExtractorEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\IEditorForm.cs" />
     <Compile Include="Enums\CrawlingMode.cs" />
     <Compile Include="Dialogs\About.cs">
       <SubType>Form</SubType>
@@ -109,6 +110,7 @@
       <DependentUpon>FormsEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Enums\DisplayResult.cs" />
+    <Compile Include="Extensions\CheckedListExtensions.cs" />
     <Compile Include="Extensions\ExtensionMethods.cs" />
     <Compile Include="Dialogs\FormsList.cs">
       <SubType>Form</SubType>
@@ -273,8 +275,21 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Settings\OneroTestSite\BrokenImages.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Settings\OneroTestSite\BrokenLinks.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Settings\OneroTestSite\BrokenScripts.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Settings\OneroTestSite\BrokenStyles.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Settings\OneroTestSite\DataExtractItems.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Settings\OneroTestSite\Forms.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -284,6 +299,7 @@
     </Content>
     <Content Include="Settings\OneroTestSite\Rules.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Settings\OneroTestSite\Settings.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

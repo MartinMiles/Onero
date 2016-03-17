@@ -54,20 +54,11 @@ namespace Onero.Loader
 
                             result.PageLoadTime = timer.ElapsedMilliseconds;
 
-                            var dataExtractAction = new DataExtractAction(driver, settings);
-                            result.DataExtracts = dataExtractAction.Execute();
-
-                            var screenshotAction = new MakeScreenshotAction(driver, settings)  { Order = order };
-                            screenshotAction.Execute();
-
-                            var brokenLinksAction = new BrokenLinksAction(driver, settings);
-                            result.BrokenLinksResult = brokenLinksAction.Execute();
-
-                            var rulesAction = new RulesExecuteAction(driver, settings);
-                            result.RuleResults = rulesAction.Execute();
-
-                            var formsAction = new FormSubmitAction(driver, settings);
-                            result.FormResults = formsAction.Execute();
+                            var actions = ActionsFactory.GetActions(driver, settings, order);
+                            foreach (BaseAction action in actions)
+                            {
+                                result.GenericResults.Add(action.GetType(), action.Execute());
+                            }
 
                             result.PageResult = ResultCode.Successful;
                         }

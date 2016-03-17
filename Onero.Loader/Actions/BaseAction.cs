@@ -3,12 +3,7 @@ using OpenQA.Selenium;
 
 namespace Onero.Loader.Actions
 {
-    public interface IAction
-    {
-        dynamic Execute();
-    }
-
-    public abstract class BaseAction : IAction
+    public abstract class BaseAction
     {
         protected IWebDriver driver;
         protected LoaderSettings settings;
