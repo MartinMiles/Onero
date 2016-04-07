@@ -37,6 +37,8 @@ namespace Onero.Loader
 
         public Rule(string name, string condition) : this()
         {
+            Name = name;
+            Condition = condition;
         }
 
         #endregion
@@ -60,12 +62,12 @@ namespace Onero.Loader
 
             if (RuleExecutionScope == RuleExecutionScope.Include)
             {
-                return Urls.Select(u => new Regex(u, RegexOptions.IgnoreCase)).Any(r => r.IsMatch(url.TrimEnd('/')));
+                return Urls.Select(u => new Regex(u.TrimEnd('/'), RegexOptions.IgnoreCase)).Any(r => r.IsMatch(url.TrimEnd('/')));
             }
 
             if (RuleExecutionScope == RuleExecutionScope.Exclude)
             {
-                return Urls.Select(u => new Regex(u, RegexOptions.IgnoreCase)).All(r => !r.IsMatch(url.TrimEnd('/')));
+                return Urls.Select(u => new Regex(u.TrimEnd('/'), RegexOptions.IgnoreCase)).All(r => !r.IsMatch(url.TrimEnd('/')));
             }
 
             return true;

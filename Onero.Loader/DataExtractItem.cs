@@ -23,9 +23,8 @@ namespace Onero.Loader
 
         public bool RemoveWhitespaces { get; set; }
 
-        // TODO: Use when multiple data extractor types occur
+        // TODO: Create multiple data extractor types extending DataExtractorType enum
         //public DataExtractorType DataExtractorType { get; set; }
-
 
         protected override void Parse()
         {

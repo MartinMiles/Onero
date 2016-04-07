@@ -61,6 +61,8 @@
     <Compile Include="Browser.cs" />
     <Compile Include="DataExtractItem.cs" />
     <Compile Include="DriverFactory.cs" />
+    <Compile Include="Forms\FieldType.cs" />
+    <Compile Include="HttpStatusCodeReader.cs" />
     <Compile Include="Results\DataExtractResult.cs" />
     <Compile Include="XmlExtensionMethods.cs" />
     <Compile Include="Interfaces\IProfile.cs" />

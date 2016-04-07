@@ -120,7 +120,6 @@ namespace Onero.Dialogs
             return GetEntity(_entity);
         }
 
-        // TODO: Maybe generic?
         protected virtual T GetEntity(T entity)
         {
             return entity;

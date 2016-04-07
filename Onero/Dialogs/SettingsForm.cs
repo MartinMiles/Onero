@@ -27,7 +27,7 @@ namespace Onero.Dialogs
             InitializeComponent();
         }
 
-        private void FormLoad(object sender, EventArgs e)
+        private void Form_Load(object sender, EventArgs e)
         {
             profiles = new BindingList<Profile>(Profiles.Read());
 
@@ -40,11 +40,7 @@ namespace Onero.Dialogs
         {
             foreach (Browser item in Enum.GetValues(typeof (Browser)))
             {
-                // currently only first 2 browsers from the enum
-                //if ((int)item < 3)
-                {
-                    browserCombobox.Items.Add(item.GetDescription());
-                }
+                browserCombobox.Items.Add(item.GetDescription());
             }
         }
 
@@ -117,6 +113,7 @@ namespace Onero.Dialogs
 
             if (!isExistingProfile)
             {
+                // TODO: What about others?
                 new CollectionOf<Rule>(CurrentProfile.Name).Create<Rule>();
                 new CollectionOf<WebForm>(CurrentProfile.Name).Create<WebForm>();
             }

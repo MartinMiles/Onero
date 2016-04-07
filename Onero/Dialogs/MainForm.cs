@@ -627,7 +627,7 @@ namespace Onero.Dialogs
         {
             //ReadWebApi("http://test01/sitecore/api/ssc/item/0DE95AE4-41AB-4D01-9EB0-67441B7C2450/children?database=master");
 
-            //ParseWebApi(apiEndpoint.Text, apiLogin.Text);
+            //ParseWebApi(apiEndpoint.Text, apiLogin.SendText);
 
             const string WebApi = "http://test02/?sc_itemid={110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}";
             const string URL1 = "https://tfl.gov.uk/\nhttp://tfl.gov.uk/plan-a-journey/\nhttp://tfl.gov.uk/plan-a-journey/results";

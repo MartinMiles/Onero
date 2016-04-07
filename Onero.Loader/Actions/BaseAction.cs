@@ -16,7 +16,7 @@ namespace Onero.Loader.Actions
 
         public abstract dynamic Execute();
 
-        protected By BySelector(string selector)
+        public static By BySelector(string selector)
         {
             switch (selector.First())
             {

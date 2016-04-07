@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <rule name="Just a simple rule" enabled="true">
+    <condition>$('html').length &gt; 0</condition>
+  </rule>
+</items>

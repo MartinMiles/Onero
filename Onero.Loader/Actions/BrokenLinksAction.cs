@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using Onero.Loader.Results;
 using OpenQA.Selenium;
 
@@ -9,7 +8,7 @@ namespace Onero.Loader.Actions
 {
     public class BrokenLinksAction : BaseAction
     {
-        const int TIMEOUT = 20; // 10 seconds
+        const int TIMEOUT = 20; // seconds
 
         public BrokenLinksAction(IWebDriver driver, LoaderSettings settings) : base(driver, settings)
         {
@@ -45,43 +44,54 @@ namespace Onero.Loader.Actions
         {
             var brokenLinks = new List<string>();
 
-            var hrefs = driver
+            var uris = driver
                 .FindElements(By.TagName(tagName))
                 .Where(e => FilterByAttribute(e, filterAttributeName, filterAttributeValue))
                 .Select(l => l.GetAttribute(attributeName))
                 .Where(i=>!string.IsNullOrWhiteSpace(i))
-                .Distinct();
+                .Distinct().Select(u => new Uri(u));
 
-            foreach (var href in hrefs)
+            HttpStatusCodeReader httpStatusCodeReader = new HttpStatusCodeReader(uris);
+            var results = httpStatusCodeReader.GetHttpStatusCodes();
+
+            foreach (var result in results)
             {
-                if (href.StartsWith("javascript:"))
+                if (!result.Value)
                 {
-                    continue;
-                }
-
-                try
-                {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(href);
-                    //request.Method = WebRequestMethods.Http.Head;
-                    request.Timeout = TIMEOUT*1000;
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                    if (response.StatusCode != HttpStatusCode.OK)
-                    {
-                        brokenLinks.Add(href);
-                    }
-                }
-                catch (NotSupportedException e)
-                {
-                    brokenLinks.Add(href);
-                }
-                catch (WebException e)
-                {
-                    brokenLinks.Add(href);
-                }
-                catch (ArgumentNullException e)
-                {
+                    brokenLinks.Add(result.Key.ToString());
                 }
             }
+
+            //foreach (var href in hrefs)
+            //{
+            //    if (href.StartsWith("javascript:"))
+            //    {
+            //        continue;
+            //    }
+
+            //    try
+            //    {
+            //        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(href);
+            //        //request.Method = WebRequestMethods.Http.Head;
+            //        request.Timeout = TIMEOUT*1000;
+            //        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            //        if (response.StatusCode != HttpStatusCode.OK)
+            //        {
+            //            brokenLinks.Add(href);
+            //        }
+            //    }
+            //    catch (NotSupportedException e)
+            //    {
+            //        brokenLinks.Add(href);
+            //    }
+            //    catch (WebException e)
+            //    {
+            //        brokenLinks.Add(href);
+            //    }
+            //    catch (ArgumentNullException e)
+            //    {
+            //    }
+            //}
 
             return brokenLinks;
         }

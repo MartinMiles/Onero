@@ -8,6 +8,7 @@ using Onero.Loader;
 using Onero.Dialogs;
 using Onero.Loader.Results;
 using Onero.Extensions;
+using Onero.Loader.Forms;
 
 namespace Onero
 {
@@ -223,9 +224,14 @@ namespace Onero
             for (int i = 0; i < 7; i++)
             {
                 var field = formEditor.fieldsGroupbox.Controls.Find("fieldId" + (i + 1), true).First() as TextBox;
+                var type = formEditor.fieldsGroupbox.Controls.Find("fieldtype" + (i + 1), true).First() as ComboBox;
                 var value = formEditor.fieldsGroupbox.Controls.Find("fieldValue" + (i + 1), true).First() as TextBox;
 
-                if (field != null && value != null && (!String.IsNullOrWhiteSpace(field.Text) && String.IsNullOrWhiteSpace(value.Text)) || (String.IsNullOrWhiteSpace(field.Text) && !String.IsNullOrWhiteSpace(value.Text)))
+                if (field != null && value != null && 
+                    (!String.IsNullOrWhiteSpace(field.Text) && String.IsNullOrWhiteSpace(value.Text) && (FieldType)type.SelectedItem != FieldType.ClickItem)
+                    || 
+                    (String.IsNullOrWhiteSpace(field.Text) && !String.IsNullOrWhiteSpace(value.Text))
+                    )
                 {
                     MessageBox.Show(ID_AND_VALUE_INVALID, VALIDATION_ERROR);
                     return false;

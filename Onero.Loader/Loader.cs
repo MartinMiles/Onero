@@ -36,42 +36,12 @@ namespace Onero.Loader
                 {
                     driver.Manage().Timeouts().SetPageLoadTimeout(new TimeSpan(0, 0, settings.Profile.Timeout));
 
-                    var timer = new Stopwatch();
-
                     foreach (var page in settings.PagesToCrawl)
                     {
                         if (backgroundWorker.CancellationPending)
                             break;
 
-                        var result = new Result(page);
-
-                        try
-                        {
-                            timer.Reset();
-                            timer.Start();
-                            driver.Navigate().GoToUrl(page);
-                            timer.Stop();
-
-                            result.PageLoadTime = timer.ElapsedMilliseconds;
-
-                            var actions = ActionsFactory.GetActions(driver, settings, order);
-                            foreach (BaseAction action in actions)
-                            {
-                                result.GenericResults.Add(action.GetType(), action.Execute());
-                            }
-
-                            result.PageResult = ResultCode.Successful;
-                        }
-                        catch (WebDriverException e)
-                        {
-                            var errorMsg = e.Message.ToLower();
-
-                            result.PageResult = errorMsg.Contains("timeout") || errorMsg.Contains("timed out")
-                                ? ResultCode.PageFailedFromTimeout 
-                                : ResultCode.PageFailed;
-                        }
-
-                        backgroundWorker.ReportProgress(order, result);
+                        backgroundWorker.ReportProgress(order, RunThePage(page, driver, order));
                         order++;
                     }
                 }
@@ -85,6 +55,39 @@ namespace Onero.Loader
 
                 throw;
             }
+        }
+
+        private Result RunThePage(string page, IWebDriver driver, int order)
+        {
+            var result = new Result(page);
+            var timer = new Stopwatch();
+
+            try
+            {
+                timer.Reset();
+                timer.Start();
+                driver.Navigate().GoToUrl(page);
+                timer.Stop();
+
+                result.PageLoadTime = timer.ElapsedMilliseconds;
+
+                var actions = ActionsFactory.GetActions(driver, settings, order);
+                foreach (BaseAction action in actions)
+                {
+                    result.GenericResults.Add(action.GetType(), action.Execute());
+                }
+
+                result.PageResult = ResultCode.Successful;
+            }
+            catch (WebDriverException e)
+            {
+                var errorMsg = e.Message.ToLower();
+
+                result.PageResult = errorMsg.Contains("timeout") || errorMsg.Contains("timed out")
+                    ? ResultCode.PageFailedFromTimeout
+                    : ResultCode.PageFailed;
+            }
+            return result;
         }
     }
 }

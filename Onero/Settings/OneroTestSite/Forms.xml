@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <form name="Login form" enabled="true">
+    <url>/Account/Login</url>
+    <fields>
+      <field id="#Email" type="SendText">test@test.com</field>
+      <field id="#Password" type="SendText">Test-123</field>
+    </fields>
+    <submit id=".btn-default" />
+    <result type="redirect">
+      <url>http://localhost:8540$</url>
+    </result>
+  </form>
+  <form name="Supported fields" enabled="true">
+    <url>/Home/SupportedFields</url>
+    <fields>
+      <field id="#fieldTextInput" type="SendText">test</field>
+      <field id="#fieldPasswordInput" type="SendText">test</field>
+      <field id="#fieldCheckbox" type="ClickItem"></field>
+      <field id="#radioFemale" type="ClickItem">test</field>
+      <field id="#browsersDatalist" type="SendText">test</field>
+      <field id="#range" type="SendKeys">RIGHT*40</field>
+      <field id="#quantity" type="SendKeys">UP*4</field>
+      <field id="#colorpicker" type="JavaScript">$('#colorpicker').val('#ffff00');</field>
+    </fields>
+    <submit id="#fieldButton" />
+    <result type="message">
+      <message>OK</message>
+      <id>#message</id>
+    </result>
+  </form>
+</items>

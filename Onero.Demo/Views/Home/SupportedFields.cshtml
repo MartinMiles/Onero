@@ -1,0 +1,170 @@
+﻿@{ ViewBag.Title = "SupportedFields"; }
+
+<h2>Supported Fields</h2>
+<br/><br/>
+
+<style>
+.div-table{
+  display:table;         
+  width:auto;         
+  background-color:#fafafa;
+  border:1px solid  #666666;         
+  border-spacing:5px;/*cellspacing:poor IE support for  this*/
+}
+.div-table-row{
+  display:table-row;
+  width:auto;
+  clear:both;
+}
+.div-table-col{
+  float:left;/*fix for  buggy browsers*/
+  display:table-column;         
+  width:200px;         
+  /*background-color:#ccc;*/  
+}
+</style>
+
+<div class="div-table">
+    <div class="div-table-row">
+        <div class="div-table-col"></div>
+        <div class="div-table-col"></div>
+    </div>
+    <div class="div-table-row">
+        <div class="div-table-col">Text input box</div>
+        <div class="div-table-col"><input type="text" id="fieldTextInput" name="fieldTextInput"/>
+        </div>
+    </div>
+    <div class="div-table-row">
+        <div class="div-table-col">Password input box</div>
+        <div class="div-table-col"><input type="password" id="fieldPasswordInput" name="fieldPasswordInput"/>
+        </div>
+    </div>
+    <div class="div-table-row">
+        <div class="div-table-col">Checkbox</div>
+        <div class="div-table-col">
+            <input type="checkbox" id="fieldCheckbox" name="fieldCheckbox"/> Check me
+        </div>
+    </div>
+    <div class="div-table-row">
+        <div class="div-table-col">Radio button</div>
+        <div class="div-table-col">
+            <input type="radio" name="radio" id="radioMale" value="male" checked> Male<br>
+            <input type="radio" name="radio" id="radioFemale" value="female"> Female<br>
+        </div>
+    </div>
+    <div class="div-table-row">
+        <div class="div-table-col">Datalist</div>
+        <div class="div-table-col">
+            <input list="browsers" name="browser" id="browsersDatalist">
+            <datalist id="browsers">
+                <option value="Internet Explorer">
+                <option value="Firefox">
+                <option value="Chrome">
+                <option value="Opera">
+                <option value="Safari">
+            </datalist>
+        </div>
+    </div>
+    <div class="div-table-row">
+        <div class="div-table-col">Range</div>
+        <div class="div-table-col"><input type="range" id="range" value="50">
+        </div>
+    </div>
+    <div class="div-table-row">
+        <div class="div-table-col">Date (chrome)</div>
+        <div class="div-table-col"><input type=date>
+        </div>
+    </div>
+    <div class="div-table-row">
+        <div class="div-table-col">Time (except FF & IE)</div>
+        <div class="div-table-col"><input type="time" name="usr_time">
+        </div>
+    </div>
+    <div class="div-table-row">
+        <div class="div-table-col">Week (not in IE)</div>
+        <div class="div-table-col"><input type="week" name="year_week">
+        </div>
+    </div>
+    <div class="div-table-row">
+        <div class="div-table-col">Number</div>
+        <div class="div-table-col"><input type="number" id="quantity"  name="quantity" min="1" max="10" value="5">
+        </div>
+    </div>
+    <div class="div-table-row">
+        <div class="div-table-col">Color</div>
+        <div class="div-table-col"><input type="color" id="colorpicker" name="colorpicker" value="#ff0000">
+        </div>
+    </div>
+
+    <div class="divRow">
+        <div class="div-table-col">Button</div>
+        <div class="div-table-col"><input type="button" id="fieldButton" name="fieldButton" value="Submit"/>
+        </div>
+    </div>
+
+    <div class="divRow">
+        <div class="div-table-col" id="message"></div>
+    </div>
+</div>
+
+<script src="/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(document).ready(function () {
+
+        function ValidatePage() {
+
+            var test = 'test';
+
+            if ($('#fieldTextInput').val() != test) {
+                return false;
+            }
+            if ($('#fieldPasswordInput').val() != test) {
+
+                alert($('#fieldPasswordInput').val());
+                return false;
+            }
+            if ($('#fieldCheckbox').val() != 'on') {
+
+                alert($('#fieldCheckbox').val());
+                return false;
+            }
+
+            if ($('input[name=radio]:checked').val() != 'female') {
+
+                alert($('input[name=radio]:checked').val());
+                return false;
+            }
+            if ($('#browsersDatalist').val() != test) {
+
+                alert($('#browsersDatalist').val());
+                return false;
+            }
+            if ($('#range').val() != 90) {
+
+                alert($('#range').val());
+                return false;
+            }
+
+            if ($('#quantity').val() != 9) {
+
+                alert($('#quantity').val());
+                return false;
+            }
+
+            if ($('#colorpicker').val() != '#ffff00') {
+
+                alert($('#colorpicker').val());
+                return false;
+            }
+
+            return true;
+        }
+
+        $('#fieldButton').click(function () {
+            $('#message').html(ValidatePage() ? 'OK' : 'Failed');
+        });
+    });
+</script>
+
+
+

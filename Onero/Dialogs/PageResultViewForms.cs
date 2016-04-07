@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Onero.Collections;
+using Onero.Extensions;
 using Onero.Loader;
 using Onero.Loader.Actions;
 using Onero.Loader.Broken;
@@ -83,7 +84,7 @@ namespace Onero.Dialogs
 
         private static string UrlToFilename(string url)
         {
-            // TODO: Turn into smth more friendly
+            // TODO: Change filename into smth more friendly
             // Data extractor page - test 1 - http___localhost_8540_Home_ExtractData
             return Path.GetInvalidFileNameChars().Aggregate(url, (current, c) => current.Replace(c, '_'));
         }
@@ -106,7 +107,7 @@ namespace Onero.Dialogs
         private static void FillRichTextBox<T>(RichTextBox box, Dictionary<T, ResultCode> displayResults) where T : INameable
         {
             var displayResultsRule = displayResults.ToDictionary(
-                r => $"{r.Key.Name} - {r.Value}",
+                r => $"{r.Key.Name} - {r.Value.GetDescription()}",
                 r => r.Value == ResultCode.Successful ? DisplayResult.Successful : DisplayResult.Failed);
 
             box.FillValuesWithColor(displayResultsRule);

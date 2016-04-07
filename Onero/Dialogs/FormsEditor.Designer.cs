@@ -50,6 +50,22 @@
             this.fieldValue1 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.fieldsGroupbox = new System.Windows.Forms.GroupBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.fieldType1 = new System.Windows.Forms.ComboBox();
+            this.fieldType2 = new System.Windows.Forms.ComboBox();
+            this.fieldType3 = new System.Windows.Forms.ComboBox();
+            this.fieldType4 = new System.Windows.Forms.ComboBox();
+            this.fieldType5 = new System.Windows.Forms.ComboBox();
+            this.fieldType6 = new System.Windows.Forms.ComboBox();
+            this.fieldType7 = new System.Windows.Forms.ComboBox();
+            this.fieldType8 = new System.Windows.Forms.ComboBox();
             this.label25 = new System.Windows.Forms.Label();
             this.submitButtonId = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
@@ -83,6 +99,7 @@
             this.fieldValue2 = new System.Windows.Forms.TextBox();
             this.fieldId2 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.fieldsGroupbox.SuspendLayout();
@@ -92,7 +109,7 @@
             // 
             this.nameTextbox.Location = new System.Drawing.Point(9, 32);
             this.nameTextbox.Name = "nameTextbox";
-            this.nameTextbox.Size = new System.Drawing.Size(388, 20);
+            this.nameTextbox.Size = new System.Drawing.Size(415, 20);
             this.nameTextbox.TabIndex = 1;
             // 
             // label1
@@ -125,7 +142,7 @@
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(352, 642);
+            this.cancelButton.Location = new System.Drawing.Point(379, 642);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(57, 23);
             this.cancelButton.TabIndex = 25;
@@ -135,7 +152,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(294, 642);
+            this.button1.Location = new System.Drawing.Point(321, 642);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(52, 23);
             this.button1.TabIndex = 24;
@@ -147,7 +164,7 @@
             // 
             this.urlTextbox.Location = new System.Drawing.Point(9, 71);
             this.urlTextbox.Name = "urlTextbox";
-            this.urlTextbox.Size = new System.Drawing.Size(388, 20);
+            this.urlTextbox.Size = new System.Drawing.Size(415, 20);
             this.urlTextbox.TabIndex = 2;
             // 
             // label2
@@ -184,7 +201,7 @@
             // 
             this.resultMessage.Location = new System.Drawing.Point(9, 117);
             this.resultMessage.Name = "resultMessage";
-            this.resultMessage.Size = new System.Drawing.Size(388, 20);
+            this.resultMessage.Size = new System.Drawing.Size(415, 20);
             this.resultMessage.TabIndex = 22;
             // 
             // label4
@@ -200,7 +217,7 @@
             // 
             this.resultId.Location = new System.Drawing.Point(9, 78);
             this.resultId.Name = "resultId";
-            this.resultId.Size = new System.Drawing.Size(388, 20);
+            this.resultId.Size = new System.Drawing.Size(415, 20);
             this.resultId.TabIndex = 21;
             // 
             // label5
@@ -216,7 +233,7 @@
             // 
             this.resultUrl.Location = new System.Drawing.Point(9, 160);
             this.resultUrl.Name = "resultUrl";
-            this.resultUrl.Size = new System.Drawing.Size(388, 20);
+            this.resultUrl.Size = new System.Drawing.Size(415, 20);
             this.resultUrl.TabIndex = 23;
             // 
             // label6
@@ -236,7 +253,7 @@
             this.groupBox1.Controls.Add(this.urlTextbox);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(407, 100);
+            this.groupBox1.Size = new System.Drawing.Size(437, 100);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "General:";
@@ -253,7 +270,7 @@
             this.groupBox3.Controls.Add(this.resultId);
             this.groupBox3.Location = new System.Drawing.Point(12, 435);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(407, 201);
+            this.groupBox3.Size = new System.Drawing.Size(437, 201);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Result match:";
@@ -262,12 +279,12 @@
             // 
             this.fieldId1.Location = new System.Drawing.Point(30, 36);
             this.fieldId1.Name = "fieldId1";
-            this.fieldId1.Size = new System.Drawing.Size(192, 20);
+            this.fieldId1.Size = new System.Drawing.Size(128, 20);
             this.fieldId1.TabIndex = 3;
             // 
             // fieldValue1
             // 
-            this.fieldValue1.Location = new System.Drawing.Point(244, 36);
+            this.fieldValue1.Location = new System.Drawing.Point(271, 36);
             this.fieldValue1.Name = "fieldValue1";
             this.fieldValue1.Size = new System.Drawing.Size(153, 20);
             this.fieldValue1.TabIndex = 4;
@@ -275,7 +292,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(228, 39);
+            this.label7.Location = new System.Drawing.Point(259, 39);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(10, 13);
             this.label7.TabIndex = 28;
@@ -283,6 +300,23 @@
             // 
             // fieldsGroupbox
             // 
+            this.fieldsGroupbox.Controls.Add(this.label34);
+            this.fieldsGroupbox.Controls.Add(this.label26);
+            this.fieldsGroupbox.Controls.Add(this.label27);
+            this.fieldsGroupbox.Controls.Add(this.label28);
+            this.fieldsGroupbox.Controls.Add(this.label29);
+            this.fieldsGroupbox.Controls.Add(this.label30);
+            this.fieldsGroupbox.Controls.Add(this.label31);
+            this.fieldsGroupbox.Controls.Add(this.label32);
+            this.fieldsGroupbox.Controls.Add(this.label33);
+            this.fieldsGroupbox.Controls.Add(this.fieldType1);
+            this.fieldsGroupbox.Controls.Add(this.fieldType2);
+            this.fieldsGroupbox.Controls.Add(this.fieldType3);
+            this.fieldsGroupbox.Controls.Add(this.fieldType4);
+            this.fieldsGroupbox.Controls.Add(this.fieldType5);
+            this.fieldsGroupbox.Controls.Add(this.fieldType6);
+            this.fieldsGroupbox.Controls.Add(this.fieldType7);
+            this.fieldsGroupbox.Controls.Add(this.fieldType8);
             this.fieldsGroupbox.Controls.Add(this.label25);
             this.fieldsGroupbox.Controls.Add(this.submitButtonId);
             this.fieldsGroupbox.Controls.Add(this.label19);
@@ -321,10 +355,156 @@
             this.fieldsGroupbox.Controls.Add(this.fieldId1);
             this.fieldsGroupbox.Location = new System.Drawing.Point(12, 118);
             this.fieldsGroupbox.Name = "fieldsGroupbox";
-            this.fieldsGroupbox.Size = new System.Drawing.Size(407, 311);
+            this.fieldsGroupbox.Size = new System.Drawing.Size(438, 311);
             this.fieldsGroupbox.TabIndex = 2;
             this.fieldsGroupbox.TabStop = false;
             this.fieldsGroupbox.Text = "Fields:";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(164, 221);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(10, 13);
+            this.label26.TabIndex = 77;
+            this.label26.Text = "-";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(164, 195);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(10, 13);
+            this.label27.TabIndex = 76;
+            this.label27.Text = "-";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(164, 169);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(10, 13);
+            this.label28.TabIndex = 75;
+            this.label28.Text = "-";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(164, 143);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(10, 13);
+            this.label29.TabIndex = 74;
+            this.label29.Text = "-";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(164, 117);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(10, 13);
+            this.label30.TabIndex = 73;
+            this.label30.Text = "-";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(164, 91);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(10, 13);
+            this.label31.TabIndex = 72;
+            this.label31.Text = "-";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(164, 65);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(10, 13);
+            this.label32.TabIndex = 71;
+            this.label32.Text = "-";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(164, 39);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(10, 13);
+            this.label33.TabIndex = 70;
+            this.label33.Text = "-";
+            // 
+            // fieldType1
+            // 
+            this.fieldType1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.fieldType1.FormattingEnabled = true;
+            this.fieldType1.Location = new System.Drawing.Point(180, 35);
+            this.fieldType1.Name = "fieldType1";
+            this.fieldType1.Size = new System.Drawing.Size(73, 21);
+            this.fieldType1.TabIndex = 69;
+            // 
+            // fieldType2
+            // 
+            this.fieldType2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.fieldType2.FormattingEnabled = true;
+            this.fieldType2.Location = new System.Drawing.Point(180, 61);
+            this.fieldType2.Name = "fieldType2";
+            this.fieldType2.Size = new System.Drawing.Size(73, 21);
+            this.fieldType2.TabIndex = 68;
+            // 
+            // fieldType3
+            // 
+            this.fieldType3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.fieldType3.FormattingEnabled = true;
+            this.fieldType3.Location = new System.Drawing.Point(180, 87);
+            this.fieldType3.Name = "fieldType3";
+            this.fieldType3.Size = new System.Drawing.Size(73, 21);
+            this.fieldType3.TabIndex = 67;
+            // 
+            // fieldType4
+            // 
+            this.fieldType4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.fieldType4.FormattingEnabled = true;
+            this.fieldType4.Location = new System.Drawing.Point(180, 113);
+            this.fieldType4.Name = "fieldType4";
+            this.fieldType4.Size = new System.Drawing.Size(73, 21);
+            this.fieldType4.TabIndex = 66;
+            // 
+            // fieldType5
+            // 
+            this.fieldType5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.fieldType5.FormattingEnabled = true;
+            this.fieldType5.Location = new System.Drawing.Point(180, 139);
+            this.fieldType5.Name = "fieldType5";
+            this.fieldType5.Size = new System.Drawing.Size(73, 21);
+            this.fieldType5.TabIndex = 65;
+            // 
+            // fieldType6
+            // 
+            this.fieldType6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.fieldType6.FormattingEnabled = true;
+            this.fieldType6.Items.AddRange(new object[] {
+            ""});
+            this.fieldType6.Location = new System.Drawing.Point(180, 165);
+            this.fieldType6.Name = "fieldType6";
+            this.fieldType6.Size = new System.Drawing.Size(73, 21);
+            this.fieldType6.TabIndex = 64;
+            // 
+            // fieldType7
+            // 
+            this.fieldType7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.fieldType7.FormattingEnabled = true;
+            this.fieldType7.Location = new System.Drawing.Point(180, 191);
+            this.fieldType7.Name = "fieldType7";
+            this.fieldType7.Size = new System.Drawing.Size(73, 21);
+            this.fieldType7.TabIndex = 63;
+            // 
+            // fieldType8
+            // 
+            this.fieldType8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.fieldType8.FormattingEnabled = true;
+            this.fieldType8.Location = new System.Drawing.Point(180, 217);
+            this.fieldType8.Name = "fieldType8";
+            this.fieldType8.Size = new System.Drawing.Size(73, 21);
+            this.fieldType8.TabIndex = 62;
             // 
             // label25
             // 
@@ -339,7 +519,7 @@
             // 
             this.submitButtonId.Location = new System.Drawing.Point(30, 273);
             this.submitButtonId.Name = "submitButtonId";
-            this.submitButtonId.Size = new System.Drawing.Size(367, 20);
+            this.submitButtonId.Size = new System.Drawing.Size(394, 20);
             this.submitButtonId.TabIndex = 19;
             // 
             // label19
@@ -354,7 +534,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(228, 221);
+            this.label20.Location = new System.Drawing.Point(259, 221);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(10, 13);
             this.label20.TabIndex = 58;
@@ -362,7 +542,7 @@
             // 
             // fieldValue8
             // 
-            this.fieldValue8.Location = new System.Drawing.Point(244, 218);
+            this.fieldValue8.Location = new System.Drawing.Point(271, 218);
             this.fieldValue8.Name = "fieldValue8";
             this.fieldValue8.Size = new System.Drawing.Size(153, 20);
             this.fieldValue8.TabIndex = 18;
@@ -371,7 +551,7 @@
             // 
             this.fieldId8.Location = new System.Drawing.Point(30, 218);
             this.fieldId8.Name = "fieldId8";
-            this.fieldId8.Size = new System.Drawing.Size(192, 20);
+            this.fieldId8.Size = new System.Drawing.Size(128, 20);
             this.fieldId8.TabIndex = 17;
             // 
             // label21
@@ -386,7 +566,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(228, 195);
+            this.label22.Location = new System.Drawing.Point(259, 195);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(10, 13);
             this.label22.TabIndex = 54;
@@ -394,7 +574,7 @@
             // 
             // fieldValue7
             // 
-            this.fieldValue7.Location = new System.Drawing.Point(244, 192);
+            this.fieldValue7.Location = new System.Drawing.Point(271, 192);
             this.fieldValue7.Name = "fieldValue7";
             this.fieldValue7.Size = new System.Drawing.Size(153, 20);
             this.fieldValue7.TabIndex = 16;
@@ -403,7 +583,7 @@
             // 
             this.fieldId7.Location = new System.Drawing.Point(30, 192);
             this.fieldId7.Name = "fieldId7";
-            this.fieldId7.Size = new System.Drawing.Size(192, 20);
+            this.fieldId7.Size = new System.Drawing.Size(128, 20);
             this.fieldId7.TabIndex = 15;
             // 
             // label23
@@ -418,7 +598,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(228, 169);
+            this.label24.Location = new System.Drawing.Point(259, 169);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(10, 13);
             this.label24.TabIndex = 50;
@@ -426,7 +606,7 @@
             // 
             // fieldValue6
             // 
-            this.fieldValue6.Location = new System.Drawing.Point(244, 166);
+            this.fieldValue6.Location = new System.Drawing.Point(271, 166);
             this.fieldValue6.Name = "fieldValue6";
             this.fieldValue6.Size = new System.Drawing.Size(153, 20);
             this.fieldValue6.TabIndex = 14;
@@ -435,13 +615,13 @@
             // 
             this.fieldId6.Location = new System.Drawing.Point(30, 166);
             this.fieldId6.Name = "fieldId6";
-            this.fieldId6.Size = new System.Drawing.Size(192, 20);
+            this.fieldId6.Size = new System.Drawing.Size(128, 20);
             this.fieldId6.TabIndex = 13;
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(252, 20);
+            this.label18.Location = new System.Drawing.Point(278, 17);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(131, 13);
             this.label18.TabIndex = 47;
@@ -450,11 +630,11 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(35, 20);
+            this.label17.Location = new System.Drawing.Point(35, 17);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(143, 13);
+            this.label17.Size = new System.Drawing.Size(101, 13);
             this.label17.TabIndex = 46;
-            this.label17.Text = "Selector of the field to submit";
+            this.label17.Text = "Selector of the field ";
             // 
             // label15
             // 
@@ -468,7 +648,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(228, 143);
+            this.label16.Location = new System.Drawing.Point(259, 143);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(10, 13);
             this.label16.TabIndex = 44;
@@ -476,7 +656,7 @@
             // 
             // fieldValue5
             // 
-            this.fieldValue5.Location = new System.Drawing.Point(244, 140);
+            this.fieldValue5.Location = new System.Drawing.Point(271, 140);
             this.fieldValue5.Name = "fieldValue5";
             this.fieldValue5.Size = new System.Drawing.Size(153, 20);
             this.fieldValue5.TabIndex = 12;
@@ -485,7 +665,7 @@
             // 
             this.fieldId5.Location = new System.Drawing.Point(30, 140);
             this.fieldId5.Name = "fieldId5";
-            this.fieldId5.Size = new System.Drawing.Size(192, 20);
+            this.fieldId5.Size = new System.Drawing.Size(128, 20);
             this.fieldId5.TabIndex = 11;
             // 
             // label13
@@ -500,7 +680,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(228, 117);
+            this.label14.Location = new System.Drawing.Point(259, 117);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(10, 13);
             this.label14.TabIndex = 40;
@@ -508,7 +688,7 @@
             // 
             // fieldValue4
             // 
-            this.fieldValue4.Location = new System.Drawing.Point(244, 114);
+            this.fieldValue4.Location = new System.Drawing.Point(271, 114);
             this.fieldValue4.Name = "fieldValue4";
             this.fieldValue4.Size = new System.Drawing.Size(153, 20);
             this.fieldValue4.TabIndex = 10;
@@ -517,7 +697,7 @@
             // 
             this.fieldId4.Location = new System.Drawing.Point(30, 114);
             this.fieldId4.Name = "fieldId4";
-            this.fieldId4.Size = new System.Drawing.Size(192, 20);
+            this.fieldId4.Size = new System.Drawing.Size(128, 20);
             this.fieldId4.TabIndex = 9;
             // 
             // label11
@@ -532,7 +712,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(228, 91);
+            this.label12.Location = new System.Drawing.Point(259, 91);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(10, 13);
             this.label12.TabIndex = 36;
@@ -540,7 +720,7 @@
             // 
             // fieldValue3
             // 
-            this.fieldValue3.Location = new System.Drawing.Point(244, 88);
+            this.fieldValue3.Location = new System.Drawing.Point(271, 88);
             this.fieldValue3.Name = "fieldValue3";
             this.fieldValue3.Size = new System.Drawing.Size(153, 20);
             this.fieldValue3.TabIndex = 8;
@@ -549,7 +729,7 @@
             // 
             this.fieldId3.Location = new System.Drawing.Point(30, 88);
             this.fieldId3.Name = "fieldId3";
-            this.fieldId3.Size = new System.Drawing.Size(192, 20);
+            this.fieldId3.Size = new System.Drawing.Size(128, 20);
             this.fieldId3.TabIndex = 7;
             // 
             // label9
@@ -564,7 +744,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(228, 65);
+            this.label10.Location = new System.Drawing.Point(259, 65);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(10, 13);
             this.label10.TabIndex = 32;
@@ -572,7 +752,7 @@
             // 
             // fieldValue2
             // 
-            this.fieldValue2.Location = new System.Drawing.Point(244, 62);
+            this.fieldValue2.Location = new System.Drawing.Point(271, 62);
             this.fieldValue2.Name = "fieldValue2";
             this.fieldValue2.Size = new System.Drawing.Size(153, 20);
             this.fieldValue2.TabIndex = 6;
@@ -581,7 +761,7 @@
             // 
             this.fieldId2.Location = new System.Drawing.Point(30, 62);
             this.fieldId2.Name = "fieldId2";
-            this.fieldId2.Size = new System.Drawing.Size(192, 20);
+            this.fieldId2.Size = new System.Drawing.Size(128, 20);
             this.fieldId2.TabIndex = 5;
             // 
             // label8
@@ -593,12 +773,21 @@
             this.label8.TabIndex = 29;
             this.label8.Text = "1";
             // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(183, 17);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(62, 13);
+            this.label34.TabIndex = 78;
+            this.label34.Text = "Submit type";
+            // 
             // FormsEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(428, 672);
+            this.ClientSize = new System.Drawing.Size(461, 672);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.button1);
@@ -678,5 +867,22 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label25;
         public System.Windows.Forms.TextBox submitButtonId;
+        private System.Windows.Forms.ComboBox fieldType8;
+        private System.Windows.Forms.ComboBox fieldType7;
+        private System.Windows.Forms.ComboBox fieldType6;
+        private System.Windows.Forms.ComboBox fieldType1;
+        private System.Windows.Forms.ComboBox fieldType2;
+        private System.Windows.Forms.ComboBox fieldType3;
+        private System.Windows.Forms.ComboBox fieldType4;
+        private System.Windows.Forms.ComboBox fieldType5;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label label34;
     }
 }

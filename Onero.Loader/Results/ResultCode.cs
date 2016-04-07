@@ -1,4 +1,6 @@
-﻿namespace Onero.Loader.Results
+﻿using System.ComponentModel;
+
+namespace Onero.Loader.Results
 {
     public enum ResultCode
     {
@@ -9,7 +11,13 @@
         ElementNotFound,
         RedirectUrlMismatch,
         Timeout,
+
+        [Description("Form result URL mismatch")]
         FormResultUrlMissmatch,
+
+        [Description("Form returns the result other than expected")]
+        FormReturnsNotExpectedResult,
+
         PageFailed = 500,
         PageFailedFromTimeout,
         NotFinished

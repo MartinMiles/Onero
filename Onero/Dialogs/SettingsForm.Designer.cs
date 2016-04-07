@@ -304,7 +304,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "SettingsForm";
             this.Text = "Application settings";
-            this.Load += new System.EventHandler(this.FormLoad);
+            this.Load += new System.EventHandler(this.Form_Load);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox1.ResumeLayout(false);

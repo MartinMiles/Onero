@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<profile enabled="true">
+  <Screenshots value="false" />
+  <VerboseMode value="false" />
+  <CreateErrorLog value="false" />
+  <Browser value="Firefox" />
+  <OutputDirectory value="E:\Projects\Onero\Onero\bin\Debug\Results\OneroTestSite" />
+  <Timeout value="60" />
+  <FindAllBrokenLinks value="false" />
+  <FindAllBrokenImages value="false" />
+  <FindAllBrokenScripts value="false" />
+  <FindAllBrokenStyles value="false" />
+</profile>

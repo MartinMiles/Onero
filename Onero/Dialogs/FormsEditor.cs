@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Onero.Loader;
+using Onero.Loader.Forms;
 using Onero.Loader.Results;
 
 namespace Onero.Dialogs
@@ -12,7 +13,48 @@ namespace Onero.Dialogs
         public FormsEditor()
         {
             InitializeComponent();
+
+            for (int i = 0; i < 8; i++)
+            {
+                var typeCombobox = fieldsGroupbox.Controls.Find("fieldType" + (i + 1), true).First() as ComboBox;
+                InitFieldTypeCombobox(typeCombobox);
+
+                typeCombobox.SelectedIndexChanged += TypeComboboxChanged;
+            }
         }
+
+        private void InitFieldTypeCombobox(ComboBox comboBox)
+        {
+            var enumValues = Enum.GetValues(typeof(FieldType));
+            comboBox.Items.Clear();
+
+            if (enumValues.Length > 0)
+            {
+                foreach (FieldType item in enumValues)
+                {
+                    comboBox.Items.Add(item);
+                }
+
+                comboBox.SelectedIndex = 0;
+            }
+        }
+
+        private void TypeComboboxChanged(object sender, EventArgs e)
+        {
+            var typeCombo = sender as ComboBox;
+            var selectedType = (FieldType)typeCombo.SelectedItem;
+
+            EnableDisableField(typeCombo.Name.Last(), selectedType != FieldType.ClickItem);
+        }
+
+        private void EnableDisableField(char comboboxNameIndex, bool enabled)
+        {
+            int i = int.Parse(comboboxNameIndex.ToString());
+            var textBox = fieldsGroupbox.Controls.Find("fieldValue" + i, true).First() as TextBox;
+
+            textBox.Enabled = enabled;
+        }
+
 
         private WebForm _form;
         public WebForm Form 
@@ -29,12 +71,13 @@ namespace Onero.Dialogs
             _form.Fields = new List<WebFormField>(); 
             for (int i = 0; i < 7; i++)
             {
-                var field = fieldsGroupbox.Controls.Find(string.Format("fieldId{0}", i + 1), true).First() as TextBox;
-                var value = fieldsGroupbox.Controls.Find(string.Format("fieldValue{0}", i + 1), true).First() as TextBox;
+                var field = fieldsGroupbox.Controls.Find($"fieldId{i + 1}", true).First() as TextBox;
+                var fieldtype = GetFieldType(i);
+                var value = fieldsGroupbox.Controls.Find($"fieldValue{i + 1}", true).First() as TextBox;
 
-                if (field != null && field.Text.Any() && value != null && value.Text.Any())
+                if (field != null && field.Text.Any() && (value != null && value.Text.Any() || fieldtype == FieldType.ClickItem))
                 {
-                    _form.Fields.Add(new WebFormField(field.Text, value.Text));
+                    _form.Fields.Add(new WebFormField(field.Text, fieldtype, value.Text));
                 }
             }
 
@@ -46,6 +89,24 @@ namespace Onero.Dialogs
             _form.ResultParameters.Url = resultUrl.Text;
 
             return _form;
+        }
+
+        private FieldType GetFieldType(int i)
+        {
+            var fieldTypeCombobox = fieldsGroupbox.Controls.Find($"fieldType{i + 1}", true).First() as ComboBox;
+            return (FieldType)fieldTypeCombobox.SelectedItem;
+        }
+
+        private void SetFieldType(int i, FieldType type)
+        {
+            var typeCombobox = fieldsGroupbox.Controls.Find("fieldType" + (i + 1), true).First() as ComboBox;
+
+            if (typeCombobox.Items.Count == 0)
+            {
+                InitFieldTypeCombobox(typeCombobox);
+            }
+
+            typeCombobox.SelectedItem = type;
         }
 
         public FormResultType ResultType
@@ -78,6 +139,8 @@ namespace Onero.Dialogs
 
                     field.Text = form.Fields.ElementAt(i).Id;
                     value.Text = form.Fields.ElementAt(i).Value;
+
+                    SetFieldType(i, form.Fields.ElementAt(i).Type);
                 }
             }
 

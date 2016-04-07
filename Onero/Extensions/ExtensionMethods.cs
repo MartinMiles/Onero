@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using System.Xml;
 using Onero.Collections;
 
 namespace Onero.Extensions
@@ -54,8 +51,8 @@ namespace Onero.Extensions
                     return ((DescriptionAttribute)attrs[0]).Description;
                 }
             }
-            return enumerationValue.ToString();
 
+            return enumerationValue.ToString();
         }
 
         public static void EnableProfile(this BindingList<Profile> profiles, Profile profileToEnable)

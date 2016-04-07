@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <rule name="Data extractor page - test 1" enabled="true" type="include" whitespaces="true">
+    <condition>.body-content</condition>
+    <url>/Home/DataExtract/</url>
+  </rule>
+</items>

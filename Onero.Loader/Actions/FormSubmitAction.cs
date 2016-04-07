@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
+using Onero.Loader.Forms;
 using Onero.Loader.Results;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
 
 namespace Onero.Loader.Actions
 {
@@ -40,7 +42,30 @@ namespace Onero.Loader.Actions
                                 foreach (var field in pageForm.Fields)
                                 {
                                     var element = driver.FindElement(BySelector(field.Id));
-                                    element.SendKeys(field.Value);
+
+                                    if (field.Type == FieldType.SendText)
+                                    {
+                                        element.SendKeys(field.Value);
+                                    }
+                                    else if (field.Type == FieldType.ClickItem)
+                                    {
+                                        element.Click();
+                                    }
+                                    else if (field.Type == FieldType.SendKeys)
+                                    {
+                                        // TODO: Validate string and integer and the rest; refactor this PoC entirely
+                                        var strings = field.Value.Split('*');
+
+                                        for (int i = 0; i < int.Parse(strings[1]); i++)
+                                        {
+                                            string keys = strings[0] == "RIGHT" ? Keys.Right : Keys.Up;
+                                            element.SendKeys(keys);
+                                        }
+                                    }
+                                    else if (field.Type == FieldType.JavaScript)
+                                    {
+                                        (driver as RemoteWebDriver).ExecuteScript(field.Value);
+                                    }
                                 }
 
                                 if (!string.IsNullOrEmpty(pageForm.SubmitId))
@@ -86,7 +111,7 @@ namespace Onero.Loader.Actions
 
                                     var element = driver.FindElement(BySelector(pageForm.ResultParameters.Id));
                                     var regex = new Regex(pageForm.ResultParameters.Message, RegexOptions.IgnoreCase);
-                                    resultCode = regex.IsMatch(element.Text) ? ResultCode.Successful : ResultCode.ElementNotFound;
+                                    resultCode = regex.IsMatch(element.Text) ? ResultCode.Successful : ResultCode.FormReturnsNotExpectedResult;
 
                                     if(!string.IsNullOrWhiteSpace(pageForm.ResultParameters.Url) && driver.Url.Trim('/').ToLower() != pageForm.ResultParameters.Url.ToLower().Trim('/'))
                                     {

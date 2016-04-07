@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
+using Onero.Loader.Forms;
 using Onero.Loader.Results;
 
 namespace Onero.Loader
@@ -55,8 +56,10 @@ namespace Onero.Loader
             foreach (XmlNode _node in xmlNodeList)
             {
                 string id = _node.Attributes["id"].Value;
+                var type = _node.ParseEnum<FieldType>("type");
                 string value = _node.InnerText;
-                Fields.Add(new WebFormField(id, value));
+
+                Fields.Add(new WebFormField(id, type, value));
             }
 
             XmlNode resultNodeList = node.SelectSingleNode("result");
@@ -82,6 +85,7 @@ namespace Onero.Loader
             {
                 var field = new XElement("field", webFormField.Value);
                 field.SetAttributeValue("id", webFormField.Id);
+                field.SetAttributeValue("type", webFormField.Type);
                 fields.Add(field);
             }
             node.Add(fields);

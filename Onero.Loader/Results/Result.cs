@@ -10,29 +10,35 @@ namespace Onero.Loader.Results
         public string Url { get; set; }
         public ResultCode PageResult { get; set; }
         public long PageLoadTime { get; set; }
-        public Dictionary<Rule, ResultCode> RuleResults { get; set; }
-        public Dictionary<WebForm, ResultCode> FormResults { get; set; }
+
+        public Dictionary<Rule, ResultCode> RuleResults => GenericResults[typeof (RulesExecuteAction)] as Dictionary<Rule, ResultCode>;
+        public Dictionary<WebForm, ResultCode> FormResults => GenericResults[typeof(FormSubmitAction)] as Dictionary<WebForm, ResultCode>;
         public Dictionary<DataExtractItem, string> DataExtracts { get; set; }
         public BrokenLinksResult BrokenLinksResult { get; set; }
 
         public Dictionary<Type, dynamic> GenericResults { get; set; }
 
-        public bool IsSuccessful
+        public bool IsSuccessful => AreValid<RulesExecuteAction, Rule>() 
+            && AreValid<FormSubmitAction, WebForm>() 
+            && AreValid<BrokenLinksAction, object>();
+
+        private bool AreValid<T, U>()
         {
-            get
+            if (typeof (T) == typeof (BrokenLinksAction))
             {
-                bool allRules = RuleResults.All(r=>r.Value == ResultCode.Successful);
-                bool allForms = FormResults.All(r=>r.Value == ResultCode.Successful);
-                bool allLinks = !BrokenLinksResult.Images.Any() && !BrokenLinksResult.Links.Any();
-                return allRules && allForms && allLinks;
+                var result = GenericResults[typeof (T)] as BrokenLinksResult;
+                return !(result.Links.Any() || result.Images.Any() || result.Scripts.Any() || result.Styles.Any());
             }
+
+            // TODO: Breaks here if forms submission is terminated by exception and forms reulsts do not exist
+            return (GenericResults[typeof (T)] as Dictionary<U, ResultCode>).All(r => r.Value == ResultCode.Successful);
         }
 
         public Result()
         {
             PageResult = ResultCode.NotFinished;
-            RuleResults = new Dictionary<Rule, ResultCode>();
-            FormResults = new Dictionary<WebForm, ResultCode>();
+            //RuleResults = new Dictionary<Rule, ResultCode>();
+            //FormResults = new Dictionary<WebForm, ResultCode>();
             BrokenLinksResult = new BrokenLinksResult();
 
             GenericResults = new Dictionary<Type, dynamic>();

@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.XML" />
     <Reference Include="WebDriver">
@@ -54,9 +55,18 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Loader.ActionsTests.cs" />
+    <Compile Include="BaseTest.cs" />
+    <Compile Include="Const\SupportedFields.cs" />
+    <Compile Include="LoaderSettingsFactory.cs" />
+    <Compile Include="Tests\Actions\BrokenLinks.cs" />
+    <Compile Include="Tests\Actions\DataExtracts.cs" />
+    <Compile Include="Tests\Actions\Forms.cs" />
+    <Compile Include="Tests\Actions\Rules.cs" />
+    <Compile Include="Tests\Actions\Screenshots.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Const\URL.cs" />
+    <Compile Include="Tests\Loader_Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Onero.Loader\Onero.Loader.csproj">
@@ -66,6 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="_readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tests\Loader.Supported_Fields.cs" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
