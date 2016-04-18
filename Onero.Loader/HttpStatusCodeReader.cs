@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 
 namespace Onero.Loader
@@ -18,11 +17,12 @@ namespace Onero.Loader
         {
             if (uris == null)
             {
-                throw new ArgumentNullException("uris");
+                throw new ArgumentNullException("Broken Links Action: HttpStatusCodeReader - uris should not be null");
             }
 
             foreach (Uri uri in uris)
             {
+                // TODO: test schema-less
                 if (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps)
                 {
                     throw new ArgumentException($"{uri} is not valid http(s) uri.", "uris");

@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Onero.Loader;
 using Onero.Loader.Results;
 
 namespace Onero.Tests.Tests
@@ -7,11 +6,16 @@ namespace Onero.Tests.Tests
     [TestClass]
     public class Loader_Tests : BaseTest
     {
+        //const string BASE_URL = "http://localhost:8540";
+
+        /// <summary>
+        /// Runs the test for Loader
+        /// </summary>
         [TestMethod]
         public void Loader_Default()
         {
             int order = 1;
-            string page = "http://localhost:8540/Home/DataExtract";
+            string page = $"{WEBSITE_TEST_BASE}/Home/DataExtract";
 
             using (Driver = PhantomDriver)
             {

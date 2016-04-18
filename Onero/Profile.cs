@@ -1,7 +1,7 @@
-﻿using System.Xml;
+﻿using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Onero.Loader.Interfaces;
-using Onero.Extensions;
 using Onero.Loader;
 
 namespace Onero
@@ -10,12 +10,19 @@ namespace Onero
     {
         private const string ENABLED_ATTRIBUTE_NAME = "enabled";
         private const string VALUE_ATTRIBUTE_NAME = "value";
+        private const int TIMEOUT = 60;
 
         #region Constructors
 
         public Profile(string name)
         {
             Name = name;
+
+            // TODO: Where else Results is used? Unify with that place!
+            OutputDirectory = $"{Directory.GetCurrentDirectory()}\\Results\\{Name}";
+            Timeout = TIMEOUT;
+            CreateErrorLog = true;
+            Browser = Browser.Firefox;
         }
 
         public Profile(string name, string profileSettingsFile) : this(name)

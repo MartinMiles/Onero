@@ -41,18 +41,6 @@ namespace Onero
 
         }
 
-        private static Color GetColor(DisplayResult displayResult)
-        {
-            switch (displayResult)
-            {
-                case DisplayResult.Unprocessed: return Color.Black;
-                case DisplayResult.Successful: return Color.Green;
-                case DisplayResult.Failed: return Color.Red;
-            }
-
-            throw new ArgumentOutOfRangeException("DisplayResult: unknown value being passed");
-        }
-
         public static string GetClickedString(this RichTextBox richTextBox1, MouseEventArgs ea)
         {
             int positionToSearch = richTextBox1.GetCharIndexFromPosition(ea.Location);
@@ -72,6 +60,18 @@ namespace Onero
             }
 
             return currentWord.Trim();
+        }
+
+        private static Color GetColor(DisplayResult displayResult)
+        {
+            switch (displayResult)
+            {
+                case DisplayResult.Unprocessed: return Color.Black;
+                case DisplayResult.Successful: return Color.Green;
+                case DisplayResult.Failed: return Color.Red;
+            }
+
+            throw new ArgumentOutOfRangeException("DisplayResult: unknown value being passed");
         }
     }
 }

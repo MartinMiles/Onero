@@ -48,6 +48,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,12 +58,14 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(16, 56);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(216, 13);
+            this.label1.Size = new System.Drawing.Size(212, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Version 1.2       Release date: 21/Dec/2015";
+            this.label1.Text = "Version 1.4       Release date: 10/Apr/2016";
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label19);
+            this.groupBox1.Controls.Add(this.label18);
             this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.okButton);
             this.groupBox1.Controls.Add(this.label16);
@@ -83,7 +87,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(266, 338);
+            this.groupBox1.Size = new System.Drawing.Size(266, 353);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Onero Page Runner";
@@ -100,7 +104,7 @@
             // okButton
             // 
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.okButton.Location = new System.Drawing.Point(191, 299);
+            this.okButton.Location = new System.Drawing.Point(188, 314);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(64, 23);
             this.okButton.TabIndex = 1;
@@ -149,10 +153,10 @@
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Location = new System.Drawing.Point(90, 78);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(142, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(88, 13);
             this.linkLabel1.TabIndex = 12;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "http://onero.martinmiles.net/";
+            this.linkLabel1.Text = "http://onero.net/";
             // 
             // label12
             // 
@@ -176,7 +180,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(16, 288);
+            this.label10.Location = new System.Drawing.Point(16, 314);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(125, 13);
             this.label10.TabIndex = 9;
@@ -254,12 +258,30 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "The most intelligent way of crawling the websites";
             // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(16, 288);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(160, 13);
+            this.label18.TabIndex = 18;
+            this.label18.Text = "- finds broken links / images etc.";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(16, 301);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(108, 13);
+            this.label19.TabIndex = 19;
+            this.label19.Text = "- built-in data exporter";
+            // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.okButton;
-            this.ClientSize = new System.Drawing.Size(289, 362);
+            this.ClientSize = new System.Drawing.Size(289, 377);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -293,5 +315,7 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label18;
     }
 }

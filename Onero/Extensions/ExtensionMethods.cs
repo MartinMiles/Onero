@@ -70,6 +70,7 @@ namespace Onero.Extensions
             return Profiles.EnabledOrDefault(profiles);
         }
 
+        // TODO: Move to checked list Extensions
         public static string GetSelectedString(this CheckedListBox checkedListBox)
         {
             if (checkedListBox.SelectedItem == null)

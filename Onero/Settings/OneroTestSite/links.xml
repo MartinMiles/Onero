@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <items>
-  <!--<link url="http://localhost:8540/Home/SupportedFields" />
-  <link url="http://localhost:8540/Account/Login" />
-  <link url="http://localhost:8540/Home/BrokenLinks" />-->
-  <link url="http://localhost:8540/Home/DataExtract" />
+  <link url="http://demo.onero.net" />
+  <link url="http://demo.onero.net/Home/SupportedFields" />
+  <link url="http://demo.onero.net/Home/BrokenLinks" />
+  <link url="http://demo.onero.net/Home/DataExtract" />
 </items>

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
-using System.Xml;
 using Onero.Loader.Interfaces;
 
 namespace Onero.Collections
@@ -14,51 +12,50 @@ namespace Onero.Collections
         public const string PROFILE_SETTINGS_FILENAME = "Settings.xml";
         public const string SETTINGS_DIRECTORY = "Settings";
 
-        //public static string SettingsDirectory
-        //{
-        //    get { return string.Format("{0}Settings", PathPrefix); }
-        //}
-
-        //private static string PathPrefix
-        //{
-        //    get
-        //    {
-        //        string prefix = String.Empty;
-
-        //        #if (DEBUG)
-        //            prefix = "..\\..\\";
-        //        #endif
-
-        //        return prefix;
-        //    }
-        //}
-
-        public static IProfile Current
-        {
-            get { return EnabledOrDefault(Read()); }
-        }
+        public static IProfile Current => EnabledOrDefault(Read());
 
         public static List<Profile> Read()
         {
+            // TODO: Why is this called so multiple times? Refactor that!
+
             var profiles = new List<Profile>();
+
+            if (!Directory.Exists(SETTINGS_DIRECTORY))
+            {
+                Directory.CreateDirectory(SETTINGS_DIRECTORY);
+            }
 
             var profileDirectories = Directory.GetDirectories(SETTINGS_DIRECTORY);
 
-            if (profileDirectories.Length > 0)
+            if (profileDirectories.Length == 0)
             {
-                foreach (string profileDirectory in profileDirectories)
-                {
-                    var currentDirectory = new DirectoryInfo(profileDirectory);
-                    string file = string.Format("{0}\\{1}", profileDirectory, PROFILE_SETTINGS_FILENAME);
-                        profiles.Add(new Profile(currentDirectory.Name, file));
-                }
+                var defaultDirectory = $"{SETTINGS_DIRECTORY}\\{DEFAULT_PROFILE_NAME}";
+
+                Directory.CreateDirectory(defaultDirectory);
+                profileDirectories = new[] {defaultDirectory};
             }
-            else
+
+            foreach (string profileDirectory in profileDirectories)
             {
-                // alert no default
+                var currentDirectory = new DirectoryInfo(profileDirectory);
+                string settingsFile = $"{profileDirectory}\\{PROFILE_SETTINGS_FILENAME}";
+
+                if (!File.Exists(settingsFile))
+                {
+                    string profileName = profileDirectory.Split('\\')[1];
+                    CreateSettingsFile(profileName, settingsFile);
+                }
+
+                profiles.Add(new Profile(currentDirectory.Name, settingsFile));
             }
 
             return profiles;
+        }
+
+        private static void CreateSettingsFile(string profileName, string settingsFile)
+        {
+            var profile = new Profile(profileName);
+            profile.Save(settingsFile);
         }
 
         public static void Save(IEnumerable<Profile> profiles)

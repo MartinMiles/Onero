@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
@@ -122,6 +121,11 @@ namespace Onero.Loader.Actions
                             catch (NoSuchElementException e)
                             {
                                 resultCode = ResultCode.ElementNotFound;
+                            }
+                            catch (Exception e)
+                            {
+                                // TODO: Log (if switched) and debug this scenario (ex. on demosite / loginform)
+                                resultCode = ResultCode.FormFailed;
                             }
 
                             result.Add(pageForm, resultCode);

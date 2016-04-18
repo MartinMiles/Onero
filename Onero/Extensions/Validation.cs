@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -42,8 +43,8 @@ namespace Onero
         private const string HOSTNAME_NOT_SELECTED = "Hostname is not selected";
         private const string SITEMAP_NOT_SET = "Sitemap file is not set";
         private const string NO_LINKS_ARE_SET = "No links are set";
-        private const string RULES_FILE_NOT_EXISTS_AT = "Rules file does not exist at: {0}";
-        private const string FORMS_FILE_NOT_EXISTS_AT = "Forms file does not exist at: {0}";
+        //private const string RULES_FILE_NOT_EXISTS_AT = "Rules file does not exist at: {0}";
+        //private const string FORMS_FILE_NOT_EXISTS_AT = "Forms file does not exist at: {0}";
 
         private const string SITEMAP_MODE_HOST_AND_FILE_EMPTY = "Sitemap host / filenames fields should not be empty when running Sitemap mode";
         private const string WEBAPI_MODE_ENDPOINT_EMPTY = "Endpoint URL should not be empty when running Sitecore WebAPI mode";
@@ -104,7 +105,6 @@ namespace Onero
             return true;
         }
 
-
         public static bool IsValid(this RulesEditor formEditor)
         {
             if (String.IsNullOrWhiteSpace(formEditor.nameTextbox.Text))
@@ -143,6 +143,7 @@ namespace Onero
             return true;
         }
 
+        // TODO: Test this functionality
         public static bool IsValid(this BrokenItems editor)
         {
             //if (!editor.testAllLinks.Checked && editor.linksCheckList.Items.Count == 0)
@@ -268,18 +269,16 @@ namespace Onero
 
         public static bool IsValid(this MainForm mainForm)
         {
-            string rulesFilePath = new CollectionOf<Rule>(mainForm.CurrentProfileName).FilePath;
-            if (!File.Exists(rulesFilePath))
+            var rulesCollection = new CollectionOf<Rule>(mainForm.CurrentProfileName);
+            if (!File.Exists(rulesCollection.FilePath))
             {
-                MessageBox.Show(string.Format(RULES_FILE_NOT_EXISTS_AT, rulesFilePath), ERROR);
-                return false;
+                rulesCollection.Save(new List<Rule>());
             }
 
-            var formsFilePath = new CollectionOf<WebForm>(mainForm.CurrentProfileName).FilePath;
-            if (!File.Exists(formsFilePath))
+            var formsCollection = new CollectionOf<WebForm>(mainForm.CurrentProfileName);
+            if (!File.Exists(formsCollection.FilePath))
             {
-                MessageBox.Show(string.Format(FORMS_FILE_NOT_EXISTS_AT, formsFilePath), ERROR);
-                return false;
+                formsCollection.Save(new List<WebForm>());
             }
 
             if (MainForm.settings.Profile.OutputDirectory == null)

@@ -14,6 +14,9 @@ namespace Onero.Loader.Results
 
         [Description("Form result URL mismatch")]
         FormResultUrlMissmatch,
+        [Description("Unknown error in form execution")]
+        FormFailed,
+
 
         [Description("Form returns the result other than expected")]
         FormReturnsNotExpectedResult,

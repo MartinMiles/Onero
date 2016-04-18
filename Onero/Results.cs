@@ -10,6 +10,7 @@ namespace Onero
     {
         private const string RESULTS_FILENAME = "results.csv";
 
+        // TODO: Split writer IO functionality and producing results (single resp)
         public static void WriteCSV(List<Result> NewResults, LoaderSettings settings)
         {
             var output = new List<string>();
@@ -19,6 +20,7 @@ namespace Onero
                 output.Add($"{"Page URL"},{"Addons"},{"Status"},{"Addons overall"},{"Page status"},{"Time to load (ms)"}");
             }
 
+            // TODO: Support other actions in the result - not only rules and forms
             foreach (var url in NewResults)
             {
                 output.Add($"{url.Url},{""},{""},{(url.IsSuccessful ? "Successful" : "Failed")},{url.PageResult},{url.PageLoadTime}");

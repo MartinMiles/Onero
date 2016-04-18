@@ -46,6 +46,10 @@ namespace Onero.Loader
                     }
                 }
             }
+            catch (InvalidOperationException e)
+            {
+                // TODO: This occurs when I close Firefox before function ends up. Implement proper solution
+            }
             catch (Exception e)
             {
                 if (settings.Profile.CreateErrorLog)

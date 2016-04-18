@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace WebsiteTest
@@ -12,6 +8,18 @@ namespace WebsiteTest
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+                name: "Sitemap",
+                url: "sitemap.xml",
+                defaults: new { controller = "Seo", action = "SitemapXml", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Robots",
+                url: "robots.txt",
+                defaults: new { controller = "Seo", action = "RobotsTxt", id = UrlParameter.Optional }
+            );
 
             routes.MapRoute(
                 name: "Default",

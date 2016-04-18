@@ -15,14 +15,17 @@ namespace WebsiteTest.Controllers
 
             return View();
         }
+
         public ActionResult BrokenLinks()
         {
             return View();
         }
+
         public ActionResult SupportedFields()
         {
             return View();
         }
+
         public ActionResult DataExtract()
         {
             return View();
