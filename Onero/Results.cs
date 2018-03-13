@@ -11,6 +11,7 @@ namespace Onero
         private const string RESULTS_FILENAME = "results.csv";
 
         // TODO: Split writer IO functionality and producing results (single resp)
+        // TODO: Global exception happens when folder path does not exist, for example being set to drive E:\ whereas machine has only C:\ available
         public static void WriteCSV(List<Result> NewResults, LoaderSettings settings)
         {
             var output = new List<string>();

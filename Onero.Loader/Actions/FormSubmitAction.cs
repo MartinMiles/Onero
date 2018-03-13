@@ -7,6 +7,7 @@ using Onero.Loader.Forms;
 using Onero.Loader.Results;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Support.UI;
 
 namespace Onero.Loader.Actions
 {
@@ -69,15 +70,15 @@ namespace Onero.Loader.Actions
 
                                 if (!string.IsNullOrEmpty(pageForm.SubmitId))
                                 {
-
                                     var element = driver.FindElement(BySelector(pageForm.SubmitId));
-                                    driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(60));                                    
+                                    driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(60));
                                     element.Click();
                                 }
 
                                 if (pageForm.ResultParameters.ResultType == FormResultType.Redirect)
                                 {
-                                    var regexResultUrl = new Regex(pageForm.ResultParameters.Url.Trim('/'), RegexOptions.IgnoreCase);
+                                    var regexResultUrl = new Regex(pageForm.ResultParameters.Url.Trim('/'),
+                                        RegexOptions.IgnoreCase);
 
                                     //TODO: Refactor this to somehing properly handling redirect - while URL not changes instead of
                                     int i = 0;
@@ -87,7 +88,9 @@ namespace Onero.Loader.Actions
                                         i++;
                                     }
 
-                                    resultCode = regexResultUrl.IsMatch(driver.Url.TrimEnd('/')) ? ResultCode.Successful : ResultCode.RedirectUrlMismatch;
+                                    resultCode = regexResultUrl.IsMatch(driver.Url.TrimEnd('/'))
+                                        ? ResultCode.Successful
+                                        : ResultCode.RedirectUrlMismatch;
                                     //if (resultCode == ResultCode.RedirectUrlMismatch)
                                     //{
                                     //    artefact = driver.Url.TrimEnd('/');
@@ -110,12 +113,28 @@ namespace Onero.Loader.Actions
 
                                     var element = driver.FindElement(BySelector(pageForm.ResultParameters.Id));
                                     var regex = new Regex(pageForm.ResultParameters.Message, RegexOptions.IgnoreCase);
-                                    resultCode = regex.IsMatch(element.Text) ? ResultCode.Successful : ResultCode.FormReturnsNotExpectedResult;
+                                    resultCode = regex.IsMatch(element.Text)
+                                        ? ResultCode.Successful
+                                        : ResultCode.FormReturnsNotExpectedResult;
 
-                                    if(!string.IsNullOrWhiteSpace(pageForm.ResultParameters.Url) && driver.Url.Trim('/').ToLower() != pageForm.ResultParameters.Url.ToLower().Trim('/'))
+                                    if (!string.IsNullOrWhiteSpace(pageForm.ResultParameters.Url) &&
+                                        driver.Url.Trim('/').ToLower() !=
+                                        pageForm.ResultParameters.Url.ToLower().Trim('/'))
                                     {
                                         resultCode = ResultCode.FormResultUrlMissmatch;
                                     }
+                                }
+                                else if (pageForm.ResultParameters.ResultType == FormResultType.Popup)
+                                {
+                                    var alert = driver.SwitchTo().Alert();
+                                    string alertText = alert.Text;
+
+                                    resultCode = !string.IsNullOrWhiteSpace(pageForm.ResultParameters.Message) &&
+                                                 pageForm.ResultParameters.Message != alertText
+                                        ? ResultCode.InvalidPopupValue
+                                        : ResultCode.Successful;
+
+                                    alert.Accept();
                                 }
                             }
                             catch (NoSuchElementException e)

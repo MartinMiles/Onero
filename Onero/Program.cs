@@ -18,6 +18,8 @@ namespace Onero
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            // TODO: Support console run, passing profile parameter (an / or maybe configuraion or optional)
+
             try
             {
                 var settings = new LoaderSettings { Profile = Profiles.Current };

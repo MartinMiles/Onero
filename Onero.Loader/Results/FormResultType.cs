@@ -4,6 +4,7 @@
     {
         Unknown = 0,
         Message,
-        Redirect
+        Redirect,
+        Popup
     }
 }

@@ -12,6 +12,9 @@ namespace Onero.Loader.Results
         RedirectUrlMismatch,
         Timeout,
 
+        [Description("Popup value does not match expected")]
+        InvalidPopupValue,
+
         [Description("Form result URL mismatch")]
         FormResultUrlMissmatch,
         [Description("Unknown error in form execution")]

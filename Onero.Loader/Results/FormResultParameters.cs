@@ -21,6 +21,12 @@ namespace Onero.Loader.Results
             var type = resultNodeList.Attributes["type"].Value;
             switch (type.Trim().ToLower())
             {
+                case "popup":
+                {
+                    ResultType = FormResultType.Popup;
+                    Message = resultNodeList.SelectSingleNode("message") != null ? resultNodeList.SelectSingleNode("message").InnerText : String.Empty;
+                    break;
+                }
                 case "redirect":
                 {
                     ResultType = FormResultType.Redirect;

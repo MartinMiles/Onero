@@ -69,6 +69,18 @@ namespace Onero.Loader
             }
         }
 
+        private string GetResultTypeAttribute(FormResultType formResultType)
+        {
+            switch (ResultParameters.ResultType)
+            {
+                case FormResultType.Redirect: return "redirect";
+                case FormResultType.Message: return "message";
+                case FormResultType.Popup: return "popup";
+            }
+
+            throw new ArgumentException($"Unknown FormResultType: {formResultType}");
+        }
+
         public override XElement Save()
         {
             var node = new XElement("form");
@@ -95,7 +107,7 @@ namespace Onero.Loader
             node.Add(submit);
 
             var result = new XElement("result");
-            result.SetAttributeValue("type", ResultParameters.ResultType == FormResultType.Redirect ? "redirect" : "message");
+            result.SetAttributeValue("type", GetResultTypeAttribute(ResultParameters.ResultType));
 
             if (!string.IsNullOrWhiteSpace(ResultParameters.Url))
             {

@@ -31,7 +31,16 @@ namespace Onero.Loader.Results
             }
 
             // TODO: Breaks here if forms submission is terminated by exception and forms reulsts do not exist
-            return (GenericResults[typeof (T)] as Dictionary<U, ResultCode>).All(r => r.Value == ResultCode.Successful);
+            bool all = false;
+            try
+            {
+                all = (GenericResults[typeof(T)] as Dictionary<U, ResultCode>).All(r => r.Value == ResultCode.Successful);
+            }
+            catch (Exception e)
+            {
+                int k = 0;
+            }
+            return all;
         }
 
         public Result()
