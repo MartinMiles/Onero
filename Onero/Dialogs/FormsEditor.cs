@@ -69,7 +69,7 @@ namespace Onero.Dialogs
             _form.Urls = urlTextbox.Text.Split(',').Select(u => u.Trim());
 
             _form.Fields = new List<WebFormField>(); 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i <= 7; i++)
             {
                 var field = fieldsGroupbox.Controls.Find($"fieldId{i + 1}", true).First() as TextBox;
                 var fieldtype = GetFieldType(i);

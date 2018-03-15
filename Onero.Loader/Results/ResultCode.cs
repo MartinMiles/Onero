@@ -20,6 +20,8 @@ namespace Onero.Loader.Results
         [Description("Unknown error in form execution")]
         FormFailed,
 
+        [Description("There was no alert open")]
+        NoAlertOpen,
 
         [Description("Form returns the result other than expected")]
         FormReturnsNotExpectedResult,

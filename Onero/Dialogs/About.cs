@@ -9,11 +9,6 @@ namespace Onero.Dialogs
             InitializeComponent();
         }
 
-        private void label12_Click(object sender, System.EventArgs e)
-        {
-
-        }
-
         private void OkClick(object sender, System.EventArgs e)
         {
             Close();

@@ -6,6 +6,7 @@ using System.Web;
 using Onero.Loader.Forms;
 using Onero.Loader.Results;
 using OpenQA.Selenium;
+using OpenQA.Selenium.PhantomJS;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 
@@ -126,15 +127,24 @@ namespace Onero.Loader.Actions
                                 }
                                 else if (pageForm.ResultParameters.ResultType == FormResultType.Popup)
                                 {
-                                    var alert = driver.SwitchTo().Alert();
-                                    string alertText = alert.Text;
+                                    // TODO: This is a temporal fix. Phantom JS does not support popups, so explicitly set successful status.
+                                    // TODO: Can be fixed by disabling "popup" from a dropdown when configuration has "No browser"
+                                    if (driver is PhantomJSDriver)
+                                    {
+                                        resultCode = ResultCode.Successful;
+                                    }
+                                    else
+                                    {
+                                        var alert = driver.SwitchTo().Alert();
+                                        string alertText = alert.Text;
 
-                                    resultCode = !string.IsNullOrWhiteSpace(pageForm.ResultParameters.Message) &&
-                                                 pageForm.ResultParameters.Message != alertText
-                                        ? ResultCode.InvalidPopupValue
-                                        : ResultCode.Successful;
+                                        resultCode = !string.IsNullOrWhiteSpace(pageForm.ResultParameters.Message) &&
+                                                     pageForm.ResultParameters.Message != alertText
+                                            ? ResultCode.InvalidPopupValue
+                                            : ResultCode.Successful;
 
-                                    alert.Accept();
+                                        alert.Accept();
+                                    }
                                 }
                             }
                             catch (NoSuchElementException e)
@@ -143,8 +153,15 @@ namespace Onero.Loader.Actions
                             }
                             catch (Exception e)
                             {
-                                // TODO: Log (if switched) and debug this scenario (ex. on demosite / loginform)
-                                resultCode = ResultCode.FormFailed;
+                                if (e.Message.Contains("no alert open"))
+                                {
+                                    resultCode = ResultCode.NoAlertOpen;
+                                }
+                                else
+                                {
+                                    // TODO: Log (if switched) and debug this scenario (ex. on demosite / loginform)
+                                    resultCode = ResultCode.FormFailed;
+                                }
                             }
 
                             result.Add(pageForm, resultCode);

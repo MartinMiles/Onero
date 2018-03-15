@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using Onero.Loader;
@@ -88,7 +89,9 @@ namespace Onero.Collections
                 root.Add(rule.Save());
             }
 
-            doc.Save(FilePath);
+            var fileToSave = $"{Environment.CurrentDirectory.TrimEnd('\\')}\\{FilePath.Trim('\\')}";
+
+            doc.Save(fileToSave);
         }
     }
 }

@@ -65,14 +65,12 @@ namespace Onero.Dialogs
                 //    directory = Directory.GetParent(directory).ToString();
                 //#endif
 
-                return string.Format("{0}\\{1}", directory, RESULTS_DIRECTORY);
+                return $"{directory}\\{RESULTS_DIRECTORY}";
             }
         }
 
-        private Profile CurrentProfile
-        {
-            get { return profileCombobox.SelectedItem as Profile; }
-        }
+        private Profile CurrentProfile => profileCombobox.SelectedItem as Profile;
+
         private Profile DefaultProfile
         {
             get { return profiles.First(p => p.Name == "Default"); }

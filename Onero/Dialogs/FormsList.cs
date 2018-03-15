@@ -95,6 +95,12 @@ namespace Onero.Dialogs
             if (dialogResult == DialogResult.OK)
             {
                 form = editorForm.Form;
+
+                int index = forms.FindIndex(f => f.Name == form.Name);
+
+                if (index != -1)
+                    forms[index] = form;
+
                 DrawFormsList();
             }
             else if (dialogResult == DialogResult.Yes)

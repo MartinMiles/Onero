@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Onero.Loader;
@@ -39,7 +40,16 @@ namespace Onero
 
             if (!Directory.Exists(settings.Profile.OutputDirectory))
             {
-                Directory.CreateDirectory(settings.Profile.OutputDirectory);
+                try
+                {
+                    // TODO: May not be created when disk drive does not exist, ie. system does not have drive E:\ -STILL DOES NOT WORK - pages go red, probably need to set it earlier
+                    Directory.CreateDirectory(settings.Profile.OutputDirectory);
+                }
+                catch (Exception e)
+                {
+                    var currectFolderRelativeDirectory = $"{Environment.CurrentDirectory.TrimEnd('\\')}Results\\{settings.Profile.Name}";
+                    settings.Profile.OutputDirectory = currectFolderRelativeDirectory;
+                }
             }
 
             File.WriteAllLines($"{settings.Profile.OutputDirectory}\\{RESULTS_FILENAME}", output);
