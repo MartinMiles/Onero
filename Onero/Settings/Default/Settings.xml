@@ -3,8 +3,8 @@
   <Screenshots value="true" />
   <VerboseMode value="true" />
   <CreateErrorLog value="true" />
-  <Browser value="Firefox" />
-  <OutputDirectory value="e:\Projects\Onero\Onero\bin\Debug\Results\Default" />
+  <Browser value="Chrome" />
+  <OutputDirectory value="c:\Projects\My\Onero\Onero\bin\Debug\Results\Default" />
   <Timeout value="60" />
   <FindAllBrokenLinks value="false" />
   <FindAllBrokenImages value="false" />

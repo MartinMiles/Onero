@@ -192,14 +192,17 @@ namespace Onero.Dialogs
 
         private void LoadLinksCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            environmentLinksItems.FillValuesWithColor(UrlToProcess);
+            if (UrlToProcess != null)
+            {
+                environmentLinksItems.FillValuesWithColor(UrlToProcess);
+            }
 
             loadLinksButton.Enabled = true;
             startButton.Enabled = true;
             startToolStripMenuItem.Enabled = true;
             environmentLinksItems.Enabled = true;
 
-            linksGroupbox.Text = $"Pages to process ({UrlToProcess.Count})";
+            linksGroupbox.Text = $"Pages to process ({UrlToProcess?.Count ?? 0})";
         }
 
         #endregion

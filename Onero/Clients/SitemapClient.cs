@@ -1,5 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Xml;
 
 namespace Onero
@@ -8,7 +13,6 @@ namespace Onero
     {
         private readonly string url;
         private static Dictionary<string, IEnumerable<string>> savedSitemaps;
-
 
         public SitemapClient(string url)
         {
@@ -32,19 +36,24 @@ namespace Onero
 
         private IEnumerable<string> Load()
         {
-            var rssXmlDoc = new XmlDocument();
-
-            rssXmlDoc.Load(url);
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            
+            // Trust ALL the certificates, enable if required
+            //ServicePointManager.ServerCertificateValidationCallback += (s, ce, ch, ssl) => true;
+            
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(url);
 
             var urls = new List<string>();
 
             // Iterate through the top level nodes and find the "urlset" node. 
-            foreach (XmlNode topNode in rssXmlDoc.ChildNodes)
+            foreach (XmlNode topNode in xmlDoc.ChildNodes)
             {
                 if (topNode.Name.ToLower() == "urlset")
                 {
                     // Use the Namespace Manager, so that we can fetch nodes using the namespace
-                    var nsmgr = new XmlNamespaceManager(rssXmlDoc.NameTable);
+                    var nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
                     nsmgr.AddNamespace("ns", topNode.NamespaceURI);
 
                     // Get all URL nodes and iterate through it.
@@ -62,6 +71,39 @@ namespace Onero
             }
 
             return urls.Distinct();
+        }
+
+        private void Https(string url)
+        {
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3;
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+
+            //Header Settings
+            req.Method = "POST"; // Post method
+            req.ContentType = "text/xml";// content type
+            req.KeepAlive = false;
+            req.ProtocolVersion = HttpVersion.Version10;
+
+            //Certificate with private key
+            X509Certificate2 cert = new X509Certificate2("Cert.der", "Password");
+            req.ClientCertificates.Add(cert);
+            req.PreAuthenticate = true;
+
+            String XML = "Test Message"; //reader.ReadToEnd();
+            byte[] buffer = Encoding.ASCII.GetBytes(XML);
+            req.ContentLength = buffer.Length;
+
+            // Wrap the request stream with a text-based writer
+            Stream writer = req.GetRequestStream();
+
+            // Write the XML text into the stream
+            writer.Write(buffer, 0, buffer.Length);
+
+            writer.Close();
+
+            WebResponse rsp = req.GetResponse();
+            StreamReader responseStream = new StreamReader(rsp.GetResponseStream());
         }
     }
 }
