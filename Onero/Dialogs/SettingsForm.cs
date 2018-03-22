@@ -16,7 +16,10 @@ namespace Onero.Dialogs
         private const string RESULT_FOLDER_MISSING = "Result folder does not exist. Run tests first.";
 
         private const string RESULTS_DIRECTORY = "Results";
-        private const int DEFAULT_TIMEOUT = 60;
+
+        //private const int DEFAULT_TIMEOUT = 60;
+        //private const int DEFAULT_WIDTH = 1920;
+        //private const int DEFAULT_HEIGHT = 1080;
 
         public LoaderSettings Settings { get; set; }
 
@@ -51,6 +54,8 @@ namespace Onero.Dialogs
             createErrorLog.Checked = CurrentProfile.CreateErrorLog;
             outputPath.Text = CurrentProfile.OutputDirectory;
             timeOut.Text = CurrentProfile.Timeout.ToString();
+            widthBox.Text = CurrentProfile.Width.ToString();
+            heightBox.Text = CurrentProfile.Height.ToString();
 
             browserCombobox.SelectedItem = CurrentProfile.Browser.GetDescription();
         }
@@ -100,6 +105,8 @@ namespace Onero.Dialogs
             bool isExistingProfile = Profiles.Read().Any(p => p.Name == CurrentProfile.Name);
 
             CurrentProfile.Timeout = timeOut.Text.Parse(0);
+            CurrentProfile.Width = widthBox.Text.Parse(0);
+            CurrentProfile.Height = heightBox.Text.Parse(0);
             CurrentProfile.OutputDirectory = outputPath.Text.Trim();
             CurrentProfile.VerboseMode = verbose.Checked;
             CurrentProfile.CreateErrorLog = createErrorLog.Checked;
@@ -182,7 +189,9 @@ namespace Onero.Dialogs
 
             var newProfile = new Profile(name)
             {
-                Timeout = DEFAULT_TIMEOUT,
+                //Timeout = DEFAULT_TIMEOUT,
+                //Width = DEFAULT_WIDTH,
+                //Height = DEFAULT_HEIGHT,
                 OutputDirectory = string.Format("{0}\\{1}", DefaultOutputPath, name)
             };
 

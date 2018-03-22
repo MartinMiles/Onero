@@ -8,6 +8,10 @@
 
         int Timeout { get; set; }
 
+        int Width { get; set; }
+
+        int Height { get; set; }
+
         bool CreateScreenshots { get; set; }
 
         bool VerboseMode { get; set; }

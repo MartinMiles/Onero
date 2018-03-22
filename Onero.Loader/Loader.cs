@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using Onero.Loader.Actions;
 using Onero.Loader.Results;
 using OpenQA.Selenium;
@@ -32,7 +33,11 @@ namespace Onero.Loader
 
                 settings.CleanOutputDirectory();
 
-                using (IWebDriver driver = new DriverFactory(settings.Profile).Driver)
+                var selectedDriver = new DriverFactory(settings.Profile).Driver;
+
+                selectedDriver.Manage().Window.Size = new Size(settings.Profile.Width, settings.Profile.Height);
+
+                using (IWebDriver driver = selectedDriver)
                 {
                     driver.Manage().Timeouts().SetPageLoadTimeout(new TimeSpan(0, 0, settings.Profile.Timeout));
 

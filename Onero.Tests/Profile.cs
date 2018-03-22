@@ -8,6 +8,8 @@ namespace Onero.Tests
         public string Name { get; set; }
         public bool Enabled { get; set; }
         public int Timeout { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
         public bool CreateScreenshots { get; set; }
         public bool VerboseMode { get; set; }
         public bool CreateErrorLog { get; set; }
