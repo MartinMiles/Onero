@@ -52,6 +52,7 @@ namespace Onero.Dialogs
             createScreenshots.Checked = CurrentProfile.CreateScreenshots;
             verbose.Checked = CurrentProfile.VerboseMode;
             createErrorLog.Checked = CurrentProfile.CreateErrorLog;
+            sendErrorsAndStats.Checked = CurrentProfile.SendErrorsAndStats;
             outputPath.Text = CurrentProfile.OutputDirectory;
             timeOut.Text = CurrentProfile.Timeout.ToString();
             widthBox.Text = CurrentProfile.Width.ToString();
@@ -110,6 +111,7 @@ namespace Onero.Dialogs
             CurrentProfile.OutputDirectory = outputPath.Text.Trim();
             CurrentProfile.VerboseMode = verbose.Checked;
             CurrentProfile.CreateErrorLog = createErrorLog.Checked;
+            CurrentProfile.SendErrorsAndStats = sendErrorsAndStats.Checked;
             CurrentProfile.CreateScreenshots = createScreenshots.Checked;
             CurrentProfile.Browser = SelectedBrowser;
 

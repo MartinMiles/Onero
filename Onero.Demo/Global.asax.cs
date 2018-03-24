@@ -13,6 +13,7 @@ namespace Onero.Demo
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            DependenciesConfig.RegisterDependencies();
         }
     }
 }

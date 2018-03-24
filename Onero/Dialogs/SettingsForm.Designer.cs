@@ -54,6 +54,7 @@
             this.newProfileName = new System.Windows.Forms.TextBox();
             this.addProfileButton = new System.Windows.Forms.Button();
             this.profileCombobox = new System.Windows.Forms.ComboBox();
+            this.sendErrorsAndStats = new System.Windows.Forms.CheckBox();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -153,7 +154,7 @@
             this.verbose.AutoSize = true;
             this.verbose.Checked = true;
             this.verbose.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.verbose.Location = new System.Drawing.Point(16, 92);
+            this.verbose.Location = new System.Drawing.Point(16, 106);
             this.verbose.Margin = new System.Windows.Forms.Padding(6);
             this.verbose.Name = "verbose";
             this.verbose.Size = new System.Drawing.Size(236, 29);
@@ -187,6 +188,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.sendErrorsAndStats);
             this.groupBox1.Controls.Add(this.createErrorLog);
             this.groupBox1.Controls.Add(this.createScreenshots);
             this.groupBox1.Controls.Add(this.verbose);
@@ -202,7 +204,7 @@
             // createErrorLog
             // 
             this.createErrorLog.AutoSize = true;
-            this.createErrorLog.Location = new System.Drawing.Point(16, 137);
+            this.createErrorLog.Location = new System.Drawing.Point(16, 169);
             this.createErrorLog.Margin = new System.Windows.Forms.Padding(6);
             this.createErrorLog.Name = "createErrorLog";
             this.createErrorLog.Size = new System.Drawing.Size(194, 29);
@@ -358,6 +360,17 @@
             this.profileCombobox.TabIndex = 31;
             this.profileCombobox.SelectedIndexChanged += new System.EventHandler(this.ProfileComboboxChanged);
             // 
+            // sendErrorsAndStats
+            // 
+            this.sendErrorsAndStats.AutoSize = true;
+            this.sendErrorsAndStats.Location = new System.Drawing.Point(16, 227);
+            this.sendErrorsAndStats.Margin = new System.Windows.Forms.Padding(6);
+            this.sendErrorsAndStats.Name = "sendErrorsAndStats";
+            this.sendErrorsAndStats.Size = new System.Drawing.Size(267, 29);
+            this.sendErrorsAndStats.TabIndex = 8;
+            this.sendErrorsAndStats.Text = "Send errors and details";
+            this.sendErrorsAndStats.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -416,5 +429,6 @@
         public System.Windows.Forms.TextBox heightBox;
         private System.Windows.Forms.Label label4;
         public System.Windows.Forms.TextBox widthBox;
+        private System.Windows.Forms.CheckBox sendErrorsAndStats;
     }
 }

@@ -36,11 +36,11 @@ namespace Onero.Loader
                 var selectedDriver = new DriverFactory(settings.Profile).Driver;
 
                 selectedDriver.Manage().Window.Size = new Size(settings.Profile.Width, settings.Profile.Height);
+                selectedDriver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(settings.Profile.Timeout);
+                //selectedDriver.Manage().Timeouts().SetPageLoadTimeout(new TimeSpan(0, 0, settings.Profile.Timeout));
 
                 using (IWebDriver driver = selectedDriver)
                 {
-                    driver.Manage().Timeouts().SetPageLoadTimeout(new TimeSpan(0, 0, settings.Profile.Timeout));
-
                     foreach (var page in settings.PagesToCrawl)
                     {
                         if (backgroundWorker.CancellationPending)

@@ -27,6 +27,7 @@ namespace Onero
             Width = WIDTH;
             Height = HEIGHT;
             CreateErrorLog = true;
+            SendErrorsAndStats = false;
             Browser = Browser.Firefox;
         }
 
@@ -50,6 +51,10 @@ namespace Onero
                 if (node.Name == "CreateErrorLog")
                 {
                     CreateErrorLog = node.BoolAttribute(VALUE_ATTRIBUTE_NAME);
+                }
+                if (node.Name == "SendErrorsAndStats")
+                {
+                    SendErrorsAndStats = node.BoolAttribute(VALUE_ATTRIBUTE_NAME);
                 }
                 if (node.Name == "Browser")
                 {
@@ -100,6 +105,8 @@ namespace Onero
 
         public bool CreateErrorLog { get; set; }
 
+        public bool SendErrorsAndStats { get; set; }
+
         public Browser Browser { get; set; }
 
         public string OutputDirectory { get; set; }
@@ -111,6 +118,7 @@ namespace Onero
         public bool FindAllBrokenScripts { get; set; }
 
         public bool FindAllBrokenStyles { get; set; }
+        
 
         #endregion
 
@@ -135,6 +143,10 @@ namespace Onero
             var createErrorLog = new XElement("CreateErrorLog");
             createErrorLog.SetAttributeValue("value", CreateErrorLog);
             root.Add(createErrorLog);
+
+            var sendErrorsAndStats = new XElement("SendErrorsAndStats");
+            sendErrorsAndStats.SetAttributeValue("value", SendErrorsAndStats);
+            root.Add(sendErrorsAndStats);
 
             var browser = new XElement("Browser");
             browser.SetAttributeValue("value", Browser);

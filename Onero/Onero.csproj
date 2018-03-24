@@ -97,7 +97,19 @@
     <Compile Include="Dialogs\ExtractorEditor.Designer.cs">
       <DependentUpon>ExtractorEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\Feedback.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\Feedback.Designer.cs">
+      <DependentUpon>Feedback.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\IEditorForm.cs" />
+    <Compile Include="Dialogs\Registration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\Registration.Designer.cs">
+      <DependentUpon>Registration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Enums\CrawlingMode.cs" />
     <Compile Include="Dialogs\About.cs">
       <SubType>Form</SubType>
@@ -176,6 +188,9 @@
     <EmbeddedResource Include="Dialogs\ExtractorEditor.resx">
       <DependentUpon>ExtractorEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\Feedback.resx">
+      <DependentUpon>Feedback.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FormsEditor.resx">
       <DependentUpon>FormsEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -187,6 +202,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\PageResultViewForms.resx">
       <DependentUpon>PageResultViewForms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\Registration.resx">
+      <DependentUpon>Registration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\RulesList.resx">
       <DependentUpon>RulesList.cs</DependentUpon>
@@ -308,6 +326,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Onero.Helper\Onero.Helper.csproj">
+      <Project>{4ff9e278-575c-44c3-85c9-049d943f1407}</Project>
+      <Name>Onero.Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Onero.Loader\Onero.Loader.csproj">
       <Project>{65f29d97-d838-41bd-93ad-4369aa176be8}</Project>
       <Name>Onero.Loader</Name>

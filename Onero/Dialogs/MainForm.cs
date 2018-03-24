@@ -665,5 +665,19 @@ namespace Onero.Dialogs
             //    }
             //};
         }
+
+        private void sendFeedbackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new Feedback { StartPosition = FormStartPosition.CenterParent };
+            form.ShowDialog();
+            form.Dispose();
+        }
+
+        private void registrationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new Registration { StartPosition = FormStartPosition.CenterParent };
+            form.ShowDialog();
+            form.Dispose();
+        }
     }
 }
