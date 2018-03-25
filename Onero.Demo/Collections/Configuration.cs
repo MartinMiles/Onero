@@ -3,9 +3,11 @@ using Onero.Demo.Collections.Inerfaces;
 
 namespace Onero.Demo.Collections
 {
-    public class Configuration : IConfiguration
+    internal class Configuration : IConfiguration
     {
         public string LicensesFilePath => MapPath("/App_Data/licenses.xml");
+        public string FeedbacksFilePath => MapPath("/App_Data/feedbacks.xml");
+        public string ErrorsFilePath => MapPath("/App_Data/errors.xml");
 
         private static string MapPath(string relaivePath)
         {

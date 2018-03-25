@@ -4,11 +4,11 @@ using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace Onero
+namespace Onero.Extensions
 {
     public static class RichTextBoxExtensions
     {
-        public static void FillValuesWithColor(this RichTextBox environmentLinksItems, Dictionary<string, DisplayResult> UrlToProcess)
+        internal static void FillValuesWithColor(this RichTextBox environmentLinksItems, Dictionary<string, DisplayResult> UrlToProcess)
         {
             environmentLinksItems.Clear();
 
@@ -27,7 +27,7 @@ namespace Onero
             environmentLinksItems.SelectionColor = GetColor(resultCode);
         }
 
-        public static void ReplaceLine(this RichTextBox environmentLinksItems, string line, DisplayResult resultCode)
+        internal static void ReplaceLine(this RichTextBox environmentLinksItems, string line, DisplayResult resultCode)
         {
             if (!string.IsNullOrWhiteSpace(line))
             {

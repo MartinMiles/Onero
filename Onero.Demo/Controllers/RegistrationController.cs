@@ -22,9 +22,9 @@ namespace Onero.Demo.Controllers
         }
 
         [HttpPost]
-        public ContentResult New(string firstname, string lastname, string email, string organisation)
+        public ContentResult New(string firstname, string lastname, string email, string organisation, string machineId)
         {
-            string licenseXml = _registrationService.Register(firstname, lastname, email, organisation);
+            string licenseXml = _registrationService.Register(firstname, lastname, email, organisation, machineId);
             return Content(licenseXml, "text/xml");
         }
 

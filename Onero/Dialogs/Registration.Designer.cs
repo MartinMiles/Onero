@@ -100,7 +100,7 @@
             // 
             // emailTextbox
             // 
-            this.emailTextbox.Location = new System.Drawing.Point(499, 78);
+            this.emailTextbox.Location = new System.Drawing.Point(48, 172);
             this.emailTextbox.Name = "emailTextbox";
             this.emailTextbox.Size = new System.Drawing.Size(320, 31);
             this.emailTextbox.TabIndex = 5;
@@ -108,7 +108,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(494, 41);
+            this.label3.Location = new System.Drawing.Point(43, 135);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(71, 25);
             this.label3.TabIndex = 4;
@@ -116,7 +116,7 @@
             // 
             // lastNameTexbox
             // 
-            this.lastNameTexbox.Location = new System.Drawing.Point(48, 166);
+            this.lastNameTexbox.Location = new System.Drawing.Point(499, 78);
             this.lastNameTexbox.Name = "lastNameTexbox";
             this.lastNameTexbox.Size = new System.Drawing.Size(320, 31);
             this.lastNameTexbox.TabIndex = 3;
@@ -124,7 +124,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(43, 129);
+            this.label2.Location = new System.Drawing.Point(494, 41);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(118, 25);
             this.label2.TabIndex = 2;
@@ -205,14 +205,14 @@
             this.restoreLastName.Location = new System.Drawing.Point(216, 98);
             this.restoreLastName.Name = "restoreLastName";
             this.restoreLastName.Size = new System.Drawing.Size(152, 31);
-            this.restoreLastName.TabIndex = 7;
+            this.restoreLastName.TabIndex = 4;
             // 
             // restoreEmail
             // 
             this.restoreEmail.Location = new System.Drawing.Point(48, 189);
             this.restoreEmail.Name = "restoreEmail";
             this.restoreEmail.Size = new System.Drawing.Size(320, 31);
-            this.restoreEmail.TabIndex = 6;
+            this.restoreEmail.TabIndex = 5;
             // 
             // label7
             // 
@@ -228,7 +228,7 @@
             this.retrieveExistingButton.Location = new System.Drawing.Point(250, 249);
             this.retrieveExistingButton.Name = "retrieveExistingButton";
             this.retrieveExistingButton.Size = new System.Drawing.Size(118, 39);
-            this.retrieveExistingButton.TabIndex = 4;
+            this.retrieveExistingButton.TabIndex = 6;
             this.retrieveExistingButton.Text = "Retrieve";
             this.retrieveExistingButton.UseVisualStyleBackColor = true;
             this.retrieveExistingButton.Click += new System.EventHandler(this.retrieveExistingByEmailClick);

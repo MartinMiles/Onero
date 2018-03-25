@@ -3,5 +3,7 @@
     public interface IConfiguration
     {
         string LicensesFilePath { get; }
+        string FeedbacksFilePath { get; }
+        string ErrorsFilePath { get; }
     }
 }

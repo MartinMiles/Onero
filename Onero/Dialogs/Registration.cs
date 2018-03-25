@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using Onero.Helper.License;
 using Onero.Helper.Models;
 using Onero.Helper.Request;
+using Onero.License;
 
 namespace Onero.Dialogs
 {
     public partial class Registration : Form
     {
+        private readonly LicenseManager _licenseManager;
 
         public Registration()
         {
+            _licenseManager = new LicenseManager();
+
             InitializeComponent();
         }
 
@@ -34,20 +37,19 @@ namespace Onero.Dialogs
                     { "lastname", lastNameTexbox.Text },
                     { "email", emailTextbox.Text },
                     { "organisation", organizationTextbox.Text },
-                    { "serialNubmer", serialNumber.Text.Trim() }
+                    { "serialNubmer", serialNumber.Text.Trim() },
+                    { "machineId", _licenseManager.MachineId }
                 };
 
                 // Example: correct async workswith UI
                 //var result = await PostRequester.DownloadPageAsync(URL, values);
                 var result = await PostRequester.GenericPost<GenericPostResult>(URL, values);
 
-                var license = XElement.Parse(result.result).FromXml();
+                var license = XElement.Parse(result.result).FromXmlLicense();
 
-                SaveLicense(license);
+                _licenseManager.SaveLicense(license);
 
                 FillUI(license);
-
-
 
                 string message = !string.IsNullOrWhiteSpace(serialNumber.Text.Trim())
                     ? "Your details have been updated"
@@ -57,12 +59,13 @@ namespace Onero.Dialogs
 
                 if (!isUpdate)
                 {
-                    CleanUI();
+                    CleanRestoreUI();
+                    EnableRestoreUI(false);
                 }
-                else
-                {
-                    EnableUI(true);
-                }
+                //else
+                //{
+                EnableUI(true);
+                //}
             }
         }
 
@@ -84,9 +87,9 @@ namespace Onero.Dialogs
             {
                 MessageBox.Show("We have found your details", "Success");
 
-                var license = XElement.Parse(result.result).FromXml();
+                var license = XElement.Parse(result.result).FromXmlLicense();
 
-                SaveLicense(license);
+                _licenseManager.SaveLicense(license);
 
                 FillUI(license);
                 EnableRestoreUI(true);
@@ -115,9 +118,9 @@ namespace Onero.Dialogs
             {
                 MessageBox.Show("Your serial number is valid", "Success");
 
-                var license = XElement.Parse(result.result).FromXml();
+                var license = XElement.Parse(result.result).FromXmlLicense();
 
-                SaveLicense(license);
+                _licenseManager.SaveLicense(license);
 
                 FillUI(license);
                 EnableUI(true);
@@ -140,7 +143,7 @@ namespace Onero.Dialogs
             serialNumber.Enabled = enabled;
         }
 
-        private void FillUI(License license)
+        private void FillUI(Helper.License.License license)
         {
             firstNameTexbox.Text = license.FirstName;
             lastNameTexbox.Text = license.LastName;
@@ -173,53 +176,27 @@ namespace Onero.Dialogs
             organizationTextbox.Text = "";
         }
 
+
+
         private void Registration_Load(object sender, EventArgs e)
         {
-            CheckLicense();
-        }
+            
+            var license = _licenseManager.CheckLicense();
 
-        private void CheckLicense()
-        {
-            if (File.Exists("license.xml"))
+            if (license != null)
             {
-                string licenseXml = File.ReadAllText("license.xml");
-                var element = XElement.Parse(licenseXml);
-                var license = element.FromXml();
+                // TODO: validate license by decoding it. Should be delegated inside of _licenseManager somewhere
 
-                if (license != null)
-                {
-                    // TODO: validate license by decoding it
+                firstNameTexbox.Text = license.FirstName;
+                lastNameTexbox.Text = license.LastName;
+                emailTextbox.Text = license.Email;
+                organizationTextbox.Text = license.Organization;
 
-                    firstNameTexbox.Text = license.FirstName;
-                    lastNameTexbox.Text = license.LastName;
-                    emailTextbox.Text = license.Email;
-                    organizationTextbox.Text = license.Organization;
+                serialNumber.Text = license.SerialNumber;
 
-                    serialNumber.Text = license.SerialNumber;
-
-                    registerNewButton.Text = "Update";
-                    EnableRestoreUI(false);
-                }
-            }
-
-        }
-
-        private void SaveLicense(License license)
-        {
-            try
-            {
-                string xml = license.XmlNode().ToString();
-                File.WriteAllText("license.xml", xml);
-            }
-            catch (Exception e)
-            {
-                // TODO: processany faulty behavior
-                throw;
+                registerNewButton.Text = "Update";
+                EnableRestoreUI(false);
             }
         }
-
-
-
-
     }
 }

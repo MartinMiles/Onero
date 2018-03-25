@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Onero.Demo.Collections.Inerfaces;
 using Onero.Helper.License;
 
@@ -9,18 +8,16 @@ namespace Onero.Demo.Services
     {
         private readonly ICollection _collection;
         private readonly LicenseHelper _licenseHelper;
-        
+
         public RegistrationService(ICollection collection)
         {
             _collection = collection;
             _licenseHelper = new LicenseHelper();
         }
 
-        public string Register(string firstname, string lastname, string email, string organisation)
+        public string Register(string firstname, string lastname, string email, string organisation, string machineId)
         {
-            string newSerialNumber = String.Empty;
-
-            var newLicense = _licenseHelper.GenerateNewLicense(firstname, lastname, email, organisation);
+            var newLicense = _licenseHelper.GenerateNewLicense(firstname, lastname, email, organisation, machineId);
 
             _collection.Licenses.Add(newLicense);
             _collection.SaveLicenses();
@@ -28,17 +25,17 @@ namespace Onero.Demo.Services
             return newLicense.XmlNode().ToString();
         }
 
-        public string GetSerialByEmail(string email)
-        {
-            var license = _collection.Licenses.FirstOrDefault(l => l.Email.ToLower() == email.ToLower());
-            return license?.SerialNumber;
-        }
+        //public string GetSerialByEmail(string email)
+        //{
+        //    var license = _collection.Licenses.FirstOrDefault(l => l.Email.ToLower() == email.ToLower());
+        //    return license?.SerialNumber;
+        //}
 
-        public bool ValidateSerial(string serialNumber)
-        {
-            var license = _collection.Licenses.FirstOrDefault(l => l.SerialNumber == serialNumber);
-            return license != null;
-        }
+        //public bool ValidateSerial(string serialNumber)
+        //{
+        //    var license = _collection.Licenses.FirstOrDefault(l => l.SerialNumber == serialNumber);
+        //    return license != null;
+        //}
 
         public string Retrieve(string firstname, string lastname, string email)
         {

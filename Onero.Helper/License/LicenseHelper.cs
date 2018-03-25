@@ -5,9 +5,9 @@ namespace Onero.Helper.License
 {
     public class LicenseHelper
     {
-        public License GenerateNewLicense(string firstname, string lastname, string email, string organisation)
+        public License GenerateNewLicense(string firstname, string lastname, string email, string organisation, string machineId)
         {
-            string serialNumber = Generate(firstname, lastname, email, organisation);
+            string serialNumber = Generate(firstname, lastname, email, organisation, machineId);
 
             return new License
             {
@@ -16,15 +16,17 @@ namespace Onero.Helper.License
                 Email = email,
                 Organization = organisation,
                 Created = DateTime.Today,
-                SerialNumber = serialNumber
+                SerialNumber = serialNumber,
+                MachineId = machineId
+
             };
         }
 
-        private string Generate(string firstname, string lastname, string email, string organisation)
+        private string Generate(string firstname, string lastname, string email, string organisation, string machineId)
         {
             string code = null;
 
-            string value = $"{firstname}|{lastname}|{email}|{organisation}";
+            string value = $"{firstname}|{lastname}|{email}|{organisation}|{machineId}";
 
             using (var password = GetPassword())
             {

@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using Onero.Collections;
+using Onero.Errors;
 using Onero.Extensions;
 using Onero.Loader;
 using Onero.Loader.Broken;
@@ -38,7 +39,7 @@ namespace Onero.Dialogs
         internal static LoaderSettings settings;
         private List<Result> results;
 
-        public Dictionary<string, DisplayResult> UrlToProcess { get; private set; }
+        internal Dictionary<string, DisplayResult> UrlToProcess { get; private set; }
 
         public MainForm(LoaderSettings _settings)
         {
@@ -78,7 +79,7 @@ namespace Onero.Dialogs
 
         #region Load links features
 
-        public CrawlingMode CurrentCrawlingMode
+        internal CrawlingMode CurrentCrawlingMode
         {
             get
             {

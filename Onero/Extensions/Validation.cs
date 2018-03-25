@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Onero.Collections;
-using Onero.Loader;
 using Onero.Dialogs;
-using Onero.Loader.Results;
-using Onero.Extensions;
+using Onero.Loader;
 using Onero.Loader.Forms;
+using Onero.Loader.Results;
 
-namespace Onero
+namespace Onero.Extensions
 {
     public static class Validation
     {

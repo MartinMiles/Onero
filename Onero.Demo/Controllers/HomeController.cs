@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace WebsiteTest.Controllers
+namespace Onero.Demo.Controllers
 {
     public class HomeController : Controller
     {

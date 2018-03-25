@@ -22,7 +22,7 @@ namespace Onero.Tests.DemoWebsite
             string email = "this.email@belongs.to.me";
             string organization = "Micorsoft";
 
-            var newLicense = _licenseHelper.GenerateNewLicense(firstName, lastName, email, organization);
+            var newLicense = _licenseHelper.GenerateNewLicense(firstName, lastName, email, organization, "MACHINE_ID");
 
             Assert.IsNotNull(newLicense);
             Assert.AreEqual(firstName, newLicense.FirstName);

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Web.Mvc;
-using Onero.Demo;
 
-namespace WebsiteTest.Controllers
+namespace Onero.Demo.Controllers
 {
     public class SeoController : Controller
     {

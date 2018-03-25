@@ -30,6 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.label21 = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
@@ -54,7 +55,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,7 +66,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(423, 25);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Version 1.5       Release date: 14/Mar/2018";
+            this.label1.Text = "Version 1.6       Release date: 26/Mar/2018";
             // 
             // groupBox1
             // 
@@ -104,6 +104,16 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Onero Page Runner";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(32, 627);
+            this.label22.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(338, 25);
+            this.label22.TabIndex = 24;
+            this.label22.Text = "- set browser resolution per profile";
             // 
             // linkLabel3
             // 
@@ -349,16 +359,6 @@
             this.label2.Size = new System.Drawing.Size(478, 25);
             this.label2.TabIndex = 1;
             this.label2.Text = "The most intelligent way of crawling the websites";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(32, 627);
-            this.label22.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(338, 25);
-            this.label22.TabIndex = 24;
-            this.label22.Text = "- set browser resolution per profile";
             // 
             // About
             // 

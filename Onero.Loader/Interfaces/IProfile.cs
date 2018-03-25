@@ -18,6 +18,8 @@
 
         bool CreateErrorLog { get; set; }
 
+        bool SendErrorsAndStats { get; set; }
+
         Browser Browser { get; set; }
 
         string OutputDirectory { get; set; }

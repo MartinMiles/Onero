@@ -13,6 +13,7 @@ namespace Onero.Tests
         public bool CreateScreenshots { get; set; }
         public bool VerboseMode { get; set; }
         public bool CreateErrorLog { get; set; }
+        public bool SendErrorsAndStats { get; set; }
         public Browser Browser { get; set; }
         public string OutputDirectory { get; set; }
         public bool FindAllBrokenLinks { get; set; }

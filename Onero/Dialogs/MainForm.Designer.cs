@@ -67,9 +67,9 @@ namespace Onero.Dialogs
             this.resultsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutOneroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.registrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sendFeedbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.registrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.linksGroupbox.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -325,14 +325,14 @@ namespace Onero.Dialogs
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(12, 4, 0, 4);
-            this.menuStrip1.Size = new System.Drawing.Size(1672, 46);
+            this.menuStrip1.Size = new System.Drawing.Size(1672, 44);
             this.menuStrip1.TabIndex = 1000;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // profilesToolStripMenuItem
             // 
             this.profilesToolStripMenuItem.Name = "profilesToolStripMenuItem";
-            this.profilesToolStripMenuItem.Size = new System.Drawing.Size(105, 38);
+            this.profilesToolStripMenuItem.Size = new System.Drawing.Size(105, 36);
             this.profilesToolStripMenuItem.Text = "Profiles";
             // 
             // configurationToolStripMenuItem
@@ -346,7 +346,7 @@ namespace Onero.Dialogs
             this.toolStripSeparator1,
             this.settingsToolStripMenuItem});
             this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
-            this.configurationToolStripMenuItem.Size = new System.Drawing.Size(174, 38);
+            this.configurationToolStripMenuItem.Size = new System.Drawing.Size(174, 36);
             this.configurationToolStripMenuItem.Text = "Configuration";
             // 
             // rulesToolStripMenuItem
@@ -402,7 +402,7 @@ namespace Onero.Dialogs
             this.startToolStripMenuItem,
             this.resultsFolderToolStripMenuItem});
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(69, 38);
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(69, 36);
             this.runToolStripMenuItem.Text = "Run";
             // 
             // startToolStripMenuItem
@@ -428,7 +428,7 @@ namespace Onero.Dialogs
             this.sendFeedbackToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(92, 38);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(92, 36);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // aboutOneroToolStripMenuItem
@@ -437,6 +437,13 @@ namespace Onero.Dialogs
             this.aboutOneroToolStripMenuItem.Size = new System.Drawing.Size(272, 38);
             this.aboutOneroToolStripMenuItem.Text = "About Onero";
             this.aboutOneroToolStripMenuItem.Click += new System.EventHandler(this.About_Click);
+            // 
+            // registrationToolStripMenuItem
+            // 
+            this.registrationToolStripMenuItem.Name = "registrationToolStripMenuItem";
+            this.registrationToolStripMenuItem.Size = new System.Drawing.Size(272, 38);
+            this.registrationToolStripMenuItem.Text = "Registration";
+            this.registrationToolStripMenuItem.Click += new System.EventHandler(this.registrationToolStripMenuItem_Click);
             // 
             // sendFeedbackToolStripMenuItem
             // 
@@ -451,13 +458,6 @@ namespace Onero.Dialogs
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(272, 38);
             this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // registrationToolStripMenuItem
-            // 
-            this.registrationToolStripMenuItem.Name = "registrationToolStripMenuItem";
-            this.registrationToolStripMenuItem.Size = new System.Drawing.Size(272, 38);
-            this.registrationToolStripMenuItem.Text = "Registration";
-            this.registrationToolStripMenuItem.Click += new System.EventHandler(this.registrationToolStripMenuItem_Click);
             // 
             // MainForm
             // 

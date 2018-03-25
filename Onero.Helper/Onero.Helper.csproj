@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,6 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorHandling\ErrorReportingHelper.cs" />
+    <Compile Include="ErrorHandling\ReportableError.cs" />
+    <Compile Include="ErrorHandling\ReportableErrorXmlExtensions.cs" />
+    <Compile Include="Feedback\Feedback.cs" />
+    <Compile Include="Feedback\FeedbackXmlExtensions.cs" />
     <Compile Include="License\Encryptor.cs" />
     <Compile Include="License\IEncryptor.cs" />
     <Compile Include="License\License.cs" />

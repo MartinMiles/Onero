@@ -1,6 +1,6 @@
 ﻿namespace Onero
 {
-    public enum DisplayResult
+    internal enum DisplayResult
     {
         Unprocessed = 1,
         Successful,

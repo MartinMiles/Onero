@@ -1,6 +1,6 @@
 ﻿namespace Onero
 {
-    public enum CrawlingMode
+    internal enum CrawlingMode
     {
         Sitemap = 1,
         WebAPI,

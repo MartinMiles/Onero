@@ -13,11 +13,12 @@ namespace Onero.Helper.License
             node.SetAttributeValue("lastname", license.LastName);
             node.SetAttributeValue("email", license.Email);
             node.SetAttributeValue("organization", license.Organization);
+            node.SetAttributeValue("machineId", license.MachineId);
             node.SetAttributeValue("created", license.Created.ToString("yyyy/MM/dd"));
             return node;
         }
 
-        public static License FromXml(this XElement lic)
+        public static License FromXmlLicense(this XElement lic)
         {
             var license = new License
             {
@@ -25,6 +26,7 @@ namespace Onero.Helper.License
                 LastName = lic.Attribute("lastname")?.Value ?? String.Empty,
                 Email = lic.Attribute("email")?.Value ?? String.Empty,
                 Organization = lic.Attribute("organization")?.Value ?? String.Empty,
+                MachineId = lic.Attribute("machineId")?.Value ?? String.Empty,
                 SerialNumber = lic.Value
             };
 
