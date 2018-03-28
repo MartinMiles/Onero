@@ -2,6 +2,309 @@
     ViewBag.Title = "About";
 }
 <h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<br/>
+<section class="post-body text">
 
-<p>Use this area to provide additional information.</p>
+
+
+<p><span style="font-weight: bold;">Onero Page Runner</span> - smart and lightweight open-source page runner/crawler, is ideal for testing websites, 
+    especially when you are making regular changes. 
+    
+    Onero doesn't just simply load pages and iterate through them, but also is capable of executing JavaScript rules against certai pages in order to verify compliance with the requirements. 
+    As well as validating Rules it can also submit complicated forms (including authorization login forms to enter protected areas), create screenshots for every single page visited 
+    and producethe detailed report at the end of its journey - both visually and as a spreadsheet.</p><p><br></p>
+
+    <ul style="font-size: 13px;padding-left: 15px;">
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#inst">Installation</a></li>
+        <li><a href="#planning">Preparing testing plan</a></li>
+        <li><a href="#settings">Settings and testing profiles<br></a></li>
+        <li><a href="#rules">Rules</a></li>
+        <li><a href="#forms">Forms</a></li>
+        <li><a href="#reports">Checking progress and report</a></li>
+        <li><a href="#limitations">Limitations / know bugs<br></a></li>
+        <li><a href="#reg">Registration</a></li>
+        <li><a href="#refs">References</a></li>
+        <li><a href="#next">Coming next</a></li>
+    </ul>
+
+    <br><br>
+
+    <div id="intro">
+        <span style="font-weight: bold;">Introduction</span><br><br>
+        Why would I use Onero? What can I do with it?<br><br>
+
+        <ul>
+            <li>Get all the links from XML sitemap files for website</li>
+            <li>Execute Sitecore queries via Web API and get a list of resulting pages links</li>
+            <li>Run and load all the links provided in one batch run</li>
+            <li>Generate screenshots for every single page it opens</li>
+            <li>Visualize run process in the suported browsers exactly as it runs normally</li>
+            <li>If browser presense is not desired - it can run invisibly</li>
+            <li>Supports customising browser (or invisible) resolution, which is especially helpful for producing screenshots</li>
+            <li>Run custom JavaScript rules that are configurable for certain pages individually, so one can verify specific content / functionality</li>
+            <li>Submit forms on the pages (with any values) and check if submission succeeded - by result message, redirect or even catching popup messaged</li>
+            <li>Do everything above with protected pages that require authorization</li>
+            <li>See progress in real time - links turn green / red depending on the result as Onero progresses</li>
+            <li>Generate detailed report when finishes, showing detailed statistics</li>
+        </ul>
+
+        Onero uses the Selenium driver to manipulate pages. Below is an example of how it runs againt Transport For London website with 1374 pages automatically identified in total.<br><br>
+        <img src="/Content/img/1. Main screen.png" alt="Main screen" class="full"  style="max-width: 880px;">
+        <br><br>
+    </div><br>
+
+
+    
+    <div id="inst">
+        <span style="font-weight: bold;">Installation</span><br><br>
+        For the moment there is only manual istallation available for Onero, however in the nearest future there will be both traditional Windows installation package as well as automated installation via Chocolatey repository. But for now, please follow the steps below:<br><br>
+
+        <ul>
+            <li>Download Onero for this website</li>
+            <li>Extract content of the zip archive into <code>C:\Onero</code> directory, you'll have your files as displayed on the image below</li>
+            <li>Run onero.exe</li>
+            <li>(optional) open current profile and change <code>Result folder path parameter</code> - that's where you'll get your report, screenshots and any of extracted data</li>
+        </ul><br/>
+        <img src="/Content/img/0. Installation.png" alt="Installation folder" class="full" style="max-width: 725px;">
+        <br><br>
+</div><br>
+
+
+
+
+    <div id="planning">
+        <span style="font-weight: bold;">Preparing test</span><br><br>
+        Onero Page Runner is running against the list of links located at the big text block left hand side, called <code>Pages to process</code>. There are three common ways to populate this box:<br><br><ul>
+            <li>Do it manually by pasting and editing links</li>
+            <li>Load them automatically from sitemap.xml file</li>
+            <li>For Sitecore websites - query using Web API or Sitecore Services Client</li>
+        </ul>
+
+    </div>The easiest way to start is just to paste (and edit if necessary) the list of URLs into Pages to process textbox, when <code>Source of links to process</code> selector is in <code>Paste URLs manually</code> mode. One line - one URL.<br><br>
+
+    Another option is to load list of URLs from automated XML sitemap file. Most of websites should have this there already to help search engines index their sites. Usually this file is called sitemap.xml and located at the root of website, however it may have alternative name (like sitemap.axd) and reside in other folders. If you fail to locate it by default name / location it's worth of checking robots.txt file at root of website as it contains the reference to sitemap.xml unless it has default name and location.<br><br>
+
+    There is also an additional mode (<code>Get from Sitecore Web API</code>)for websites powered with Sitecore CMS
+    to retrieve list of pages from Sitecore Item Web API ( for example by
+    passing a Sitecore query, but not limited to) . Onero will parse
+    resulting JSON response and get list of IDs from it and prepare list of
+    links for those pages, in preview mode. Unfortunately, that is the only
+    known mode to generate links from Sitecore Item web API in its default
+    configuration. I am looking for an opportunity to get list of friendly
+    page URLs from Sitecore as they come. <br><br><br>
+
+
+
+
+
+    <div id="settings">
+        <span style="font-weight: bold;">Settings and testing profiles</span><br><br>It is essential to understand what Testing (settings) profiles are and how to use them. Previously there was one Settings folder with all the settings for application. Since now it became possible to have individual settings set for each of profile. You may create a profile with each individual settings for each website you may test, few profiles for same website or on the contrary - share a profile for few websites - it is entirely up to you how to use them. Testing profiles stores the following:<br><ul><li>all the settings from a settings screenshot below - switches, output directory, browser, timeouts etc.</li><li>rules and forms - they are now configured individually per a profile (currently active)</li><li>pages to process links are stored within a profile each time you click start button, change a profile or exit the application</li></ul>
+
+        <div style="overflow: auto;">
+
+            <img src="/Content/img/7. Program settings.png" alt="Program settings" style="float: left; margin-right: 20px; width: 343.366px; height: 374.9px;">
+
+            Output directory is a directory where the report spreadsheet would be generated, as well as the log file (in case of any exceptional situation , for troubleshooting purposes) and screenshots taken (if enabled).<br><br><code>Change folder</code> button helps you to find and set an output directory by showing directory browser dialog box.&nbsp; <br><br>
+
+            <code>Open folder</code> button opens results folder in a separate Explorer window and is the quickest way to access results.&nbsp; <br><br>
+
+            <code>Delete results</code> removes entire results folder from hard drive.<br>
+        </div>
+
+
+        <br>Binary switches contain the following options:<br>
+
+        <ul>
+            <li><code>Create screenshots</code> of every page visited</li>
+            <li><code>Verbose mode</code> - reports all rules / forms, not only failed</li>
+            <li><code>Create error log</code> - creates a log file (log.txt) with the debugging details on application crash<br></li>
+        </ul>
+
+
+        You can also can set up a wait timeout, that defaults to 1 minutes (60 seconds) at the moment.<br>
+        Worth of mentioning, you need to have Firefox browser installed on your system in order to benefit from <code>Show Firefox</code> mode.
+
+    </div><br><br>
+
+
+
+
+
+
+
+    <div id="rules">
+        <span style="font-weight: bold;">Running Rules</span><br><br>
+
+
+
+        <img src="/Content/img/2. Rules list.png" alt="Rules list" style="margin-right: 35px;">
+
+        <img src="/Content/img/3. Rules editor.png" alt="Rules editor"><br>
+
+        <div>
+            <br>Apart from just ensuring page loads, you can run various JavaScript-based rules on that page in order to verify its state. For example, you would want to check if the footer has loaded and has correct content within itself, or whether an image presents, of for example if there is a specific button on a page and it has correct text set. One would probably also have custom rules to ensure Google tag manager (or anything at all) presents on all the pages.
+        </div>
+
+
+
+        <br>As you've probably noticed from right hand side screenshot, there is a rule having URL pattern with a value that ends with $. Dollar sign at the end of URL pattern means that it will only match URLs ending with this pattern (ignoring trailing slashes). For example, rule from above will be executed on <code>http://tfl.gov.uk/</code> page, but not on <code>http://tfl.gov.uk/plan-a-journey</code>. If you remove $ then both pages will have that rule running.<br><br>There are 3 modes to run the rules:<br><br>
+
+        <ul>
+            <li><code>Everywhere</code> - simply runs that rule on an every single page it runs</li>
+            <li><code>Include</code> - executes that particular rule against only those pages matching URL Pattern</li>
+            <li><code>Exclude</code> - executes that particular rule on all the pages EXCEPT those matching URL Pattern</li>
+        </ul>
+
+        <code>URL Pattern</code> stores a comma separated list of values, which can be either full URLs or just any part of URL like host, folder, page, query string parameters, but not limited to.
+
+
+
+        <br>
+    </div><br>Every time the page loads, Onero looks for the set of rules that target that page and runs them all.<br>In order to be able to run rules with jQuery, the website should have
+    this library references. If it runs only native JavaScript - then that's what you're limited to.<br><br><br>
+
+
+
+
+
+    <div id="forms" style="overflow: auto;">
+        <span style="font-weight: bold;">Submitting forms</span><br><br>
+
+
+        <div style="overflow: auto;">
+
+            <img src="/Content/img/4. Forms list.png" alt="Forms list" style="float: left; margin-right: 10px; width: 348.744px; height: 210.383px;">
+
+
+            Apart from the ability to run any number of custom JavaScript rules, it is also possible to submit forms from that page and verify the result. Similar to rules, there is comma-separated list of URL patterns where Onero will try to find and submit a form.<br><br>
+
+            Fields section of Form Editor dialog contains list of field names paired with values to be submitted into the form as well as id of an element that actually submits the form.
+        </div>
+        <br>
+        <img style="width: 485.042px; height: 751px;" src="/Content/img/5. Forms editor.png" alt="Forms editor"><br><br>
+
+        Verifying if the form was submitted successfully can be done in one of two modes, per form:<br><br>
+
+        <ul>
+            <li><code>Redirect</code> - if form submission was successful and site redirected to a "thank-you" page, Onero checks if redirect happened indeed and whether actual redirected URL matches URL pattern set in Result match / URL pattern field.</li>
+
+            <li><code>Message</code> - this mode for forms that display confirmation message on that same URL without redirecting anywhere else. In that case Onero Page Runner checks for presence pf an element from Result match / ID field and comparing its content with a message set in Result match / Message field.</li>
+        
+            <li><code>Popup</code> - an alternative mode when the page presents a javascript popup with a message upon submission. It is possible to validate against specific content of that (success) message.
+</ul>
+    </div>
+    Also, it is important to mention that if you want a URL match ending exactly as in your URL pattern - add trailing '$' character as on a screenshot above. That means that form will be executed only on URL ending with a pattern, like http://tfl.gov.uk/plan-a-journey but will not on http://tfl.gov.uk/plan-a-journey/result<br><br><br>
+
+
+
+
+
+
+    <div id="reports">
+        <span style="font-weight: bold;">Generating reports</span><br><br>
+
+        On every run, Onero generates a spreadsheet with statistics on execution results. This spreadsheet contains:<br>
+
+    </div><br>
+
+    <ul>
+        <li>A list of all the pages Onero has verified at <code>Page URL</code> column.</li>
+        <li>The page status and the same name column with a status for every specific page by itself (without mentioning rules / forms)</li>
+        <li>a list of all the rules and forms actually run on every specific page, an <code>Addons</code> column.</li>
+        <li><code>Status</code> column displays status code for every specific rule / form.</li>
+        <li>Overall (superposition) status for all rules and forms for that specific page, at <code>Addon status</code> column.</li>
+        <li><code>Time to load</code> column keeps value in milliseconds took to load that page.</li>
+    </ul>
+    <br>
+
+    Report can be found in Output folder, as configured from <code>Settings</code> dialog. Also, clicking <code>Open folder</code> button on that dialog it the quickest way to get to the folder with results. Spreadsheet is stored under <code>Results.cvs</code> filename by default.<br>
+
+    <br>
+    <img src="/Content/img/8. Results spreadsheet.png" alt="Results spreadsheet" class="full">
+    <br>
+
+    <br>The result folder contains a folder with screenshots (if enabled from Settings screen) as well as <code>urls.txt</code> file which enumerates all the pages executed. This file is useful because it is not possible to give screenshot a name of URL it is taken from because of invalid characters, thus they are named increasingly and matching file is created in the same folder.<br><br>
+
+    In addition to full report at the end of whole run process, it is possible to get a quick report for an individual page from Pages to process textbox, once that has been processed and is in a successful (green) or failed (red) state. To do that simply double click that link in editor and Onero will show you a nice dialog with stats for that exact page, including all rules and forms executed on that specific page (remember, that rules and forms can be defined to run just per individual pages) on which and their statuses - now one can say for sure what exactly breaks the page.<br><br>
+    <img src="/Content/img/6. Execution result preview.png" alt="Execution result preview">
+    <br><br><br><br>
+
+
+
+
+
+
+    <div id="limitations">
+        <span style="font-weight: bold;">Limitations and know bugs</span><br><br>
+
+        <ul>
+            <li>Web API mode from Sitecore currently loads pages by their ID in preview mode. Very likely to add full URL mode in future.</li>
+            <li>
+                There is a visual glitch occurring when you try to click an immediate
+                page result while Onero is not yet finished and still running other
+                pages. In that case last link is auto selected and list of links scrolls
+                to the very bottom
+            </li>
+            <li>It is only currently possible to set and run only one form per page</li>
+            <li>Every page can only appear once in the list, unique per URL. Current workaround to run the same page twice (or more) is to mention that page with some dummy query URL parameters.</li>
+            <li>Slow UI performance on a big (more than 1,000) lists of URLs</li>
+        </ul>
+
+    </div><br><br>
+    
+    
+    
+    
+    
+    <div id="reg">
+        <span style="font-weight: bold;">Registration</span><br><br>
+        Registration is provided free of charge, it is just to let me know that you are using Onero - every new user brings me a pleasure! Upon submission, you will be given a serial number - it automatically set to the application and is stored within <code>license.xml</code> file at the program folder. Please be aware that certain advanced functions work only for registered users only, but there is nothing complicated and takes 20 seconds to get registered.<br>
+        <br/>
+        If you forgot serial number for furter use and lose license.xml files - it is possible to auto-restore from Registration dialog underneath <code>About</code> menu, also it is possible to change your details, such as company or email. It is also possible to send me your feedbacks - they are always welcome from the same menu item (<code>About</code> -> <code>Send feedback</code>), and it will be sent along with your registration details (if any).<br/><br />
+        <img src="/Content/img/9. Registration.png" alt="Registration dialog" class="full" style="max-width: 752px;">
+    </div><br><br>
+    
+
+
+
+    <div id="refs">
+            <span style="font-weight: bold;">References</span><br><br>
+            <ul>
+                <li><a href="/dist/onero.zip">Download latest Onero</a></li>
+                <li><a href="http://blog.martinmiles.net/?tag=/Onero">Onero-related blog posts in my blog</a></li>
+                <li><a href="https://github.com/MartinMiles/Onero">Onero on GitHub (source code)</a></li>
+            </ul>
+        </div><br><br>
+
+
+
+
+    <div id="next">
+        <span style="font-weight: bold;">What is coming next?</span><br><br>
+        Further plans for development include the following features:<br><br>
+        <ul>
+            <li>Support for mobiles: Android, iPhone, iPad</li>
+            <li>Program auto-update feature</li>
+            <li>Easier alternative installation via Chocolatey package repository<br></li>
+            <li>Even more testing options</li>
+            <li>Plugin-driven architecture with sample plugins open sourced</li>
+            <li>To make this happen - will entirely rewrite the code and enhance stability</li>
+            <li>... last, but not the least - anything you ask me to implement by sending your feedbacks</li>
+        </ul><br>
+
+        Plase let me know what you think about Onero!
+    </div><br><br>
+
+    <style>
+        code {
+            color: #666;
+            background-color: #eee;
+            font-weight: bold;
+            font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+        }
+
+        .full { width: 100%; }
+    </style>
+
+</section>

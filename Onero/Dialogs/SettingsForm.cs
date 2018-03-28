@@ -3,10 +3,12 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using Onero.Collections;
 using Onero.Loader;
 using Onero.Extensions;
+using Onero.Helper.Browsers;
 
 namespace Onero.Dialogs
 {
@@ -41,7 +43,12 @@ namespace Onero.Dialogs
 
         private void SetBrowserCombobox()
         {
-            foreach (Browser item in Enum.GetValues(typeof (Browser)))
+            var currentlySupportedBrowsers = typeof(SupportedBrowser).GetFields(BindingFlags.Public | BindingFlags.Static)
+                .Where(field => !field.IsDefined(typeof(IgnoreBrowserAttribute), false))
+                .Select(field => (SupportedBrowser)field.GetValue(null)).ToArray();
+
+            // display only those Browsers that do not have [IgnoreBrowser] attribute. Prevoiusly was: foreach (Browser item in Enum.GetValues(typeof (Browser)))
+            foreach (SupportedBrowser item in currentlySupportedBrowsers)
             {
                 browserCombobox.Items.Add(item.GetDescription());
             }
@@ -158,7 +165,8 @@ namespace Onero.Dialogs
         private void ChangeButtonClick(object sender, EventArgs e)
         {
             var folderDialog = new FolderBrowserDialog();
-            DialogResult result = folderDialog.ShowDialog();
+            var result = folderDialog.ShowDialog();
+
             if (result == DialogResult.OK)
             {
                 outputPath.Text = folderDialog.SelectedPath;
@@ -194,7 +202,7 @@ namespace Onero.Dialogs
                 //Timeout = DEFAULT_TIMEOUT,
                 //Width = DEFAULT_WIDTH,
                 //Height = DEFAULT_HEIGHT,
-                OutputDirectory = string.Format("{0}\\{1}", DefaultOutputPath, name)
+                OutputDirectory = $"{DefaultOutputPath}\\{name}"
             };
 
             profiles.Add(newProfile);
@@ -208,7 +216,7 @@ namespace Onero.Dialogs
 
         private void DeleteProfileClick(object sender, EventArgs e)
         {
-            string derectoryName = string.Format("{0}\\{1}", Profiles.SETTINGS_DIRECTORY, CurrentProfile.Name);
+            string derectoryName = $"{Profiles.SETTINGS_DIRECTORY}\\{CurrentProfile.Name}";
             if (Directory.Exists(derectoryName))
             {
                 Directory.Delete(derectoryName, true);
@@ -226,22 +234,6 @@ namespace Onero.Dialogs
             addProfileButton.Enabled = !string.IsNullOrWhiteSpace(newProfileName.Text);
         }
 
-        private Browser SelectedBrowser
-        {
-            get
-            {
-                switch (browserCombobox.SelectedIndex)
-                {
-                    case 0 : return Browser.BrowserHidden;
-                    case 1 : return Browser.IE;
-                    case 2 : return Browser.Edge;
-                    case 3 : return Browser.Firefox;
-                    case 4 : return Browser.Chrome;
-                    case 5 : return Browser.Opera;
-                }
-
-                throw new NotImplementedException("Browser not supported");
-            }
-        }
+        private SupportedBrowser SelectedBrowser => (SupportedBrowser)Enum.Parse(typeof(SupportedBrowser), (string)browserCombobox.SelectedItem, true);
     }
 }

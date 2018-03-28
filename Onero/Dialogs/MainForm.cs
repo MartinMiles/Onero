@@ -8,7 +8,6 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using Onero.Collections;
-using Onero.Errors;
 using Onero.Extensions;
 using Onero.Loader;
 using Onero.Loader.Broken;

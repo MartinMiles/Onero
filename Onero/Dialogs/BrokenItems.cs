@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Onero.Collections;
 using Onero.Extensions;
+using Onero.Helper.Interfaces;
 using Onero.Loader.Broken;
-using Onero.Loader.Interfaces;
 
 namespace Onero.Dialogs
 {

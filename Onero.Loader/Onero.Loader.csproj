@@ -60,14 +60,12 @@
     <Compile Include="Broken\BrokenLink.cs" />
     <Compile Include="Broken\BrokenScript.cs" />
     <Compile Include="Broken\BrokenStyle.cs" />
-    <Compile Include="Browser.cs" />
     <Compile Include="DataExtractItem.cs" />
     <Compile Include="DriverFactory.cs" />
     <Compile Include="Forms\FieldType.cs" />
     <Compile Include="HttpStatusCodeReader.cs" />
     <Compile Include="Results\DataExtractResult.cs" />
     <Compile Include="XmlExtensionMethods.cs" />
-    <Compile Include="Interfaces\IProfile.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Actions\FormSubmitAction.cs" />
     <Compile Include="Actions\BaseAction.cs" />
@@ -75,7 +73,6 @@
     <Compile Include="Actions\RulesExecuteAction.cs" />
     <Compile Include="LoaderSettings.cs" />
     <Compile Include="Interfaces\INameable.cs" />
-    <Compile Include="Logger.cs" />
     <Compile Include="Results\BrokenLinksResult.cs" />
     <Compile Include="Results\FormResultParameters.cs" />
     <Compile Include="Results\FormResultType.cs" />
@@ -90,6 +87,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Onero.Helper\Onero.Helper.csproj">
+      <Project>{4ff9e278-575c-44c3-85c9-049d943f1407}</Project>
+      <Name>Onero.Helper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

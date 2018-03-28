@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
-using Onero.Loader.Interfaces;
+using Onero.Helper.Browsers;
+using Onero.Helper.Interfaces;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
@@ -35,12 +36,12 @@ namespace Onero.Loader
         {
             switch (_profile.Browser)
             {
-                case Browser.BrowserHidden : return PhantomDriver;
-                case Browser.IE : return InternetExplorerDriver;
-                case Browser.Edge : return EdgeDriver;
-                case Browser.Firefox : return FirefoxDriver;
-                case Browser.Chrome : return ChromeDriver;
-                case Browser.Opera : return OperaDriver;
+                case SupportedBrowser.BrowserHidden : return PhantomDriver;
+                case SupportedBrowser.IE : return InternetExplorerDriver;
+                case SupportedBrowser.Edge : return EdgeDriver;
+                case SupportedBrowser.Firefox : return FirefoxDriver;
+                case SupportedBrowser.Chrome : return ChromeDriver;
+                case SupportedBrowser.Opera : return OperaDriver;
             }
 
             throw new NotImplementedException($"Unknown Remote Web Driver: {_profile.Browser}");
@@ -55,7 +56,13 @@ namespace Onero.Loader
                 var driverService = InternetExplorerDriverService.CreateDefaultService(DriversFolder);
                 driverService.HideCommandPromptWindow = true;
 
-                return new InternetExplorerDriver(driverService, new InternetExplorerOptions { InitialBrowserUrl = ABOUT_BLANK });
+                var ieOptions = new InternetExplorerOptions
+                {
+                    InitialBrowserUrl = ABOUT_BLANK,
+                    IgnoreZoomLevel = true
+                };
+
+                return new InternetExplorerDriver(driverService, ieOptions);
             }
         }
 

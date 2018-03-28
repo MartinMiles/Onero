@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using System.Xml;
 using Onero.Collections;
 using Onero.Dialogs;
-using Onero.Errors;
+using Onero.Helper.ErrorHandling;
 using Onero.Loader;
 
 namespace Onero
@@ -29,17 +29,14 @@ namespace Onero
             catch (XmlException e)
             {
                 MessageBox.Show(CONFIGURATION_FAILED);
-
-                if (Profiles.Current.SendErrorsAndStats)
-                {
-                    new ErrorManager().Report(e, "Global Program.cs error");
-                }
+                new ErrorManager(Profiles.Current).Fix(e, CONFIGURATION_FAILED);
             }
 #if DEBUG
 #else       
             catch (Exception e)
             {
                 MessageBox.Show(GENERAL_EXCEPTION);
+                new ErrorManager(Profiles.Current).Fix(e, GENERAL_EXCEPTION);
             }
 #endif
         }

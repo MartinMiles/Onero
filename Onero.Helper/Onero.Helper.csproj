@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,14 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ErrorHandling\ErrorReportingHelper.cs" />
+    <Compile Include="Browsers\SupportedBrowser.cs" />
+    <Compile Include="Browsers\IgnoreBrowserAttribute.cs" />
+    <Compile Include="ErrorHandling\ErrorManager.cs" />
+    <Compile Include="ErrorHandling\Logger.cs" />
     <Compile Include="ErrorHandling\ReportableError.cs" />
     <Compile Include="ErrorHandling\ReportableErrorXmlExtensions.cs" />
     <Compile Include="Feedback\Feedback.cs" />
     <Compile Include="Feedback\FeedbackXmlExtensions.cs" />
+    <Compile Include="GlobalSettings.cs" />
+    <Compile Include="Interfaces\IProfile.cs" />
     <Compile Include="License\Encryptor.cs" />
     <Compile Include="License\IEncryptor.cs" />
     <Compile Include="License\License.cs" />
+    <Compile Include="License\LicenseManager.cs" />
     <Compile Include="License\LIcenseXmlExtensions.cs" />
     <Compile Include="License\LicenseHelper.cs" />
     <Compile Include="Models\Request\GenericPostResult.cs" />

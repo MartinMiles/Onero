@@ -126,7 +126,6 @@
       <DependentUpon>FormsEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Enums\DisplayResult.cs" />
-    <Compile Include="Errors\ErrorManager.cs" />
     <Compile Include="Extensions\CheckedListExtensions.cs" />
     <Compile Include="Extensions\ExtensionMethods.cs" />
     <Compile Include="Dialogs\FormsList.cs">
@@ -155,7 +154,6 @@
     </Compile>
     <Compile Include="Clients\JsonResponse.cs" />
     <Compile Include="FormsFactory.cs" />
-    <Compile Include="License\LicenseManager.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Collections\Profiles.cs" />
     <Compile Include="Program.cs" />
@@ -339,6 +337,7 @@
       <Name>Onero.Loader</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

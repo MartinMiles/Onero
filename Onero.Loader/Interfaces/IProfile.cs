@@ -1,4 +1,6 @@
-﻿namespace Onero.Loader.Interfaces
+﻿using Onero.Loader.Browsers;
+
+namespace Onero.Loader.Interfaces
 {
     public interface IProfile
     {

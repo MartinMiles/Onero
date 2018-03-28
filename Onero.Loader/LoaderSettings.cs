@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Onero.Loader.Interfaces;
+using Onero.Helper.Interfaces;
 
 namespace Onero.Loader
 {

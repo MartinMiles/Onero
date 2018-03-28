@@ -125,7 +125,7 @@
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(16, 1235);
+            this.deleteButton.Location = new System.Drawing.Point(24, 645);
             this.deleteButton.Margin = new System.Windows.Forms.Padding(6);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(150, 44);
@@ -146,7 +146,7 @@
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(758, 1235);
+            this.cancelButton.Location = new System.Drawing.Point(1653, 645);
             this.cancelButton.Margin = new System.Windows.Forms.Padding(6);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(114, 44);
@@ -157,7 +157,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(642, 1235);
+            this.button1.Location = new System.Drawing.Point(1537, 645);
             this.button1.Margin = new System.Windows.Forms.Padding(6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(104, 44);
@@ -287,7 +287,7 @@
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.resultId);
-            this.groupBox3.Location = new System.Drawing.Point(24, 837);
+            this.groupBox3.Location = new System.Drawing.Point(24, 234);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(6);
@@ -377,7 +377,7 @@
             this.fieldsGroupbox.Controls.Add(this.label7);
             this.fieldsGroupbox.Controls.Add(this.fieldValue1);
             this.fieldsGroupbox.Controls.Add(this.fieldId1);
-            this.fieldsGroupbox.Location = new System.Drawing.Point(24, 227);
+            this.fieldsGroupbox.Location = new System.Drawing.Point(923, 23);
             this.fieldsGroupbox.Margin = new System.Windows.Forms.Padding(6);
             this.fieldsGroupbox.Name = "fieldsGroupbox";
             this.fieldsGroupbox.Padding = new System.Windows.Forms.Padding(6);
@@ -863,7 +863,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(922, 1314);
+            this.ClientSize = new System.Drawing.Size(1828, 757);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.button1);

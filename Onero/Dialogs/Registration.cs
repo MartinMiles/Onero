@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using Onero.Helper;
 using Onero.Helper.License;
 using Onero.Helper.Models;
 using Onero.Helper.Request;
-using Onero.License;
 
 namespace Onero.Dialogs
 {
@@ -24,8 +24,8 @@ namespace Onero.Dialogs
         {
             bool isUpdate = !string.IsNullOrWhiteSpace(serialNumber.Text.Trim());
             string URL = isUpdate
-                ? "http://demo.onero.net/registration/update"
-                : "http://demo.onero.net/registration/new";
+                ? $"{GlobalSettings.ServerBase}/registration/update"
+                : $"{GlobalSettings.ServerBase}/registration/new";
 
             if (true)   // Validate
             {
@@ -73,7 +73,8 @@ namespace Onero.Dialogs
         {
             EnableRestoreUI(false);
 
-            const string URL = "http://demo.onero.net/registration/retrieve";
+            string URL = $"{GlobalSettings.ServerBase}/registration/retrieve";
+
             var values = new Dictionary<string, string>
             {
                 { "firstname", restoreFirstName.Text },
@@ -106,7 +107,7 @@ namespace Onero.Dialogs
         {
             EnableUI(false);
 
-            const string URL = "http://demo.onero.net/registration/Check";
+            string URL = $"{GlobalSettings.ServerBase}/registration/Check";
             var values = new Dictionary<string, string>
             {
                 { "serialNubmer", serialNumber.Text }
@@ -116,7 +117,7 @@ namespace Onero.Dialogs
 
             if (!string.IsNullOrWhiteSpace(result.result))
             {
-                MessageBox.Show("Your serial number is valid", "Success");
+                MessageBox.Show("We have found your registration", "Thank you");
 
                 var license = XElement.Parse(result.result).FromXmlLicense();
 
@@ -128,7 +129,7 @@ namespace Onero.Dialogs
             }
             else
             {
-                MessageBox.Show("Your serial number is NOT valid", "Failure");
+                MessageBox.Show("Your serial number cannot be found or is NOT valid", "Failure");
                 //EnableRestoreUI(true);
             }
         }

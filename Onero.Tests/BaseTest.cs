@@ -7,8 +7,7 @@ namespace Onero.Tests
     public class BaseTest
     {
         // USAGE HINT: IF you prefer to work locally (and much quicker) - use localhost-based connection
-        //public const string WEBSITE_TEST_BASE = "http://localhost:8540";
-        public const string WEBSITE_TEST_BASE = "http://demo.onero.net";
+        public const string WEBSITE_TEST_BASE = "http://demo.onero.net"; // hosts maaped
 
         #region Web drivers
 

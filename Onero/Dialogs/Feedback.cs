@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Windows.Forms;
+using Onero.Helper;
 using Onero.Helper.Models;
 using Onero.Helper.Request;
-using Onero.License;
 
 namespace Onero.Dialogs
 {
     public partial class Feedback : Form
     {
-        const string URL = "http://demo.onero.net/feedbacks/send";
+        readonly string URL = $"{GlobalSettings.ServerBase}/feedbacks/send";
 
-        private readonly LicenseManager _licenseManager;
+        private readonly Onero.Helper.License.LicenseManager _licenseManager;
 
         public Feedback()
         {
-            _licenseManager = new LicenseManager();
+            _licenseManager = new Onero.Helper.License.LicenseManager();
 
             InitializeComponent();
         }
@@ -46,6 +46,8 @@ namespace Onero.Dialogs
             MessageBox.Show("Your feedback has been delivered", "Thank you");
             feedbackTextbox.Enabled = true;
             button1.Enabled = true;
+
+            Close();
         }
     }
 }

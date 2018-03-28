@@ -1,7 +1,8 @@
 ﻿using System.IO;
 using System.Xml;
 using System.Xml.Linq;
-using Onero.Loader.Interfaces;
+using Onero.Helper.Browsers;
+using Onero.Helper.Interfaces;
 using Onero.Loader;
 
 namespace Onero
@@ -28,7 +29,7 @@ namespace Onero
             Height = HEIGHT;
             CreateErrorLog = true;
             SendErrorsAndStats = false;
-            Browser = Browser.Firefox;
+            Browser = SupportedBrowser.Firefox;
         }
 
         public Profile(string name, string profileSettingsFile) : this(name)
@@ -58,7 +59,7 @@ namespace Onero
                 }
                 if (node.Name == "Browser")
                 {
-                    Browser = node.ParseEnum<Browser>(VALUE_ATTRIBUTE_NAME);
+                    Browser = node.ParseEnum<SupportedBrowser>(VALUE_ATTRIBUTE_NAME);
                 }
                 if (node.Name == "Timeout")
                 {
@@ -107,7 +108,7 @@ namespace Onero
 
         public bool SendErrorsAndStats { get; set; }
 
-        public Browser Browser { get; set; }
+        public SupportedBrowser Browser { get; set; }
 
         public string OutputDirectory { get; set; }
 

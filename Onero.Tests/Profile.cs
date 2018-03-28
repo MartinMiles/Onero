@@ -1,5 +1,5 @@
-﻿using Onero.Loader;
-using Onero.Loader.Interfaces;
+﻿using Onero.Helper.Browsers;
+using Onero.Helper.Interfaces;
 
 namespace Onero.Tests
 {
@@ -14,7 +14,7 @@ namespace Onero.Tests
         public bool VerboseMode { get; set; }
         public bool CreateErrorLog { get; set; }
         public bool SendErrorsAndStats { get; set; }
-        public Browser Browser { get; set; }
+        public SupportedBrowser Browser { get; set; }
         public string OutputDirectory { get; set; }
         public bool FindAllBrokenLinks { get; set; }
         public bool FindAllBrokenImages { get; set; }

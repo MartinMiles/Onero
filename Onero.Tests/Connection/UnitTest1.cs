@@ -14,7 +14,7 @@ namespace Onero.Tests
         [TestMethod]
         public async void HttpClientTest_NOT_ACTUAL_REPLACE()
         {
-            var url = "http://demo.onero.net/feedbacks";
+            var url = "http://onero.net/feedbacks";
             var values = new Dictionary<string, string> { { "feedback", "Test" } };
 
             var result = await PostRequester.GenericPost<GenericPostResult>(url, values);

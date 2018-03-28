@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Onero.Loader.Interfaces;
+using Onero.Helper.Interfaces;
 
 namespace Onero.Collections
 {

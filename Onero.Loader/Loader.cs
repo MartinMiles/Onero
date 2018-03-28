@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using Onero.Helper.ErrorHandling;
 using Onero.Loader.Actions;
 using Onero.Loader.Results;
 using OpenQA.Selenium;
@@ -10,7 +11,7 @@ namespace Onero.Loader
 {
     public class Loader
     {
-        private readonly LoaderSettings settings;
+        private readonly LoaderSettings _settings;
 
         #region Constructors
 
@@ -20,7 +21,7 @@ namespace Onero.Loader
 
         public Loader(LoaderSettings settings)
         {
-            this.settings = settings;
+            _settings = settings;
         }
 
         #endregion
@@ -31,17 +32,17 @@ namespace Onero.Loader
             {
                 int order = 1;
 
-                settings.CleanOutputDirectory();
+                _settings.CleanOutputDirectory();
 
-                var selectedDriver = new DriverFactory(settings.Profile).Driver;
+                var selectedDriver = new DriverFactory(_settings.Profile).Driver;
 
-                selectedDriver.Manage().Window.Size = new Size(settings.Profile.Width, settings.Profile.Height);
-                selectedDriver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(settings.Profile.Timeout);
+                selectedDriver.Manage().Window.Size = new Size(_settings.Profile.Width, _settings.Profile.Height);
+                selectedDriver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(_settings.Profile.Timeout);
                 //selectedDriver.Manage().Timeouts().SetPageLoadTimeout(new TimeSpan(0, 0, settings.Profile.Timeout));
 
                 using (IWebDriver driver = selectedDriver)
                 {
-                    foreach (var page in settings.PagesToCrawl)
+                    foreach (var page in _settings.PagesToCrawl)
                     {
                         if (backgroundWorker.CancellationPending)
                             break;
@@ -57,10 +58,7 @@ namespace Onero.Loader
             }
             catch (Exception e)
             {
-                if (settings.Profile.CreateErrorLog)
-                {
-                    Logger.Log(e);
-                }
+                new ErrorManager(_settings.Profile).Fix(e, "Loader failed");
 
                 throw;
             }
@@ -80,7 +78,7 @@ namespace Onero.Loader
 
                 result.PageLoadTime = timer.ElapsedMilliseconds;
 
-                var actions = ActionsFactory.GetActions(driver, settings, order);
+                var actions = ActionsFactory.GetActions(driver, _settings, order);
                 foreach (BaseAction action in actions)
                 {
                     result.GenericResults.Add(action.GetType(), action.Execute());
