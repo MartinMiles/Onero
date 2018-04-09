@@ -9,6 +9,7 @@ using Onero.Collections;
 using Onero.Loader;
 using Onero.Extensions;
 using Onero.Helper.Browsers;
+using Onero.Helper.Extensions;
 
 namespace Onero.Dialogs
 {
@@ -234,6 +235,7 @@ namespace Onero.Dialogs
             addProfileButton.Enabled = !string.IsNullOrWhiteSpace(newProfileName.Text);
         }
 
-        private SupportedBrowser SelectedBrowser => (SupportedBrowser)Enum.Parse(typeof(SupportedBrowser), (string)browserCombobox.SelectedItem, true);
+        private SupportedBrowser SelectedBrowser =>
+            EnumExtensions.GetValueFromDescription<SupportedBrowser>((string)browserCombobox.SelectedItem);
     }
 }

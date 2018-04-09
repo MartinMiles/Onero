@@ -17,6 +17,7 @@ namespace Onero.Helper.Browsers
         [IgnoreBrowser]
         Firefox,
 
+        [Description("Google Chrome")]
         Chrome,
 
         [IgnoreBrowser]

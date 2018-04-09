@@ -49,6 +49,7 @@
     <Compile Include="ErrorHandling\Logger.cs" />
     <Compile Include="ErrorHandling\ReportableError.cs" />
     <Compile Include="ErrorHandling\ReportableErrorXmlExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Feedback\Feedback.cs" />
     <Compile Include="Feedback\FeedbackXmlExtensions.cs" />
     <Compile Include="GlobalSettings.cs" />
