@@ -3,6 +3,8 @@ The most intelligent way of crawling websites - now with Sitecore support!
 
 Please visit project website - http://onero.martinmiles.net
 
+Video reviw of all the features - https://youtu.be/fkK_1iZE-G4
+
 **Onero Page Runner** - smart and lightweight open-source page runner/crawler, is ideally suited for testing websites, especially when you are making changes to it. Onero doesn't just simply load pages, but also executes JavaScript rules against it to verify compliance. As well as Rules it can also submit forms on pages (including authorization login forms to enter protected areas), create screenshots of every single page visited and generate detailed report at the end of its journey.
 
 Version 1.2 has now ben released. New features include:
