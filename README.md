@@ -1,7 +1,7 @@
 # Onero Page Runner
 The most intelligent way of crawling websites - now with Sitecore support!
 
-Please visit project website - http://onero.martinmiles.net
+Please visit project website - https://onero.net
 
 Video reviw of all the features - https://youtu.be/fkK_1iZE-G4
 
